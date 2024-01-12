@@ -9,7 +9,7 @@
     return (
       <div>
         <Routes>
-        <Route path="/landingpage" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
           <Route path="/donor" element={<Donor />} />
           <Route path="/volunteer" element={<Volunteer />} />
           <Route path="*" element={<NotFound />} />
