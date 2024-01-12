@@ -34,8 +34,8 @@ export const Sidebar = ({ menus }) => {
         </div>
       )}
       {window.innerWidth <= 768 && open && (
-        <div className="fixed inset-0 bg-[#ddd4d4] z-50 p-5 font-semibold text-xl">
-           <div className="py-3 flex justify-between items-center">
+        <div className="fixed inset-0 bg-[#ddd4d4] z-50 p-5 font-semibold text-xl overflow-y-auto">
+          <div className="py-3 flex justify-between items-center">
             <p>Khana.com</p>
             <HiMenuAlt3
               size={26}
@@ -59,6 +59,13 @@ export const Sidebar = ({ menus }) => {
                 </h2>
               </Link>
             ))}
+            <h2>
+              <button className="text-sm font-medium p-2 hover:bg-white rounded-md">
+                <h2 className={`whitespace-pre ${!open && "translate-x-28"}`}>
+                  Logout
+                </h2>
+              </button>
+            </h2>
           </div>
         </div>
       )}
@@ -66,7 +73,7 @@ export const Sidebar = ({ menus }) => {
         <div
           className={`min-h-screen ${
             open ? "w-72 bg-[#ddd4d4]" : "w-16"
-          } duration-500 px-4 flex flex-col font-semibold p-1 `}
+          } duration-500 px-4 flex flex-col font-semibold p-1 overflow-y-auto`}
         >
           <div className="py-3 flex justify-between items-center">
             <p
@@ -75,7 +82,7 @@ export const Sidebar = ({ menus }) => {
               }`}
               onClick={handleToggle}
             >
-              Khana.com
+              Khana
             </p>
             <HiMenuAlt3
               size={26}
@@ -114,11 +121,20 @@ export const Sidebar = ({ menus }) => {
                 </h2>
               </Link>
             ))}
+            <div className="leading-4">
+              <h4 className="font-semibold">John Doe</h4>
+              <span className="text-xs text-gray-600">johndoe@gmail.com</span>
+              <h2>
+                <button className="text-sm font-medium p-2 hover:bg-white rounded-md">
+                  <h2 className={`whitespace-pre ${!open && "translate-x-28"}`}>
+                    Logout
+                  </h2>
+                </button>
+              </h2>
+            </div>
           </div>
         </div>
       )}
     </section>
   );
-};
-
-export default Sidebar;
+}

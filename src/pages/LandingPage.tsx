@@ -44,7 +44,7 @@ const LandingPage = () => {
           </div>
           <div className="flex flex-col items-center py-20 mx-auto">
             <div className="self-center">
-              <Button buttonText={"Join the Community"} />
+            <Button variant="base" text="Join the Community" />
             </div>
           </div>
           <div className="flex-grow-0 flex-shrink-0 w-full lg:w-1/3 xl:w-1/4"></div>

@@ -1,15 +1,26 @@
+import React, { useState, useRef } from "react";
 import { Sidebar } from "../components/Sidebar.jsx";
-import  Accomplishment  from "../components/Accomplishment.jsx";
-import Accordion from '../components/Accordion.jsx';
+import Accomplishment from "../components/Accomplishment.jsx";
+import Accordion from "../components/Accordion.jsx";
+import PendingDistributions from "../components/PendingDistributions";
+import WelcomeBack from "../components/WelcomeBack.jsx";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiFolder } from "react-icons/fi";
+// import { useNavigate } from "react-router-dom";
 
 const Volunteer = () => {
+//   const navigate = useNavigate();
+
+// const handleLogout = () => {
+//   // logout
+//   navigate("/login"); 
+// };
+
   const SidebarMenu = [
-    { name: "Homepage", link: "/", icon: MdOutlineDashboard },
+    { name: "Homepage", link: "/landingpage", icon: MdOutlineDashboard },
     { name: "User", link: "/", icon: AiOutlineUser },
     {
       name: "Volunteer Now",
@@ -22,77 +33,107 @@ const Volunteer = () => {
       name: "Difference you made",
       link: "/#Accomplishment",
       icon: AiOutlineHeart,
-      margin: true, 
+      margin: true,
     },
-    { name: "Setting", link: "/", icon: RiSettings4Line, margin: true }
-    
-    
-    // ... other custom menus
+    { name: "Setting", link: "/", icon: RiSettings4Line, margin: true },
   ];
-  const accordionItems = [
+  const userName = "John";
+  const [accordionItems, setAccordionItems] = useState([
     {
-      title: 'Opportunity 1',
-      content: 'Details about opportunity 1.',
-      description: 'Plates available: 10',
-      listedOn: '2024-01-10',
+      title: "Opportunity 1",
+      location: "pokhara",
+      description: "Plates available: 10",
+      listedOn: "2024-01-10",
+      plates: 10,
     },
     {
-      title: 'Opportunity 2',
-      content: 'Details about opportunity 2.',
-      description: 'Plates available: 15',
-      listedOn: '2024-01-11',
+      title: "Opportunity 2",
+      location: "pokhara",
+      description: "Plates available: 10",
+      listedOn: "2024-01-10",
+      plates: 10,
     },
     {
-      title: 'Opportunity 3',
-      content: 'Details about opportunity 3.',
-      description: 'Plates available: 8',
-      listedOn: '2024-01-12',
+      title: "Opportunity 3",
+      location: "pokhara",
+      description: "Plates available: 10",
+      listedOn: "2024-01-10",
+      plates: 10,
     },
     {
-      title: 'Opportunity 4',
-      content: 'Details about opportunity 3.',
-      description: 'Plates available: 8',
-      listedOn: '2024-01-12',
-    }, {
-      title: 'Opportunity 5',
-      content: 'Details about opportunity 3.',
-      description: 'Plates available: 8',
-      listedOn: '2024-01-12',
-    }, {
-      title: 'Opportunity 6',
-      content: 'Details about opportunity 3.',
-      description: 'Plates available: 8',
-      listedOn: '2024-01-12',
+      title: "Opportunity 4",
+      location: "pokhara",
+      description: "Plates available: 10",
+      listedOn: "2024-01-10",
+      plates: 10,
     },
-    // Add more opportunities
-  ];
-  
+    {
+      title: "Opportunity 5",
+      location: "pokhara",
+      description: "Plates available: 10",
+      listedOn: "2024-01-10",
+      plates: 10,
+    },
+    {
+      title: "Opportunity 6",
+      location: "pokhara",
+      description: "Plates available: 10",
+      listedOn: "2024-01-10",
+      plates: 10,
+    },
+  ]);
+
+  const [pendingItems, setPendingItems] = useState([]);
+
+  const handleCancelDistribution = (index) => {
+    const canceledItem = pendingItems[index];
+
+    // Move the canceled item back to active listings
+    setAccordionItems((prevItems) => [...prevItems, canceledItem]);
+
+    // Remove the item from pending distribution
+    setPendingItems((prevItems) => prevItems.filter((_, i) => i !== index));
+  };
+
+  const pendingListingsRef = useRef(null);
+
+  const handleDistribute = (index) => {
+    const selectedOpportunity = accordionItems[index];
+    setAccordionItems((prevItems) => prevItems.filter((_, i) => i !== index));
+
+    setPendingItems([...pendingItems, selectedOpportunity]);
+    // Scroll to the "Pending Listings" section
+    pendingListingsRef.current.scrollIntoView({ behavior: "smooth" });
+    handleToggle(index);
+  };
 
   return (
-    <div>
-      <section className="flex flex-end">
-        <div>
-
-            <Sidebar menus={SidebarMenu} />
-        </div>
-
+    <div className="flex">
+      {/* Sidebar */}
+      
+        <Sidebar menus={SidebarMenu} />
+      
         <div className="justify-center pt-10 m-3 ">
-          <h1 className="mb-4 font-extrabold leading-none tracking-tight text-4xl md:text-3xl text-shadow-lg text-center">
-            WELCOME BACK, SULAV
-          </h1>
+          
+          <WelcomeBack userName={userName} />
+
+          {pendingItems.length > 0 && (
+            <div ref={pendingListingsRef} id="PendingListings" className="mt-10">
+              <PendingDistributions
+                pendingItems={pendingItems}
+                onCancelDistribution={handleCancelDistribution}
+              />
+            </div>
+          )}
           <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-4">Active Listings</h1>
-            <Accordion items={accordionItems} />
+            <Accordion items={accordionItems} onDistribute={handleDistribute} />
           </div>
-          <div id="Accomplishment"
-          className="justify-center pt-10 w-full"
-        >
-          
-          <Accomplishment />
-
+          <div id="Accomplishment" className="justify-center pt-10 w-full">
+            <Accomplishment totalFoodSaved={30} ourCommunity={60} totalPeopleServed={90} />
+          </div>
         </div>
-        </div>
-      </section>
+      
     </div>
   );
 };
