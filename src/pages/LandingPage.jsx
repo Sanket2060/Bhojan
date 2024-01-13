@@ -4,8 +4,8 @@ import Footer from "../components/Footer";
 import Button from "../components/Button";
 import Partner from "../components/Partner";
 import Accomplishment from "../components/Accomplishment";
-import Leaderboard from "../components/LearderBoard";
-import { Image } from "./notsulav.png";
+
+import LandingpageLeaderboard from "../components/LandingpageLeaderboard";
 
 const LandingPage = () => {
   const topContributorsData = [
@@ -50,7 +50,11 @@ const LandingPage = () => {
           </div>
           <div className="flex flex-col items-center py-20 mx-auto">
             <div className="self-center">
-            <Button variant="base" text="Join the Community" />
+              <Button
+                //onClick={}
+                variant="base"
+                text="Join the Community"
+              />
             </div>
           </div>
           <div className="flex-grow-0 flex-shrink-0 w-full lg:w-1/3 xl:w-1/4"></div>
@@ -89,7 +93,7 @@ const LandingPage = () => {
         ourCommunity={60}
         totalPeopleServed={90}
       />
-      <Leaderboard topContributors={topContributorsData} />
+      <LandingpageLeaderboard topContributors={topContributorsData} />
       <div className="overflow-hidden">
         <div className=" flex flex-col pb-20 pt-10 font-bold text-6xl relative  bg-gray-100   w-[110%]  rounded-br-[50%] rounded-bl-[30%] lg:rounded-br-[90%] lg:rounded-bl-[50%]  "></div>
       </div>
