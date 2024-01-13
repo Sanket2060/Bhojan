@@ -56,7 +56,7 @@ import { FaPeopleCarry } from "react-icons/fa";
   };
 
   return (
-    <div className="text-center bg-blue-950 text-white " ref={intersectionRef}>
+    <div className="text-center bg-[#332163] text-white " ref={intersectionRef}>
       <div className="p-10">
         <h2 className="text-3xl font-bold mb-4 pb-10 ">Accomplishments</h2>
         <div className="lg:flex justify-around">
