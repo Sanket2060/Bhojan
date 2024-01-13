@@ -7,15 +7,16 @@ import Icons from "./Icons";
 const Footer = () => {
   const icons = [FaInstagram, SlSocialFacebook, FaXTwitter];
   return (
-    <div className="overflow-hidden">
-      <div className="flex flex-col relative  bg-indigo-950 text-white w-[160%] rounded-tr-[60%] rounded-tl-[50%] left-[-30%] lg:w-[110%] lg:rounded-tr-[90%] lg:rounded-tl-[60%] lg:left-[-5%] ">
+    <div className="overflow-hidden ">
+      <div className="flex flex-col relative  bg-[#332163] text-white w-[160%] rounded-tr-[60%] rounded-tl-[50%] left-[-30%] lg:w-[110%] lg:rounded-tr-[90%] lg:rounded-tl-[60%] lg:left-[-5%] ">
         <div className="p-20"></div>
         <div className="font-extrabold text-xl lg:text-3xl pt-10 text-center">
-          Connecting Plates, Eliminating Waste: <br />
+          Connecting Plates, Eliminating Waste
+          <br />
           Every Bite Rescued makes a Difference
         </div>
         <div className="m-10"></div>
-        <button className="self-center items p-3 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 bg-white text-black shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full">
+        <button className="self-center items align-middle select-none  text-center  transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl py-4 px-8 bg-white text-black shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full border-8">
           Join the community
         </button>
 

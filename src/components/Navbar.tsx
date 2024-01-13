@@ -1,5 +1,6 @@
 import React from "react";
 import { RiMenu3Line } from "react-icons/ri";
+import Button from "./Button";
 
 const Navbar = () => {
   return (
@@ -30,8 +31,9 @@ const Navbar = () => {
         <li>
           <a className=" " href="#">
             <RiMenu3Line size={32} className="lg:hidden font:bold" />
-            <button className="hidden lg:flex align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full">
-              Join the helpers
+
+            <button className="align-middle hidden lg:block select-none  py-3 px-10 text-center  transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl  bg-[#261750] text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full shadow-xl ring-1 ring-slate-900/5">
+              Login
             </button>
           </a>
         </li>
