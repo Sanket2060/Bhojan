@@ -4,6 +4,7 @@
   import Volunteer from "./pages/Volunteer";
   import NotFound from "./pages/NotFound";
   import LandingPage from "./pages/LandingPage";
+  import AboutUs from "./pages/AboutUs";
 
   const App = () => {
     return (
@@ -13,6 +14,7 @@
           <Route path="/donor" element={<Donor />} />
           <Route path="/volunteer" element={<Volunteer />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/aboutus" element={<AboutUs/>} />
         </Routes>
       </div>
     );
