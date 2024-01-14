@@ -2,7 +2,7 @@ import React from "react";
 
 const LandingpageLeaderboard = ({ topContributors }) => {
   return (
-    <div className=" flex flex-col bg-gray-100  p-10">
+    <div className=" flex flex-col bg-gray-100  pt-10">
       <h2 className="self-center text-3xl   mb-6 pt-8 font-semibold">
         Top Contributors
       </h2>
