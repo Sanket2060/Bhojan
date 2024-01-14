@@ -40,7 +40,7 @@ const Footer = () => {
         <div className="flex flex-row gap-x-8 place-content-center pt-4 pb-8">
           <div>Terms and Condition</div>
 
-          <div>End user liscence Agreement</div>
+          <div>Liscence Agreement</div>
         </div>
       </div>
     </div>

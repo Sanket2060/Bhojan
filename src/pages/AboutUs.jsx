@@ -33,7 +33,7 @@ const AboutUs = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {teamMembers.map((member, index) => (
-            <div key={index} className="bg-white p-6 rounded-md shadow-md text-center  bg-[#93edc0]">
+            <div key={index} className=" p-6 rounded-md shadow-md text-center  bg-[#93edc0]">
               <div className=" flex overflow-hidden mx-auto mb-4">
                 <img
                   src={member.photo}
