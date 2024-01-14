@@ -1,11 +1,28 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import Button from "./Button";
-import Confirmation from "./Confirmation";
+import ReCAPTCHA from "react-google-recaptcha";
+// import Button from "./Button";
+
+import { toast, ToastContainer } from "react-toastify";
 
 function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
-  const [isSure, setIsSure] = useState(false);
-  const [countdown, setCountdown] = useState(300); // 5 minutes in seconds
+  const [countdown, setCountdown] = useState(5*60); // 5 minutes in seconds
+  const [capVal, setCapVal] = useState(null);
+
+  //activate for recaptcha
+  const handleRecaptchaChange = (value) => {
+    setCapVal(value);
+    console.log("reCAPTCHA value:", value);
+  };
+  const [isRecaptchaLoaded, setIsRecaptchaLoaded] = useState(false);
+
+  useEffect(() => {
+  
+    // Simulate loading delay
+    setTimeout(() => {
+      setIsRecaptchaLoaded(true);
+    }, 2000); // Adjust delay as needed
+  }, []);
 
   useEffect(() => {
     let countdownInterval;
@@ -24,39 +41,45 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
 
   useEffect(() => {
     // Close the accordion when the countdown reaches 0
-    if (countdown === 0) {
-      onToggle(index);
-      setIsSure(false);
+    if (countdown === 0 && expanded) {
+      onToggle(false);
+      toast.warn("Booking Cancelled");
+      toast.error("Booking this item is blocked please try another item");
+      
     }
   }, [countdown, index, onToggle]);
 
-  const handleButtonClick = () => {
-    setIsSure(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsSure(false);
-  };
-
-  const handleConfirmAction = () => {
-    // Only proceed with the action if the state is still true
-    if (isSure) {
-      onToggle(index);
-      onDistribute(index);
-      setIsSure(false); // Reset the state after the action is performed
+  const handleButtonClick = async () => {
+    if (!capVal) {
+      console.error("reCAPTCHA validation failed");
+      // Simulating server-side verification delay
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      return;
     }
+    onToggle(index);
+    onDistribute(index);
+    toast.success("Distribution successful!");
   };
+
+  // const handleConfirmAction = () => {
+  //   // Only proceed with the action if the state is still true
+  //   if (isSure) {
+  //     onToggle(index);
+  //     onDistribute(index);
+  //     setIsSure(false); // Reset the state after the action is performed
+  //   }
+  // };
 
   const containerStyle = {
     backgroundColor: "bg-white",
-    shadow: "shadow-md",
+    shadow: "shadow-md", 
   };
 
   return (
     <div
-      className={`md:w-1/2 md:p-6 relative transition-all duration-300 ease-in-out rounded-md ${
-        expanded ? "bg-green-100" : ""
-      } ${containerStyle.backgroundColor} ${containerStyle.shadow} ${"sm:p-4"}`}
+      className={`${expanded ? "bg-green-200" : ""}${
+        containerStyle.backgroundColor
+      } ${containerStyle.shadow} ${"sm:p-3"}`}
     >
       <button
         className="flex items-center justify-between w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-0 relative"
@@ -84,7 +107,7 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
         </svg>
       </button>
       {expanded && (
-        <div className="mt-3 prose max-h-96 overflow-y-auto opacity-100 transition-all duration-300 ease-in-out rounded-md">
+        <div>
           {/* Content of the accordion item */}
           <p>Name: {item.name}</p>
           <p>Location: {item.location}</p>
@@ -97,19 +120,40 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
               Booked for: {Math.floor(countdown / 60)}:{countdown % 60} minutes
             </p>
           </div>
+          <div>
+            {isRecaptchaLoaded ? (
+              <ReCAPTCHA
+                sitekey="6LeVh08pAAAAAGFv8aKqbVg0H5X5FpZi5XhZPHUo"
+                onChange={handleRecaptchaChange}
+              />
+            ) : (
+            <div className="recaptcha-loading">
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading reCAPTCHA...</span>
+              </div>
+            </div>
+           )} 
+          </div>
 
-          <div className="flex justify-center mt-4">
-            <Button text={"I'll distribute"} onClick={handleButtonClick} />
+          <ToastContainer />
+          <div className="flex justify-center p-4">
+            <button 
+            className="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+              disabled={!capVal}    
+              onClick={() => {
+                toast.success("Alerted Donor - Pending Distribution");
+                if (capVal) {
+                handleButtonClick();
+                } else {
+                console.error("reCAPTCHA validation failed");
+                
+                }
+              }}
+              
+            >I'll distribute</button>
           </div>
         </div>
       )}
-
-      <Confirmation
-        isOpen={isSure}
-        onClose={handleCloseModal}
-        onConfirm={handleConfirmAction}
-        message="Are you sure you want to distribute?"
-      />
     </div>
   );
 }

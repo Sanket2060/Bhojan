@@ -4,20 +4,22 @@ import Accomplishment from "../components/Accomplishment.jsx";
 import Accordion from "../components/Accordion.jsx";
 import PendingDistributions from "../components/PendingDistributions";
 import WelcomeBack from "../components/WelcomeBack.jsx";
+//icons
 import { MdOutlineDashboard } from "react-icons/md";
-import { RiSettings4Line } from "react-icons/ri";
+import { FiLogOut } from 'react-icons/fi';
 import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiFolder } from "react-icons/fi";
+
 // import { useNavigate } from "react-router-dom";
 
 const Volunteer = () => {
-//   const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
-// const handleLogout = () => {
-//   // logout
-//   navigate("/login"); 
-// };
+  // const handleLogout = () => {
+  //   // logout
+  //   navigate("/login");
+  // };
 
   const SidebarMenu = [
     { name: "Homepage", link: "/landingpage", icon: MdOutlineDashboard },
@@ -35,7 +37,12 @@ const Volunteer = () => {
       icon: AiOutlineHeart,
       margin: true,
     },
-    { name: "Setting", link: "/", icon: RiSettings4Line, margin: true },
+    {
+      name: "Logout",
+      link: "/",
+      icon: FiLogOut,
+      margin: true,
+    },
   ];
   const userName = "John";
   const [accordionItems, setAccordionItems] = useState([
@@ -108,32 +115,38 @@ const Volunteer = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="grid grid-cols-1 md:grid-cols-[auto,1fr]">
+      
       {/* Sidebar */}
-      
-        <Sidebar menus={SidebarMenu} />
-      
-        <div className="justify-center pt-10 m-3 ">
-          
-          <WelcomeBack userName={userName} />
 
-          {pendingItems.length > 0 && (
-            <div ref={pendingListingsRef} id="PendingListings" className="mt-10">
-              <PendingDistributions
-                pendingItems={pendingItems}
-                onCancelDistribution={handleCancelDistribution}
-              />
-            </div>
-          )}
-          <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-4">Active Listings</h1>
-            <Accordion items={accordionItems} onDistribute={handleDistribute} />
-          </div>
-          <div id="Accomplishment" className="justify-center pt-10 w-full">
-            <Accomplishment totalFoodSaved={30} ourCommunity={60} totalPeopleServed={90} />
-          </div>
-        </div>
+      <Sidebar menus={SidebarMenu} />
+
       
+      <div className="md:col-span-1 justify-center pt-10 m-3">
+        <WelcomeBack userName={userName} />
+        {pendingItems.length > 0 && (
+          <div ref={pendingListingsRef} id="PendingListings" className="mt-10">
+            <PendingDistributions
+              pendingItems={pendingItems}
+              onCancelDistribution={handleCancelDistribution}
+            />
+          </div>
+        )}
+      <div className="container col-span-2 mx-auto p-4">
+          <h1 className="text-3xl font-bold mb-4">Active Listings</h1>
+          <Accordion items={accordionItems} onDistribute={handleDistribute} />
+        </div>
+        <div id="Accomplishment" className="justify-center pt-10 w-full">
+        <Accomplishment
+            totalFoodSaved={500}
+            ourCommunity={1}
+            totalPeopleServed={800}
+            totalFoodSavedText="Total Food Saved"
+            ourCommunityText="Ranking"
+            totalPeopleServedText="Total People Served"
+          />
+        </div>
+      </div>
     </div>
   );
 };
