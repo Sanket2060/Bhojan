@@ -7,6 +7,7 @@ import LandingPage from "./pages/LandingPage";
 import AboutUs from "./pages/AboutUs";
 import Leaderboard from "./pages/Leaderboard";
 import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </div>
   );
