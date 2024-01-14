@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import AccordionItem from "./AccordionItem";
 
+
 function Accordion({ items, onDistribute }) {
   const [expandedItem, setExpandedItem] = useState(null);
 
@@ -9,10 +10,11 @@ function Accordion({ items, onDistribute }) {
     setExpandedItem((prevExpandedItem) =>
       prevExpandedItem === index ? null : index
     );
+
   };
 
   return (
-    <div className="relative bg-white shadow-md rounded-md p-4 mb-4 md:flex md:flex-wrap">
+    <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-4 col-span-2 lg:col-span-1" >
       {items.length === 0 ? (
         <p className="text-gray-500">No active listings.</p>
       ) : (
@@ -24,6 +26,8 @@ function Accordion({ items, onDistribute }) {
             expanded={expandedItem === index}
             onToggle={handleToggle}
             onDistribute={onDistribute}
+            ariaControls={`accordion-item-${index}`}
+            ariaExpanded={expandedItem === index}
           />
         ))
       )}

@@ -93,9 +93,14 @@ const LandingPage = () => {
       
       <LandingpageLeaderboard topContributors={topContributorsData} />
       <div className="p-20 bg-gray-100"></div>
-      <Accomplishment totalFoodSaved={128}
-      totalPeopleServed={120}
-      ourCommunity={30}/>
+      <Accomplishment
+            totalFoodSaved={500}
+            ourCommunity={200}
+            totalPeopleServed={800}
+            totalFoodSavedText="Total Food Saved"
+            ourCommunityText="Our Community"
+            totalPeopleServedText="Total People Served"
+          />
       <div className="flex flex-col bg-gray-100  pb-10 ">
        
       <div className="wrapper pb-10 mt-28 lg:mt-32 mb-8 md:font-extrabold font-bold lg:text-7xl md:text-6xl text-5xl flex flex-col items-start">

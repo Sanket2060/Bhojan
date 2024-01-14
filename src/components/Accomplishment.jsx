@@ -7,6 +7,9 @@ import { FaPeopleCarry } from "react-icons/fa";
   totalFoodSaved: initialTotalFoodSaved,
   ourCommunity: initialOurCommunity,
   totalPeopleServed: initialTotalPeopleServed,
+  totalFoodSavedText,
+  ourCommunityText,
+  totalPeopleServedText,
 }) => {
   const [totalFoodSaved, setTotalFoodSaved] = useState(0);
   const [ourCommunity, setOurCommunity] = useState(0);
@@ -67,21 +70,21 @@ import { FaPeopleCarry } from "react-icons/fa";
             <div className="self-center p-5">
               <PiBowlFoodFill size={52} />
             </div>
-            <p>Total Food Saved</p>
+            <p>{totalFoodSavedText}</p>
             <p className="text-lg font-bold">{totalFoodSaved}</p>
           </div>
           <div className="flex flex-col">
             <div className="self-center p-5">
               <BsPeopleFill size={52} />
             </div>
-            <p>Our Community</p>
+            <p>{ourCommunityText}</p>
             <p className="text-lg font-bold">{ourCommunity}</p>
           </div>
           <div className="flex flex-col">
             <div className="self-center p-5">
               <FaPeopleCarry size={52} />
             </div>
-            <p>Total People Served</p>
+            <p>{totalPeopleServedText}</p>
             <p className="text-lg font-bold">{totalPeopleServed}</p>
           </div>
         </div>
