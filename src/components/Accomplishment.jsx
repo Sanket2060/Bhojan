@@ -7,6 +7,9 @@ import { FaPeopleCarry } from "react-icons/fa";
   totalFoodSaved: initialTotalFoodSaved,
   ourCommunity: initialOurCommunity,
   totalPeopleServed: initialTotalPeopleServed,
+  totalFoodSavedText,
+  ourCommunityText,
+  totalPeopleServedText,
 }) => {
   const [totalFoodSaved, setTotalFoodSaved] = useState(0);
   const [ourCommunity, setOurCommunity] = useState(0);
@@ -22,7 +25,7 @@ import { FaPeopleCarry } from "react-icons/fa";
           observer.unobserve(intersectionRef.current);
         }
       },
-      { threshold: 0.5 } // Adjust the threshold as needed
+      { threshold: 0.9 } // Adjust the threshold as needed
     );
 
     observer.observe(intersectionRef.current);
@@ -33,7 +36,7 @@ import { FaPeopleCarry } from "react-icons/fa";
   }, []);
 
   const animateValues = () => {
-    const animationDuration = 500; // 0.5 seconds
+    const animationDuration = 1000; // 0.5 seconds
     const startAnimationTime = Date.now();
 
     const animate = () => {
@@ -56,29 +59,32 @@ import { FaPeopleCarry } from "react-icons/fa";
   };
 
   return (
-    <div className="text-center bg-[#332163] text-white " ref={intersectionRef}>
+    <div className="text-center bgo-[#332163] bg-gradient-to-l from-[#ffafbd] to-[#ffc3a0] 
+     text-[#332163]" ref={intersectionRef}>
       <div className="p-10">
-        <h2 className="text-3xl font-bold mb-4 pb-10 ">Accomplishments</h2>
+        {//<h2 className="text-3xl font-bold mb-4 pb-10 ">Accomplishments</h2>
+        }
+        
         <div className="lg:flex justify-around">
           <div className="flex flex-col">
             <div className="self-center p-5">
               <PiBowlFoodFill size={52} />
             </div>
-            <p>Total Food Saved</p>
+            <p>{totalFoodSavedText}</p>
             <p className="text-lg font-bold">{totalFoodSaved}</p>
           </div>
           <div className="flex flex-col">
             <div className="self-center p-5">
               <BsPeopleFill size={52} />
             </div>
-            <p>Our Community</p>
+            <p>{ourCommunityText}</p>
             <p className="text-lg font-bold">{ourCommunity}</p>
           </div>
           <div className="flex flex-col">
             <div className="self-center p-5">
               <FaPeopleCarry size={52} />
             </div>
-            <p>Total People Served</p>
+            <p>{totalPeopleServedText}</p>
             <p className="text-lg font-bold">{totalPeopleServed}</p>
           </div>
         </div>
