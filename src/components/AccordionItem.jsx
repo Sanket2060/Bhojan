@@ -60,6 +60,9 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
     onDistribute(index);
     toast.success("Distribution successful!");
   };
+  const handleViewDetailsClick = () => {
+    setAccordionExpanded(!accordionExpanded);
+  };
 
   // const handleConfirmAction = () => {
   //   // Only proceed with the action if the state is still true
@@ -77,7 +80,7 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
 
   return (
     <div
-      className={`${expanded ? "bg-green-200" : ""}${
+      className={`${expanded ? "bg-green-100" : ""}${
         containerStyle.backgroundColor
       } ${containerStyle.shadow} ${"sm:p-3"}`}
     >
@@ -85,10 +88,10 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
         className="flex items-center justify-between w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-0 relative"
         onClick={() => onToggle(index)}
       >
-        <span className="text-lg font-medium text-gray-900">
+        <span className="text-lg font-medium text-gray-900 ">
           {item.title}{" "}
-          <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
-            {item.plates} Plates
+          <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs ">
+            Click to Cancel
           </span>
         </span>
         <svg
@@ -107,13 +110,12 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
         </svg>
       </button>
       {expanded && (
-        <div>
+        <div className="ml-4">
           {/* Content of the accordion item */}
           <p>Name: {item.name}</p>
           <p>Location: {item.location}</p>
           <p>Number: {item.number}</p>
           <p>Closing Time: {item.closingTime}</p>
-
           <div className="flex justify-between items-center text-xs text-gray-500 mt-2 p-2">
             <p>Listed on: {item.listedOn}</p>
             <p>

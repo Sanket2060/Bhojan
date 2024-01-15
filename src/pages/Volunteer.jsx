@@ -1,9 +1,11 @@
 import React, { useState, useRef } from "react";
 import { Sidebar } from "../components/Sidebar.jsx";
 import Accomplishment from "../components/Accomplishment.jsx";
-import Accordion from "../components/Accordion.jsx";
+// import Accordion from "../components/Accordion.jsx";
 import PendingDistributions from "../components/PendingDistributions";
-import WelcomeBack from "../components/WelcomeBack.jsx";
+import WelcomeBack from "../components/WelcomeBack";
+import Footer from "../components/Footer";
+import Listing from "../components/Listing";
 //icons
 import { MdOutlineDashboard } from "react-icons/md";
 import { FiLogOut } from 'react-icons/fi';
@@ -91,7 +93,11 @@ const Volunteer = () => {
   ]);
 
   const [pendingItems, setPendingItems] = useState([]);
-
+  const ActiveListings = [
+    { companyName: "Contributor 1", location: "Location 1" },
+    { companyName: "Contributor 2", location: "Location 2" },
+    { companyName: "Contributor 3", location: "Location 3" },
+  ];
   const handleCancelDistribution = (index) => {
     const canceledItem = pendingItems[index];
 
@@ -107,12 +113,20 @@ const Volunteer = () => {
   const handleDistribute = (index) => {
     const selectedOpportunity = accordionItems[index];
     setAccordionItems((prevItems) => prevItems.filter((_, i) => i !== index));
-
-    setPendingItems([...pendingItems, selectedOpportunity]);
+    setPendingItems([...pendingItems, distributedItem]);
+    
     // Scroll to the "Pending Listings" section
     pendingListingsRef.current.scrollIntoView({ behavior: "smooth" });
     handleToggle(index);
+    const distributedItem = {
+      ...selectedOpportunity,
+      distributedBy: userName,
+      distributionTime: new Date().toLocaleString(),
+    };
   };
+ 
+
+  
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[auto,1fr]">
@@ -126,15 +140,17 @@ const Volunteer = () => {
         <WelcomeBack userName={userName} />
         {pendingItems.length > 0 && (
           <div ref={pendingListingsRef} id="PendingListings" className="mt-10">
-            <PendingDistributions
+           <PendingDistributions
               pendingItems={pendingItems}
               onCancelDistribution={handleCancelDistribution}
             />
           </div>
         )}
+        
       <div className="container col-span-2 mx-auto p-4">
-          <h1 className="text-3xl font-bold mb-4">Active Listings</h1>
-          <Accordion items={accordionItems} onDistribute={handleDistribute} />
+          <h1 className="md:font-extrabold font-bold lg:text-3xl md:text-2xl  text-xl  relative  mx-auto text-[#261750] self-center ">Active Listings</h1>
+          <Listing ActiveListings={ActiveListings} />
+          {/* <Accordion items={accordionItems} onDistribute={handleDistribute} /> */}
         </div>
         <div id="Accomplishment" className="justify-center pt-10 w-full">
         <Accomplishment
@@ -145,7 +161,41 @@ const Volunteer = () => {
             ourCommunityText="Ranking"
             totalPeopleServedText="Total People Served"
           />
+           <div>
+        <div className="pb-12"></div>
+          <h2 className="text-5xl font-semibold mb-4 text-[#ff4c70]">
+            How it Works
+          </h2>
+          <p className="text-xl text-gray-700">
+            How To Distribute:
+            </p>
+          <ol className="text-left mt-6 list-decimal ml-4 text-lg">
+            <li className="mb-3">
+              <span className="font-semibold text-[#261750]">Book:</span>{" "}
+              Expand the food item you want to distribute. The item will be reserved for you for 5 minutes once you open. Failing to confirm will lead to ban on item
+            </li>
+            <li className="mb-3">
+              <span className="font-semibold text-[#261750]">Confirm:</span> Once
+              booked, contact the distributer and click on "i'll Distribute" 
+            </li>
+          <li className="mb-3">
+            <span className="font-semibold text-[#261750]">Deliver:</span>{" "}
+            pick up the excess food from given location
+              and distribute it to those in need.
+          </li>
+        </ol>
+        <p className=" mt-6 text-gray-700 text-xl">
+          Join us in the mission to save food from going to waste and make a
+          positive impact on the lives of those who need it the most!
+        </p>
+        
         </div>
+        <div className="relative inset-x-0 bottom-0 w-full h-16 ">
+        <div className="pb-20"></div>
+        <Footer />
+      </div>
+        </div>
+       
       </div>
     </div>
   );
