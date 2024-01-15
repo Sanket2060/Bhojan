@@ -26,17 +26,10 @@ const LandingPage = () => {
     { companyName: "Company 9", location: "Location 9" },
     { companyName: "Company 10", location: "Location 10" },
   ];
+
   return (
     <>
       <Navbar />
-      {
-        // <div className="overflow-hidden hidden lg:block">
-        //   <img
-        //     className="absolute top-[-10%] right-[-20%] z-[-10] rounded-tl-[90%]"
-        //     src={Image}
-        //   />
-        // </div>
-      }
      <div className="overflow-x-clip hidden lg:block">
       <div className="relative ">
         <img className="absolute z-[-10] lg:w-9/12  lg:right-[-25%]  lg:top-[calc(42rem-0.4*100vw)] "
