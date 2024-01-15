@@ -2,15 +2,16 @@ import React from "react";
 
 const WelcomeBack = ({ userName }) => {
   return (
-    <div className="text-center md:font-extrabold font-bold lg:text-3xl md:text-2xl  text-xl  relative  bg-gray-100  w-[100%]  rounded-tr-[40%]   rounded-tl-[50%] lg:rounded-tr-[50%] lg:rounded-tl-[90%]  ">
-         
-    <div className="mx-auto text-[#261750] self-center ">
-      Welcome Back,
+    <div className="welcome-back-container">
+      <h1 className="mb-8 text-4xl font-bold tracking-tight text-center text-shadow-md md:text-5xl">
+        Welcome Back, {userName}!
+      </h1>
+      <div className="welcome-back-wave">
+        <svg width="100%" height="50px" viewBox="0 0 100 50">
+          <path fill="royalblue" d="M0 40h100v10H0z" className="wave-anim" />
+        </svg>
+      </div>
     </div>
-    <div className="mx-auto text-[#ff4c70] self-center">{userName}</div>
- 
-</div>
-
   );
 };
 
