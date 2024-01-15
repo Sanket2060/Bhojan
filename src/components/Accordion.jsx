@@ -16,7 +16,7 @@ function Accordion({ items, onDistribute }) {
   return (
     <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-4 col-span-2 lg:col-span-1" >
       {items.length === 0 ? (
-        <p className="md:font-extrabold font-bold lg:text-3xl md:text-2xl  text-xl  relative mx-auto text-[#ff4c70] self-center ">No active listings.</p>
+        <p className="text-gray-500">No active listings.</p>
       ) : (
         items.map((item, index) => (
           <AccordionItem
