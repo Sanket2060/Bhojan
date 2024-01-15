@@ -1,86 +1,118 @@
+import React, { useState, useRef } from "react";
+import User from "../assets/Catring.jpg";
+import Accomplishment from "../components/Accomplishment.jsx";
+import AccordionItem from "./AccordionItem"; // Import AccordionItem component
+import PendingDistributions from "../components/PendingDistributions";
+import WelcomeBack from "../components/WelcomeBack";
+import Footer from "../components/Footer";
 
-// //template(idea) for (if images are used)
-// //flawed (diffuculty in implementing timer w/o accordion)
+const Listing = ({ ActiveListings, onViewDetailsClick }) => {
+  const [selectedContributor, setSelectedContributor] = useState(null);
+  const [expandedItem, setExpandedItem] = useState(null);
+  const [pendingItems, setPendingItems] = useState([]);
 
-// import React, { useState } from "react";
-// import PropTypes from "prop-types";
-// import Confirmation from "./Confirmation"; 
+  const handleCancelDistribution = (index) => {
+    const canceledItem = pendingItems[index];
 
-// const Listing = ({ items, onDistributeClick }) => {
-//   const [confirmationOpen, setConfirmationOpen] = useState(false);
-//   const [selectedItem, setSelectedItem] = useState(null);
+    // Move the canceled item back to active listings
+    setPendingItems((prevItems) => [...prevItems, canceledItem]);
 
-//   const handleDistributeClick = (item) => {
-//     setSelectedItem(item);
-//     setConfirmationOpen(true);
-//   };
+    // Remove the item from pending distribution
+    setPendingItems((prevItems) => prevItems.filter((_, i) => i !== index));
+  };
 
-//   const handleConfirmationClose = () => {
-//     setConfirmationOpen(false);
-//     setSelectedItem(null);
-//   };
+  const pendingListingsRef = useRef(null);
 
-//   const handleConfirmationConfirm = () => {
-//     onDistributeClick(selectedItem);
-//     handleConfirmationClose();
-//   };
+  const handleDistribute = (index) => {
+    const selectedOpportunity = ActiveListings[index];
 
-//   return (
-//     <div>
-//       {items.map((item, index) => (
-//         <div key={index} className="flex flex-col md:flex-row my-8 relative">
-//           <div
-//             className={`${
-//               index % 2 === 0 ? "border-r border-gray-300" : "border-l border-gray-300"
-//             } absolute h-full top-0 left-1/2 transform -translate-x-1/2`}
-//           ></div>
+    // Create a new distributed item
+    const distributedItem = {
+      ...selectedOpportunity,
+      distributedBy: "userName", // Replace with the actual username
+      distributionTime: new Date().toLocaleString(),
+    };
+ const updatedActiveListings = ActiveListings.filter((_, i) => i !== index);
+    // Remove the distributed item from active listings
+    setExpandedItem(null);
 
-//           <div className={`md:w-1/2 ${index % 2 === 0 ? "md:mr-4" : "md:ml-4"} bg-gray-100 p-4`}>
-//             <img
-//               src={item.image}
-//               alt={item.title}
-//               className="w-full h-auto"
-//             />
-//             <h2 className="text-2xl font-bold mb-2">{item.title}</h2>
-//             <p className="text-gray-700">{item.description}</p>
-//             <p className="text-gray-700">Location: {item.location}</p>
-//             <p className="text-gray-700">Listed On: {item.listedOn}</p>
-//             <p className="text-gray-700">Plates: {item.plates}</p>
-//           </div>
+    // Add the item to pending distribution
+    setPendingItems((prevItems) => [...prevItems, distributedItem]);
 
-//           {/* "I'll distribute" button at the bottom */}
-//           <button
-//             onClick={() => handleDistributeClick(item)}
-//             className="bg-blue-500 text-white px-4 py-2 mt-4 w-full md:w-auto"
-//           >
-//             I'll distribute
-//           </button>
-//         </div>
-//       ))}
+    // Scroll to the "Pending Listings" section
+    pendingListingsRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
-//       {/* Confirmation dialog */}
-//       <Confirmation
-//         isOpen={confirmationOpen}
-//         onClose={handleConfirmationClose}
-//         onConfirm={handleConfirmationConfirm}
-//         message="Are you sure you want to distribute this item?"
-//       />
-//     </div>
-//   );
-// };
+  const handleToggle = (index) => {
+    setExpandedItem((prevExpandedItem) =>
+      prevExpandedItem === index ? null : index
+    );
+  };
 
-// Listing.propTypes = {
-//   items: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       title: PropTypes.string.isRequired,
-//       description: PropTypes.string.isRequired,
-//       image: PropTypes.string.isRequired,
-//       location: PropTypes.string.isRequired,
-//       listedOn: PropTypes.string.isRequired,
-//       plates: PropTypes.string.isRequired,
-//     })
-//   ).isRequired,
-//   onDistributeClick: PropTypes.func.isRequired,
-// };
+  return (
+    <div className="flex flex-col bg-gray-100 pt-10">
+      {ActiveListings.map((contributor, index) => (
+        <div
+          key={index}
+          className={`wrapper flex flex-col items-center lg:flex-row justify-between ${
+            index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+          }`}
+          style={{
+            width: "100%",
+          }}
+        >
+          <div className="lg:w-[32rem] w-[100%]">
+            <div className="border-orange-300 border-4 rounded-full w-[100%] h-[100%] relative left-0">
+              <img
+                className="object-cover rounded-full"
+                src={User}
+                alt="Contributor"
+              />
+            </div>
+          </div>
+          <div className={`lg:w-8/12 ${index % 2 === 0 ? "lg:text-left" : "lg:text-right"}`}>
+            {selectedContributor === index ? (
+              <AccordionItem
+                key={index}
+                item={contributor}
+                index={index}
+                expanded={true} // Expanded by default
+                onToggle={() => setSelectedContributor(null)} // Close on click
+                onDistribute={() => handleDistribute(index)} // Implement your distribute function
+              />
+            ) : (
+              <div className="p-3">
+                <div className="text-2xl text-[#ff4c70] font-bold">
+                  {contributor.companyName}
+                </div>
+                <div className="text-xl text-grey-600">
+                  {contributor.location}
+                </div>
+                <button
+                  className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md"
+                  onClick={() => {
+                    setSelectedContributor(index);
+                    onViewDetailsClick(contributor); // Pass the contributor details to the parent component
+                  }}
+                >
+                  View Details
+                </button>
+                <p className="text-xs">This will book the item for 5 mins.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+      {pendingItems.length > 0 && (
+        <div ref={pendingListingsRef} id="PendingListings" className="mt-10">
+          <PendingDistributions
+            pendingItems={pendingItems}
+            onCancelDistribution={handleCancelDistribution}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
 
-// export default Listing;
+export default Listing;
