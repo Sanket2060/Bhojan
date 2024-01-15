@@ -5,7 +5,6 @@ import Accomplishment from "../components/Accomplishment.jsx";
 import WelcomeBack from "../components/WelcomeBack.jsx";
 import DonorForm from "../components/DonorForm.jsx";
 import PendingDistributions from "../components/PendingDistributions";
-import Footer from "../components/Footer";
 
 //icons
 import { MdOutlineDashboard } from "react-icons/md";
@@ -115,45 +114,9 @@ const Donor = () => {
             ourCommunityText="Ranking"
             totalPeopleServedText="Total People Served"
           />
-           <div>
-        <div className="pb-12"></div>
-          <h2 className="text-5xl font-semibold mb-4 text-[#ff4c70]">
-            How it Works
-          </h2>
-          <p className="text-xl text-gray-700">
-            How To Donate:
-            </p>
-          <ol className="text-left mt-6 list-decimal ml-4 text-lg">
-            <li className="mb-3">
-              <span className="font-semibold text-[#261750]">Place Listing:</span>{" "}
-              Fill the distribution form, and click on "Post Listing"
-              </li>
-            <li className="mb-3">
-              <span className="font-semibold text-[#261750]">Confirm:</span>
-              Interested Volunteer will contact you form confirmation
-            </li>
-          <li className="mb-3">
-            <span className="font-semibold text-[#261750]">Give Away:</span>{" "}
-            Volunteer will pick up the excess food from your location
-              and distribute it to those in need.
-          </li>
-        </ol>
-        <p className=" mt-6 text-gray-700 text-xl">
-          Join us in the mission to save food from going to waste and make a
-          positive impact on the lives of those who need it the most!
-        </p>
-        
         </div>
-        
-        </div>
-        <div className="relative inset-x-0 bottom-0 w-full h-16 ">
-        <div className="pb-20"></div>
-        <Footer />
       </div>
-      </div>
-     
     </div>
-    
   );
 };
 export default Donor;
