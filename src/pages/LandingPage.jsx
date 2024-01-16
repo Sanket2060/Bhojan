@@ -7,7 +7,7 @@ import Accomplishment from "../components/Accomplishment";
 import FoodDonation from "../assets/FoodDonation.jpg";
 import AutoScrollPartners from "../components/PartnerArea";
 import LandingpageLeaderboard from "../components/LandingpageLeaderboard";
-
+import { Link } from "react-router-dom";
 const LandingPage = () => {
   const topContributorsData = [
     { companyName: "Top Contributor 1", location: "Location 1" },

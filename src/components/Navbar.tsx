@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RiMenu3Line } from "react-icons/ri";
 import Button from "./Button";
-
+import { Link } from "react-router-dom";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const handleMenuToggle = () => {
@@ -51,9 +51,9 @@ const Navbar = () => {
             >
               <RiMenu3Line size={32} className="lg:hidden font:bold" />
             </button>
-            <button className="align-middle hidden lg:block select-none  py-3 px-10 text-center  transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl  bg-[#261750] text-white  shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full shadow-xl ring-1 ring-slate-900/5">
+          <Link to='/login'> <button className="align-middle hidden lg:block select-none  py-3 px-10 text-center  transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl  bg-[#261750] text-white  shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full shadow-xl ring-1 ring-slate-900/5">
               Login
-            </button>
+            </button></Link>
           </a>
         </li>
       </ul>
@@ -76,9 +76,9 @@ const Navbar = () => {
               </a>
             </li>
             <li className="self-center mt-[10vh]">
-              <button className="align-middle  select-none  py-3 px-14 text-center  transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl  bg-[#261750] text-white  shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full shadow-xl ring-1 ring-slate-900/5">
+            <Link to='/login'>  <button className="align-middle  select-none  py-3 px-14 text-center  transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl  bg-[#261750] text-white  shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full shadow-xl ring-1 ring-slate-900/5">
                 Login
-              </button>
+              </button></Link>
             </li>
           </ul>
           <div className="overflow-hidden pt-10 pl-10">
