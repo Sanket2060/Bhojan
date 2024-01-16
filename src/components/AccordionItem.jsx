@@ -6,7 +6,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { toast, ToastContainer } from "react-toastify";
 
 function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
-  const [countdown, setCountdown] = useState(5*60); // 5 minutes in seconds
+  const [countdown, setCountdown] = useState(5 * 60); // 5 minutes in seconds
   const [capVal, setCapVal] = useState(null);
 
   //activate for recaptcha
@@ -17,7 +17,6 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
   const [isRecaptchaLoaded, setIsRecaptchaLoaded] = useState(false);
 
   useEffect(() => {
-  
     // Simulate loading delay
     setTimeout(() => {
       setIsRecaptchaLoaded(true);
@@ -32,6 +31,7 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
       countdownInterval = setInterval(() => {
         setCountdown((prevCountdown) => prevCountdown - 1);
       }, 1000);
+      toast.success("booked for 5 min");
     }
 
     return () => {
@@ -45,7 +45,6 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
       onToggle(false);
       toast.warn("Booking Cancelled");
       toast.error("Booking this item is blocked please try another item");
-      
     }
   }, [countdown, index, onToggle]);
 
@@ -72,17 +71,17 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
 
   const containerStyle = {
     backgroundColor: "bg-white",
-    shadow: "shadow-md", 
+    shadow: "shadow-md",
   };
 
   return (
     <div
-      className={`${expanded ? "bg-green-200" : ""}${
+      className={`${expanded ? "bg-green-50 p-2 overflow-hidden" : ""}${
         containerStyle.backgroundColor
-      } ${containerStyle.shadow} ${"sm:p-3"}`}
+      } ${containerStyle.shadow} ${""}`}
     >
       <button
-        className="flex items-center justify-between w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-0 relative"
+        className="flex items-center justify-between w-full py-3 px-4 bg-gray-50 hover:bg-gray-200 focus:outline-none focus:ring-0 relative"
         onClick={() => onToggle(index)}
       >
         <span className="text-lg font-medium text-gray-900">
@@ -107,7 +106,7 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
         </svg>
       </button>
       {expanded && (
-        <div>
+        <div className="p-4 ml-4">
           {/* Content of the accordion item */}
           <p>Name: {item.name}</p>
           <p>Location: {item.location}</p>
@@ -120,37 +119,36 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute }) {
               Booked for: {Math.floor(countdown / 60)}:{countdown % 60} minutes
             </p>
           </div>
-          <div>
+          <div className="flex flex-col sm:flex-row justify-between items-center">
             {isRecaptchaLoaded ? (
               <ReCAPTCHA
                 sitekey="6LeVh08pAAAAAGFv8aKqbVg0H5X5FpZi5XhZPHUo"
                 onChange={handleRecaptchaChange}
               />
             ) : (
-            <div className="recaptcha-loading">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading reCAPTCHA...</span>
+              <div className="recaptcha-loading">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading reCAPTCHA...</span>
+                </div>
               </div>
-            </div>
-           )} 
-          </div>
+            )}
 
-          <ToastContainer />
-          <div className="flex justify-center p-4">
-            <button 
-            className="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-              disabled={!capVal}    
-              onClick={() => {
-                toast.success("Alerted Donor - Pending Distribution");
-                if (capVal) {
-                handleButtonClick();
-                } else {
-                console.error("reCAPTCHA validation failed");
-                
-                }
-              }}
-              
-            >I'll distribute</button>
+            <div className="items-end mt-4 sm:mt-0">
+              <button
+                className="bg-blue-500 text-white py-2 px-4 sm:py-4 sm:px-7 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+                disabled={!capVal}
+                onClick={() => {
+                  toast.success("Alerted Donor - Pending Distribution");
+                  if (capVal) {
+                    handleButtonClick();
+                  } else {
+                    console.error("reCAPTCHA validation failed");
+                  }
+                }}
+              >
+                I'll distribute
+              </button>
+            </div>
           </div>
         </div>
       )}

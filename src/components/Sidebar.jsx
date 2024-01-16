@@ -27,7 +27,7 @@ export const Sidebar = ({ menus }) => {
   }, []);
 
   return (
-    <section className="flex gap-6">
+    <section>
       {isMobile && (
         <div className="fixed top-0 right-0 p-3">
           <HiMenuAlt3
@@ -37,6 +37,7 @@ export const Sidebar = ({ menus }) => {
           />
         </div>
       )}
+
       {isMobile && open && (
         <div className="fixed inset-0 bg-[#ddd4d4] z-50 p-5 font-semibold text-xl overflow-y-auto">
           <div className="py-3 flex justify-between items-center">
@@ -47,7 +48,11 @@ export const Sidebar = ({ menus }) => {
               onClick={handleToggle}
             />
           </div>
-          <div className="mt-4 flex flex-col gap-4 justify-end right-0">
+          <div
+            className={`mt-4 flex flex-col gap-4 justify-end right-0 ${
+              !open && "hidden"
+            }`}
+          >
             {menus?.map((menu, i) => (
               <Link
                 to={menu?.link}
@@ -70,7 +75,7 @@ export const Sidebar = ({ menus }) => {
         <div
           className={`min-h-screen ${
             open ? "w-72 bg-[#ddd4d4]" : "w-16"
-          } duration-500 px-4 flex flex-col font-semibold p-1 overflow-y-auto`}
+          } duration-500 px-4 flex flex-col font-semibold p-1 overflow-y-auto fixed`}
         >
           <div className="py-3 flex justify-between items-center">
             <p
@@ -102,9 +107,7 @@ export const Sidebar = ({ menus }) => {
                 >
                   <div>{React.createElement(menu.icon, { size: "20" })}</div>
                   <h2
-                    className={`whitespace-pre  ${
-                      !open && "translate-x-28"
-                    }`}
+                    className={`whitespace-pre  ${!open && "translate-x-28"}`}
                   >
                     {menu?.name}
                   </h2>
