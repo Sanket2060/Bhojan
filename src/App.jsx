@@ -10,25 +10,15 @@ import AboutUs from "./pages/AboutUs";
 import Leaderboard from "./pages/Leaderboard";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import OTP from "./pages/OTP";
+import Register from "./pages/Register";
 
 const App = () => {
   return (
     <div>
-      {/* ToastContainer for Toastify */}
-      <ToastContainer />
-
-      {/* Routes */}
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/landingpage" element={<LandingPage/>}/>
-        <Route path="/donor" element={<Donor />} />
-        <Route path="/volunteer" element={<Volunteer />} />
-        <Route path="*" element={<NotFound />} />
-        <Route path="/aboutus" element={<AboutUs />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
+      <Register/>
+      
     </div>
   );
 };
