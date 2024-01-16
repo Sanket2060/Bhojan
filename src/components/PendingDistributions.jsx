@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
-import Confirmation from "./Confirmation"; 
-import { toast, ToastContainer } from 'react-toastify';
+import Confirmation from "./Confirmation";
+import { toast, ToastContainer } from "react-toastify";
 
 const PendingDistributions = ({ pendingItems, onCancelDistribution }) => {
   const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
@@ -14,7 +14,7 @@ const PendingDistributions = ({ pendingItems, onCancelDistribution }) => {
   const onConfirm = () => {
     const canceledItem = pendingItems[canceledItemIndex];
     onCancelDistribution(canceledItemIndex);
-    toast.warning(`Distribution Cancelled`);
+    toast.warning("Distribution Cancelled");
     closeConfirmation();
   };
   const closeConfirmation = () => {
@@ -53,12 +53,12 @@ const PendingDistributions = ({ pendingItems, onCancelDistribution }) => {
           ))}
         </div>
       )}
-    <Confirmation
-  isOpen={isConfirmationOpen}
-  onClose={closeConfirmation}
-  onConfirm={onConfirm}
-  message="Confirm cancellation?"
-/>
+      <Confirmation
+        isOpen={isConfirmationOpen}
+        onClose={closeConfirmation}
+        onConfirm={onConfirm}
+        message="Confirm cancellation?"
+      />
     </div>
   );
 };
