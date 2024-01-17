@@ -35,8 +35,11 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/newprofile" element={<NewProfile />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/otp" element={<OTP />} />
-        <Route path="/register" element={<Register />} />
+        {/* <Route path="/otp" element={<OTP />} /> */}
+        <Route path="/otp/:userId" element={<OTP />} />
+        <Route path="/register/:username/:email" element={<Register />} />
+
+        {/* <Route path="/register" element={<Register />} /> */}
 
       </Routes>
     </div>

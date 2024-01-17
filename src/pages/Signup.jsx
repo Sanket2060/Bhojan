@@ -8,32 +8,34 @@ const Signup = () => {
   const navigate=useNavigate();
   const params = useParams();
   const [selectedTab, setSelectedTab] = useState('Donator');
-  const [userId,setUserId]=useState('');
-  const authenticate=async ({username,email,password})=>{
-    console.log(email,password);
-    // api/users/register
-    //send register data
-    axios.post('v1/users/register',{
-      username,
-      email,
-      password,
-      isDonor:selectedTab=='Donator'?true:false
-    })
-  .then(function (response) {
-    // handle success
-    console.log(response.data);
-    setUserId(response.data.userId);
-  })
-  .then(function (){
-    navigate(`/otp/:${userId}`);
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-
-    
-  }
+  const [userId,setUserId]=useState(Number);
+  const authenticate = async ({ username, email, password }) => {
+    try {
+      console.log(email, password);
+      // api/users/register
+      // send register data
+      const response = await axios.post('http://localhost:9005/api/v1/users/register', {
+        username,
+        email,
+        password,
+        isDonor: selectedTab === 'Donator' ? true : false,
+      });
+  
+      // handle success
+      console.log(response.data);
+      setUserId(response.data.data.userId);
+      console.log(response.data.data.userId);
+  
+      // Navigate to OTP page with the userId
+      navigate(`/otp/${response.data.data.userId}`);
+    } catch (error) {
+      // handle error
+      console.log(error.message);
+      // Set error state to display the error message
+      setError(error.message);
+    }
+  };
+  
 
   useEffect(()=>{
     console.log("Error is:",error);
