@@ -7,12 +7,15 @@ import LandingPage from "./pages/LandingPage";
 import AboutUs from "./pages/AboutUs";
 import Leaderboard from "./pages/Leaderboard";
 import Profile from "./pages/Profile";
+import AboutUsme from "./pages/AboutUsme";
+
 
 const App = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        
+        <Route path="/" element={<AboutUsme/>} />
         <Route path="/donor" element={<Donor />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="*" element={<NotFound />} />
