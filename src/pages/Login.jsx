@@ -3,23 +3,27 @@ import { useForm } from "react-hook-form";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 const Login = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit,formState } = useForm();
   const [error,setError]=useState("")
   const navigate=useNavigate();
 
 
 
-  const handleLogin =async ({email,passsword}) => {
-    console.log("Email and password:",email,passsword);
+  const loginUser =async ({email,password}) => {
+    console.log('At login');
+    console.log("Email and password:",email,password);
     try {
       const response = await axios.post('http://localhost:9005/api/v1/users/login', {
         email,
-        passsword
-      });
+        password
+      },{
+        withCredentials: true, // Include credentials (cookies) in the request
+      }
+      );
       console.log(response);
       if (response){
       //also store user's data at redux toolkit
-        if (response.isDonor)
+        if (response.data.data.isDonor)
         {
           navigate('/donor');
         }
@@ -33,14 +37,29 @@ const Login = () => {
       console.log("Error:",error.response.data.message);
       setError(error.response.data.message);
     }
-    
-
-
-
-
-
-
   }
+
+  const resetError = () => {
+    // Reset the error state
+    setError('');
+  };
+
+  const onSubmit = async (data) => {
+    console.log("At first step");
+    // Check if there's an error before calling registerUser
+    // if (formState.isValid) {   //what does .isValid do->checks if all validations are true or not provided to react form hooks(validate:)
+      console.log("The form was valid");
+      resetError();
+      try {
+         handleSubmit(loginUser)(data); //??
+      } catch (error) {
+        // Handle any errors here
+        console.error("Form submission error:", error);
+      // }
+    }
+  };
+  
+
   return (
     <div className="flex justify-center items-center h-screen bg-[#f8c9c9]">
       <div className=" w-[20rem] md:w-[30rem] p-7 h-auto md:p-20 shadow-xl bg-white rounded-3xl">
@@ -49,23 +68,38 @@ const Login = () => {
         <hr className="border w-full h-1 bg-black my-4" />
         <div>
 
-          <form action="" onSubmit={handleSubmit(handleLogin)}>
+          <form action="" onSubmit={(e) => {
+            e.preventDefault(); // Prevent default form submission
+            resetError();
+            handleSubmit(onSubmit)(e);
+          }}>
+
             <div>
               <label for="email" className="font-normal text-sm ml-2">Email:</label>
               <input type="email"
                 className="border-2 w-full h-10 px-2 pl-2  border-[#01cc65] mb-1 rounded-xl p-2 text-sm focus:outline-none focus:ring-0 focus:border-gray-300 focus:text-gray-900 focus:border-4"
                 id="email" placeholder="Enter your Email"
                 required
-                {...register('email')}
-              />
+                {...register('email'
+                // , {
+                //   required: true,
+                //   validate: {
+                //     matchPattern: (value)=>
+                //     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || setError("Enter a valid email address") 
+                //   }
+                // }
+                )}  
+                />
             </div>
 
             <div>
               <label for="password" className="font-normal text-sm ml-2"> Password:</label>
               <input type="password"
                 className="border-2 w-full h-10 px-2 pl-2 border-[#01cc65] mb-1 rounded-xl focus:outline-none focus:ring-0 focus:border-gray-300 focus:text-gray-900 p-2 text-sm focus:border-4"
-                id="passowrd " placeholder="Enter your Password" required
-                {...register('password')}
+                id="password " placeholder="Enter your Password" required
+                {...register('password'
+                // ,{required:true}
+                )}
               />
             </div>
             <div>
