@@ -7,9 +7,9 @@ import react from '@vitejs/plugin-react'
 //At vite.config.js
 export default defineConfig({
   server:{
-    proxy:{
-      '/api':'http://localhost:9005'
-    }
+    // proxy:{
+    //   '/v1':'http://localhost:9005/api'
+    // }
   },
   plugins: [react()],
 }
