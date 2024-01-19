@@ -26,7 +26,10 @@ const Register = () => {
       formData.append('contact', contactno);
       formData.append('isOrganization', true);
 
-      const response = await axios.post('http://localhost:9005/api/v1/users/complete-registration', formData);
+      const response = await axios.post('http://localhost:9005/api/v1/users/complete-registration', formData,
+      {
+        withCredentials: true, // Include credentials (cookies) in the request
+      });
       
       console.log(response);
       setError('');
