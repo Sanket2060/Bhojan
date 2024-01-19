@@ -63,7 +63,7 @@ const DonorForm = ({ onFormSubmit }) => {
     <div>
       {showForm ? (
         <>
-          <div className="max-w-md mx-auto mt-8 p-4 bg-gray-100 rounded-md">
+          <div className="max-w-md mx-auto mt-8 p-4 bg-gray-50 rounded-md">
             <h1 className="text-2xl font-bold mb-4">Publish Listing</h1>
             <form onSubmit={handleSubmit}>
               {/* form components */}
