@@ -8,7 +8,7 @@ const OTP = () => {
   const [error,setError]=useState("");
   // Use the userId parameter here, e.g., for fetching user-specific OTP data
   console.log('userId from OTP:', params.userId);
-  const [userOTP,setUserOTP]=useState(Number);
+  const [userOTP,setUserOTP]=useState();
   // const verifyOTP = async () => {
   //   const response = await axios.post('http://localhost:9005/api/v1/users/verify-otp', {
   //     userId: params.userId,
@@ -22,10 +22,11 @@ const OTP = () => {
     try {
       const response = await axios.post('http://localhost:9005/api/v1/users/verify-otp', {
         userId: params.userId,
-        userOTP
+        userOTP:userOTP
+        // .trim()
       });
       console.log(response);
-      navigate(`/register/${response.data.data.username}/${response.data.data.email}`);
+      navigate(`/register/${response.data.data.username}/${response.data.data.email}/${params.userId}`);
     } catch (error) {
       console.log("Error:",error.response.data.message);
       setError(error.response.data.message)
