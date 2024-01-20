@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { login } from "../features/user/authslice";
 const Login = () => {
   const { register, handleSubmit,formState } = useForm();
   const [error,setError]=useState("")
   const navigate=useNavigate();
-
+  const dispatch=useDispatch();
 
 
   const loginUser =async ({email,password}) => {
@@ -21,6 +23,8 @@ const Login = () => {
       }
       );
       console.log(response);
+      console.log("Response.data.data.isDonor",response.data.data.isDonor);
+       dispatch(login(response.data.data));
       if (response){
       //also store user's data at redux toolkit
         if (response.data.data.isDonor)

@@ -5,10 +5,14 @@ import { useParams } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { login } from '../features/user/authslice';
 const Register = () => {
   const { register, handleSubmit,formState } = useForm();
   const params = useParams();
   const navigate=useNavigate();
+  const dispatch=useDispatch();
+
   const [error, setError] = useState('');
   // const [userUpload,setUserUpload]=useState(avater);
   const registerUser = async ({ name, address, contactno, profilepic }) => {
@@ -22,7 +26,8 @@ const Register = () => {
         formData.append('avatar', avater); // Provide the default image
       } else {
         formData.append('avatar', profilepic[0]);
-      }      formData.append('address', address);
+      }      
+      formData.append('address', address);
       formData.append('contact', contactno);
       formData.append('isOrganization', true);
 
@@ -34,6 +39,7 @@ const Register = () => {
       console.log(response);
       setError('');
       console.log(response.data.data.isDonor);
+      dispatch(login(response.data.data));
       if (response.data.data.isDonor)
       {
         navigate('/donor');
@@ -112,25 +118,25 @@ const Register = () => {
                 // setUserUpload(e.target.value)
               }}
               {...register('profilepic', {
-                validate: {
-                  validFileFormat: (value) => {
-                    // Custom validation logic for file format
-                    if (value && value.length > 0) {
-                      const allowedFormats = ['jpg', 'jpeg', 'png'];
-                      const fileExtension = value[0]?.name.split('.').pop().toLowerCase();
-                      return allowedFormats.includes(fileExtension) || 'Invalid file format';
-                    }
-                    return true; // No file provided, so no validation needed
-                  },
-                  maxFileSize: (value) => {
-                    // Custom validation logic for file size (in bytes)
-                    if (value && value.length > 0) {
-                      const maxSize = 1024 * 1024 * 5; // 5 MB
-                      return value[0]?.size <= maxSize || 'File size exceeds the limit (5 MB)';
-                    }
-                    return true; // No file provided, so no validation needed
-                  },
-                },
+                // validate: {
+                //   validFileFormat: (value) => {
+                //     // Custom validation logic for file format
+                //     if (value && value.length > 0) {
+                //       const allowedFormats = ['jpg', 'jpeg', 'png'];
+                //       const fileExtension = value[0]?.name.split('.').pop().toLowerCase();
+                //       return allowedFormats.includes(fileExtension) || 'Invalid file format';
+                //     }
+                //     return true; // No file provided, so no validation needed
+                //   },
+                //   maxFileSize: (value) => {
+                //     // Custom validation logic for file size (in bytes)
+                //     if (value && value.length > 0) {
+                //       const maxSize = 1024 * 1024 * 5; // 5 MB
+                //       return value[0]?.size <= maxSize || 'File size exceeds the limit (5 MB)';
+                //     }
+                //     return true; // No file provided, so no validation needed
+                //   },
+                // },
               })}
             />
           </div>
