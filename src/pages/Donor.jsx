@@ -12,6 +12,8 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { FiFolder } from "react-icons/fi";
+import axios from "axios";
+
 
 // import { useNavigate } from "react-router-dom";
 // const navigate = useNavigate();
@@ -24,6 +26,21 @@ import { FiFolder } from "react-icons/fi";
 
 const Donor = () => {
   const [isDistribute, setisDistribute] = useState(false);
+
+  // const logoutUser=()=>{
+  //   console.log("Logout is clicked");
+  //   // if (userDetails._id){
+  //     try {
+  //       const response=axios.post('http://localhost:9005/api/v1/users/logout',{
+  //         withCredentials: true, // Include credentials (cookies) in the request
+  //       });
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log("Error:",error);
+  //     }
+  //   // }
+  // }
+
   //sidebar
   const SidebarMenu = [
     { name: "Homepage", link: "/", icon: MdOutlineDashboard },
@@ -46,8 +63,25 @@ const Donor = () => {
       link: "/",
       icon: FiLogOut,
       margin: true,
+      onClick: async () => {
+        try {
+          const response = await axios.post(
+            "http://localhost:9005/api/v1/users/logout",
+            {
+              withCredentials: true, // Include credentials (cookies) in the request
+            }
+          );
+          console.log(response);
+          // Perform any additional actions after logout
+        } catch (error) {
+          console.log("Error:", error);
+        }
+      },
     },
   ];
+  useEffect(()=>{
+    console.log("Hello");
+  },[])
 
   //welcome back ___ (username)
   const userName = "John";
