@@ -108,7 +108,7 @@ const Leaderboard = () => {
             </tr>
           </thead>
           <tbody>
-          {distributorData && donorData.length>0?
+          {distributorData && distributorData.length>0?
             distributorData.map((org,index)=>
               (
                 <>
@@ -117,8 +117,10 @@ const Leaderboard = () => {
               )   
             )
           :
-          <h1>Loading...</h1>
-          }
+          <tr>
+            <td colSpan="3" className="text-white">Loading...</td>
+          </tr>        
+            }
           </tbody>
         </table>
       )}
