@@ -12,7 +12,7 @@ export default function NewProfile() {
 
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gradient-to-b from-white to-gray-700 ">
-      <div className="h-3/4 w-[45%] shadow-lg overflow-auto rounded-xl hover:shadow-2xl">
+      <div className="h-3/4 w-[45%] shadow-lg overflow-auto rounded- hover:shadow-2xl">
         <div className="bg-gradient-to-br from-[#9618F7] to-[#A3C9E2] p-8 rounded-t-lg shadow-lg h-1/5"></div>
         <div className="grid gap-y-4 relative top-[-3rem]">
           <div className="flex items-center justify-center">
