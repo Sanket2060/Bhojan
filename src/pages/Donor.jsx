@@ -12,6 +12,10 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { FiFolder } from "react-icons/fi";
+import axios from "axios";
+import { useSelector } from 'react-redux';
+
+
 
 // import { useNavigate } from "react-router-dom";
 // const navigate = useNavigate();
@@ -24,6 +28,22 @@ import { FiFolder } from "react-icons/fi";
 
 const Donor = () => {
   const [isDistribute, setisDistribute] = useState(false);
+  const userDetails = useSelector((state) => state.auth.userDetails);
+
+  // const logoutUser=()=>{
+  //   console.log("Logout is clicked");
+  //   // if (userDetails._id){
+  //     try {
+  //       const response=axios.post('http://localhost:9005/api/v1/users/logout',{
+  //         withCredentials: true, // Include credentials (cookies) in the request
+  //       });
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log("Error:",error);
+  //     }
+  //   // }
+  // }
+
   //sidebar
   const SidebarMenu = [
     { name: "Homepage", link: "/", icon: MdOutlineDashboard },
@@ -46,22 +66,64 @@ const Donor = () => {
       link: "/",
       icon: FiLogOut,
       margin: true,
+      onClick: async () => {
+        try {
+          const response = await axios.post(
+            "http://localhost:9005/api/v1/users/logout",
+            {
+              withCredentials: true, // Include credentials (cookies) in the request
+            }
+          );
+          console.log(response);
+          // Perform any additional actions after logout
+        } catch (error) {
+          console.log("Error:", error);
+        }
+      },
     },
   ];
 
   //welcome back ___ (username)
-  const userName = "John";
+  // const userName = "John";
   const [pendingItems, setPendingItems] = useState([]);
   const [submittedItems, setSubmittedItems] = useState([]);
   const [formData, setFormData] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = async(data) => {
     setFormData(data);
     setFormSubmitted(true);
-    setPendingItems((prevItems) => [...prevItems, data]);
+     addOrder();
+    // setPendingItems((prevItems) => [...prevItems, data]);
     setSubmittedItems((prevItems) => [...prevItems, data]);
     // setisDistribute=(true);
   };
+
+
+
+  const addOrder=async()=>{
+    
+    try {
+      if (formData){
+
+      const response=await axios.post('http://localhost:9005/api/v1/order/create-order',{
+          _id:userDetails._id,
+          foodItems:formData.foodItem,
+          platesAvailable:formData.quantity,
+          closingTime:2,
+          title:formData.title
+        })
+      console.log(response);
+      }
+      else {
+        console.log("No data recieved for forms");
+      }
+    } catch (error) {
+      console.log("Error at adding order",error);
+    }
+  }
+
+
+
   const handleCancelDistribution = (index) => {
     const canceledItem = pendingItems[index];
     // Remove the item from pending distribution
@@ -108,7 +170,7 @@ const Donor = () => {
       >
         <div className="md:col-span-1 justify-center pt-10 m-3">
           <div className=" flex flex-col relative  bg-cyan-100 rounded-tr-[40%] rounded-tl-[50%] lg:rounded-tr-[50%] lg:rounded-tl-[90%]  ">
-            <WelcomeBack userName={userName} />
+            <WelcomeBack userName={userDetails.username} />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="col-span-1">
@@ -124,10 +186,10 @@ const Donor = () => {
                     
                   ) : (
                     <div>
-                      <PendingDistributions
-                        pendingItems={[formData, ...submittedItems]}
+                      {/* <PendingDistributions
+                        // pendingItems={[formData, ...submittedItems]}
                         onCancelDistribution={handleCancelDistribution}
-                      />
+                      /> */}
                       
                       <button
                         onClick={handleSubmitAnother}

@@ -1,11 +1,32 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import TableRow from "../components/tableRow";
+import axios from "axios";
 const Leaderboard = () => {
   const [activeSection, setActiveSection] = useState("organizations");
-
+  const [donorData,setDonorData]=useState([]);
+  const [distributorData,setDistributorData]=useState([]);
   const handleSectionChange = (section) => {
     setActiveSection(section);
   };
+  useEffect(()=>{
+    getLeaderboardData();
+  },[])
+  const getLeaderboardData=async()=>{
+    try {
+      const donorData = await axios.get('http://localhost:9005/api/v1/getData/get-top-donors', 
+      );
+      setDonorData(donorData.data.data.topTenDonators);
+      console.log(donorData.data.data.topTenDonators);
+      const distributorData=await axios.get('http://localhost:9005/api/v1/getData/get-top-distributors', 
+      );
+      setDistributorData(distributorData.data.data.topTenDistributors);
+      console.log(distributorData.data.data.topTenDistributors);
+    } catch (error) {
+      console.log(error);
+      // console.log("Error:",error.response.data.message);
+    }
+  }
+  
 
   return (
     <div className="bg-gradient-to-b from-white to-orange-400 p-8 h-screen">
@@ -53,27 +74,24 @@ const Leaderboard = () => {
             <tr>
               <th className="text-white font-bold text-left px-6 py-4">#</th>
               <th className="text-white font-bold text-left px-6 py-4">Name</th>
-
               <th className="text-white font-bold text-left px-6 py-4">
                 Score
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="text-white font-bold text-left px-6 py-4">4</td>
-              <td className="text-white font-bold text-left px-6 py-4">
-                Xiomara Domka
-              </td>
-
-              <td className="text-white font-bold text-left px-6 py-4">1230</td>
-            </tr>
-            <tr>
-              <td className="text-white font-bold text-left px-6 py-4">3</td>
-              <td className="text-white font-bold text-left px-6 py-4">hero</td>
-
-              <td className="text-white font-bold text-left px-6 py-4">1230</td>
-            </tr>
+          {donorData && donorData.length>0 ?
+            donorData.map((org,index)=>
+              (
+                <>
+               <TableRow rank={index+1} name={org.name} score={parseInt(org.numberOfPeopleFeed)*5} />
+                </>
+              )   
+            )
+          :
+          <h1>Loading...</h1>
+          }
+            
           </tbody>
         </table>
       )}
@@ -84,27 +102,25 @@ const Leaderboard = () => {
             <tr>
               <th className="text-white font-bold text-left px-6 py-4">#</th>
               <th className="text-white font-bold text-left px-6 py-4">Name</th>
-
               <th className="text-white font-bold text-left px-6 py-4">
                 Score
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="text-white font-bold text-left px-6 py-4">1</td>
-              <td className="text-white font-bold text-left px-6 py-4">
-                suresh
-              </td>
-
-              <td className="text-white font-bold text-left px-6 py-4">100</td>
-            </tr>
-            <tr>
-              <td className="text-white font-bold text-left px-6 py-4">2</td>
-              <td className="text-white font-bold text-left px-6 py-4">hero</td>
-
-              <td className="text-white font-bold text-left px-6 py-4">130</td>
-            </tr>
+          {distributorData && distributorData.length>0?
+            distributorData.map((org,index)=>
+              (
+                <>
+               <TableRow rank={index+1} name={org.name} score={parseInt(org.numberOfPeopleFeed)*5} />
+                </>
+              )   
+            )
+          :
+          <tr>
+            <td colSpan="3" className="text-white">Loading...</td>
+          </tr>        
+            }
           </tbody>
         </table>
       )}

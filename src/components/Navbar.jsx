@@ -3,7 +3,10 @@ import { useState,useEffect } from "react";
 import { RiMenu3Line } from "react-icons/ri";
 import Button from "./Button";
 import { Link } from "react-router-dom";
+import {  useSelector } from "react-redux";
 const Navbar = () => {
+  const authStatus = useSelector((state) => state.auth.isAuthenticated);
+  const userDetails=useSelector((state) => state.auth.userDetails);
   const [menuOpen, setMenuOpen] = useState(false);
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -52,9 +55,30 @@ const Navbar = () => {
             >
               <RiMenu3Line size={32} className="lg:hidden font:bold" />
             </button>
-          <Link to='/login'> <button className="align-middle hidden lg:block select-none  py-3 px-10 text-center  transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl  bg-[#261750] text-white  shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full shadow-xl ring-1 ring-slate-900/5">
-              Login
-            </button></Link>
+            <div>
+    {/* Other components or content */}
+    {authStatus ? (
+      userDetails.isDonor ? (
+        <Link to='/donor'>
+          <button className="align-middle hidden lg:block select-none py-3 px-10 text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl bg-[#261750] text-white shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full shadow-xl ring-1 ring-slate-900/5">
+            Dashboard
+          </button>
+        </Link>
+      ) : (
+        <Link to='/volunteer'>
+          <button className="align-middle hidden lg:block select-none py-3 px-10 text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl bg-[#261750] text-white shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full shadow-xl ring-1 ring-slate-900/5">
+            Dashboard
+          </button>
+        </Link>
+      )
+    ) : (
+      <Link to='/login'>
+        <button className="align-middle hidden lg:block select-none py-3 px-10 text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl bg-[#261750] text-white shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full shadow-xl ring-1 ring-slate-900/5">
+          Login
+        </button>
+      </Link>
+    )}
+  </div>
           </a>
         </li>
       </ul>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 // import Button from "./Button";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -7,6 +7,7 @@ import PendingDistributions from "./PendingDistributions";
 
 const DonorForm = ({ onFormSubmit }) => {
   const [showForm, setShowForm] = useState(true);
+  const { register, handleSubmit,formState } = useForm();
 
   const handleCancel = () => {
     setShowForm(false);
@@ -42,10 +43,15 @@ const DonorForm = ({ onFormSubmit }) => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onFormSubmit(formData);
+  const handleSubmits = () => {
     console.log(formData);
+    // e.preventDefault();
+    onFormSubmit(formData);
+    try {
+      
+    } catch (error) {
+      
+    }
     toast.success("Listing Posted");
     // Additional logic if needed after form submission
   };
@@ -59,13 +65,21 @@ const DonorForm = ({ onFormSubmit }) => {
     }
   };
 
+  const createOrder=()=>{
+
+  }
+
   return (
     <div>
       {showForm ? (
         <>
           <div className="max-w-md mx-auto mt-8 p-4 bg-gray-50 rounded-md">
             <h1 className="text-2xl font-bold mb-4">Publish Listing</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={()=>{
+              // handleSubmit(createOrder)
+              handleSubmits()
+            }
+            }>
               {/* form components */}
               <div className="mb-4">
                 <label
@@ -162,14 +176,18 @@ const DonorForm = ({ onFormSubmit }) => {
               {/* Submit Button */}
               <div className="flex justify-center items-center mt-4">
               <button
+                type="submit"
                 className="bg-blue-500 text-white px-6 py-3 rounded-full text-lg font-semibold "
-                disabled={!capVal}
-                onClick={() => {
-                  if (capVal) {
+                // disabled={!capVal}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSubmits();
                   handleButtonClick();
-                  } else {
-                  console.error("reCAPTCHA validation failed");
-                  }
+
+                  // if (capVal) {
+                  // } else {
+                  // console.error("reCAPTCHA validation failed");
+                  // }
                 }}
               >
                 Post Listing

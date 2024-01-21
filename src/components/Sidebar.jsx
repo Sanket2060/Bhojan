@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { Link } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import authslice from "../features/user/authslice";
 export const Sidebar = ({ menus }) => {
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-
+  const userDetails=useSelector(state=>state.auth.userDetails);
   const handleToggle = () => {
     setOpen(!open);
   };
@@ -25,6 +26,22 @@ export const Sidebar = ({ menus }) => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // const logoutUser=()=>{
+  //   console.log("Logout is clicked");
+  //   // if (userDetails._id){
+  //     try {
+  //       const response=axios.post('http://localhost:9005/api/v1/users/logout',{
+  //         withCredentials: true, // Include credentials (cookies) in the request
+  //       });
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log("Error:",error);
+  //     }
+  //   // }
+  // }
+
+  
 
   return (
     <section>
@@ -54,19 +71,27 @@ export const Sidebar = ({ menus }) => {
             }`}
           >
             {menus?.map((menu, i) => (
-              <Link
-                to={menu?.link}
+              <div
+                // to={menu?.link}
                 key={i}
                 className={` ${
                   menu?.margin &&
                   "pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4"
                 } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md `}
+                onClick={() => {
+                  // e.preventDefault();
+                  console.log("Clicked");
+                  if (menu.onClick) {
+                    menu.onClick();
+                  }
+                }}
               >
+
                 <div>{React.createElement(menu.icon, { size: "20" })}</div>
                 <h2 className={`whitespace-pre  ${!open && "translate-x-28"}`}>
                   {menu?.name}
                 </h2>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
