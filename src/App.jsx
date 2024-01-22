@@ -8,7 +8,7 @@ import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";
 import AboutUs from "./pages/AboutUs";
 import Leaderboard from "./pages/Leaderboard";
-// import Profile from "./pages/Profile";
+import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import OTP from "./pages/OTP";
@@ -18,7 +18,6 @@ import NewProfile from "./pages/newprofile";
 const App = () => {
   return (
     <div>
-      
       {/* ToastContainer for Toastify */}
       <ToastContainer />
 
@@ -35,12 +34,15 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/newprofile" element={<NewProfile />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
         {/* <Route path="/otp" element={<OTP />} /> */}
         <Route path="/otp/:userId" element={<OTP />} />
-        <Route path="/register/:username/:email/:userId" element={<Register />} />
+        <Route
+          path="/register/:username/:email/:userId"
+          element={<Register />}
+        />
 
         {/* <Route path="/register" element={<Register />} /> */}
-
       </Routes>
     </div>
   );
