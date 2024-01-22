@@ -28,6 +28,9 @@ const Volunteer = () => {
   // };
   const userDetails = useSelector((state) => state.auth.userDetails);
 
+
+
+
   const SidebarMenu = [
     { name: "Homepage", link: "/landingpage", icon: MdOutlineDashboard },
     { name: "User", link: "/", icon: AiOutlineUser },
@@ -88,50 +91,7 @@ const Volunteer = () => {
   const [isDistribute, setIsDistribute] = useState(false);
   const [isReserved, setIsReserved] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState(null);
-  const [accordionItems, setAccordionItems] = useState([
-    {
-      title: "Opportunity 1",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-    {
-      title: "Opportunity 2",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-    {
-      title: "Opportunity 3",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-    {
-      title: "Opportunity 4",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-    {
-      title: "Opportunity 5",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-    {
-      title: "Opportunity 6",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-  ]);
+  const [accordionItems, setAccordionItems] = useState([]);
   const [expandedItem, setExpandedItem] = useState(null);
 
   const [pendingItems, setPendingItems] = useState([]);
@@ -154,6 +114,33 @@ const Volunteer = () => {
     pendingListingsRef.current.scrollIntoView({ behavior: "smooth" });
     AhandleToggle(index);
   };
+
+  const currentActiveListings=async()=>{
+    try {
+      const response=await axios.post('http://localhost:9005/api/v1/order/active-listings-for-donor',{
+          _id:userDetails._id,
+        },{
+          headers: {
+            'Content-Type': 'application/json',  //says data at body is at json format
+          },
+          withCredentials: true, // Send cookies with the request
+        })
+      console.log(response.data.data);
+      setAccordionItems(response.data.data);
+      // setActiveListings(response.data);
+      
+      
+    } catch (error) {
+      console.log("Error at listing active orders",error);
+    }
+  }
+
+  useEffect(()=>{
+    currentActiveListings();
+  })
+
+
+
 
   return (
     <div className="flex">
