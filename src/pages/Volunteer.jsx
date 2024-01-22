@@ -15,6 +15,7 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiFolder } from "react-icons/fi";
 import { BiCloud } from "react-icons/bi";
 import HowToDistribute from "../components/HowToDistribute";
+import { useSelector } from 'react-redux';
 
 // import { useNavigate } from "react-router-dom";
 
@@ -25,6 +26,7 @@ const Volunteer = () => {
   //   // logout
   //   navigate("/login");
   // };
+  const userDetails = useSelector((state) => state.auth.userDetails);
 
   const SidebarMenu = [
     { name: "Homepage", link: "/landingpage", icon: MdOutlineDashboard },
@@ -49,7 +51,7 @@ const Volunteer = () => {
       margin: true,
     },
   ];
-  const userName = "John";
+  // const userName = "John";
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [AccordionOpen, setAccordionOpen] = useState(false);
@@ -167,7 +169,7 @@ const Volunteer = () => {
       >
         <div className="md:col-span-1 justify-center pt-10 m-3">
           <div className=" flex flex-col relative  bg-cyan-100 rounded-tr-[40%] rounded-tl-[50%] lg:rounded-tr-[50%] lg:rounded-tl-[90%]  ">
-            <WelcomeBack userName={userName} />
+            <WelcomeBack userName={userDetails.username} />
           </div>
 
           {pendingItems.length > 0 && (

@@ -89,14 +89,21 @@ const Donor = () => {
   const [submittedItems, setSubmittedItems] = useState([]);
   const [formData, setFormData] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [recentOrderDetails,setRecentOrderDetails]=useState();
+  const [activeListings,setActiveListings]=useState([])
   const handleFormSubmit = async(data) => {
     setFormData(data);
     setFormSubmitted(true);
-     addOrder();
+    //  addOrder();
     // setPendingItems((prevItems) => [...prevItems, data]);
     setSubmittedItems((prevItems) => [...prevItems, data]);
     // setisDistribute=(true);
   };
+  useEffect(()=>{
+    if (formSubmitted==true){
+        addOrder();
+    }
+  },[formSubmitted])
 
 
 
@@ -111,8 +118,14 @@ const Donor = () => {
           platesAvailable:formData.quantity,
           closingTime:2,
           title:formData.title
+        },{
+          headers: {
+            'Content-Type': 'application/json',  //says data at body is at json format
+          },
+          withCredentials: true, // Send cookies with the request
         })
       console.log(response);
+      setRecentOrderDetails(response);
       }
       else {
         console.log("No data recieved for forms");
@@ -122,7 +135,30 @@ const Donor = () => {
     }
   }
 
+  const currentActiveListings=async()=>{
+    try {
+      const response=await axios.post('http://localhost:9005/api/v1/order/active-listings-for-donor',{
+          _id:userDetails._id,
+        },{
+          headers: {
+            'Content-Type': 'application/json',  //says data at body is at json format
+          },
+          withCredentials: true, // Send cookies with the request
+        })
+      console.log(response.data.data);
+      setActiveListings(response.data.data)
+      // setActiveListings(response.data);
+      
+      
+    } catch (error) {
+      console.log("Error at listing active orders",error);
+    }
+  }
 
+  useEffect(()=>{
+    
+    currentActiveListings();  //naya order list garesi feri api call garna paryo
+  },[recentOrderDetails]);
 
   const handleCancelDistribution = (index) => {
     const canceledItem = pendingItems[index];
@@ -179,17 +215,17 @@ const Donor = () => {
                   Active Listings
                 </h1>
                 <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 wrapper gap-4 col-span-2 lg:col-span-1">
-                  {!formSubmitted ? (
+                  {/* {!formSubmitted ? ( */}
                     <DonorForm
                       onFormSubmit={handleFormSubmit}
                     />
                     
-                  ) : (
+                  {/* ) : ( */}
                     <div>
-                      {/* <PendingDistributions
-                        // pendingItems={[formData, ...submittedItems]}
+                      <PendingDistributions
+                        pendingItems={activeListings}
                         onCancelDistribution={handleCancelDistribution}
-                      /> */}
+                      />
                       
                       <button
                         onClick={handleSubmitAnother}
@@ -198,7 +234,7 @@ const Donor = () => {
                         Submit Another Listing
                       </button>
                     </div>
-                  )}
+                  {/* )} */}
                 </div>
               </div>
             </div>
