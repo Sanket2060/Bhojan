@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { login } from "../features/user/authslice";
 
 const Login = () => {
-  const { register, handleSubmit, formState } = useForm();
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const { register, handleSubmit,formState } = useForm();
+  const [error,setError]=useState("")
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
+
 
   const loginUser = async ({ email, password }) => {
     console.log("At login");
@@ -23,12 +27,16 @@ const Login = () => {
         }
       );
       console.log(response);
-      if (response) {
-        //also store user's data at redux toolkit
-        if (response.data.data.isDonor) {
-          navigate("/donor");
-        } else {
-          navigate("/volunteer");
+      console.log("Response.data.data.isDonor",response.data.data.isDonor);
+       dispatch(login(response.data.data));
+      if (response){
+      //also store user's data at redux toolkit
+        if (response.data.data.isDonor)
+        {
+          navigate('/donor');
+        }
+        else {
+          navigate('/volunteer');
         }
       }
       // navigate(`/register/${response.data.data.username}/${response.data.data.email}/${params.userId}`);
