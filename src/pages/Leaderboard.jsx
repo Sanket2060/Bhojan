@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
-import TableRow from '../components/TableRow'
+import TableRow from "../components/TableRow";
 import axios from "axios";
 const Leaderboard = () => {
   const [activeSection, setActiveSection] = useState("organizations");
-  const [donorData,setDonorData]=useState([]);
-  const [distributorData,setDistributorData]=useState([]);
+  const [donorData, setDonorData] = useState([]);
+  const [distributorData, setDistributorData] = useState([]);
   const handleSectionChange = (section) => {
     setActiveSection(section);
   };
-  useEffect(()=>{
+  useEffect(() => {
     getLeaderboardData();
-  },[])
-  const getLeaderboardData=async()=>{
+  }, []);
+  const getLeaderboardData = async () => {
     try {
-      const donorData = await axios.get('http://localhost:9005/api/v1/getData/get-top-donors', 
+      const donorData = await axios.get(
+        "http://localhost:9005/api/v1/getData/get-top-donors"
       );
       setDonorData(donorData.data.data.topTenDonators);
       console.log(donorData.data.data.topTenDonators);
-      const distributorData=await axios.get('http://localhost:9005/api/v1/getData/get-top-distributors', 
+      const distributorData = await axios.get(
+        "http://localhost:9005/api/v1/getData/get-top-distributors"
       );
       setDistributorData(distributorData.data.data.topTenDistributors);
       console.log(distributorData.data.data.topTenDistributors);
@@ -25,11 +27,10 @@ const Leaderboard = () => {
       console.log(error);
       // console.log("Error:",error.response.data.message);
     }
-  }
-  
+  };
 
   return (
-    <div className="bg-gradient-to-b from-white to-orange-400 p-8 h-screen">
+    <div className="bg-white to-orange-400 p-8 h-screen">
       <div className="flex justify-between mb-8">
         <h3 className="mx-auto text-3xl font-bold text-black">LeaderBoard</h3>
       </div>
@@ -39,7 +40,9 @@ const Leaderboard = () => {
             <ul className="flex justify-center gap-[4vw]">
               <li
                 className={`ml-10 flex-none n7 mr2 relative transition duration-300 ease-in-out hover:bg-gray-700 xl rounded-lg ${
-                  activeSection === "organizations" ? "bg-gray-700" : ""
+                  activeSection === "organizations"
+                    ? "bg-gray-700 text-white"
+                    : ""
                 }`}
               >
                 <a
@@ -52,7 +55,7 @@ const Leaderboard = () => {
               </li>
               <li
                 className={`flex items-center relative transition duration-300 ease-in-out hover:bg-gray-700 xl rounded-lg ${
-                  activeSection === "volunteer" ? "bg-gray-700" : ""
+                  activeSection === "volunteer" ? "bg-gray-700 text-white" : ""
                 }`}
               >
                 <a
@@ -72,26 +75,31 @@ const Leaderboard = () => {
         <table className="bg-gray-900 rounded-lg overflow-hidden w-full">
           <thead>
             <tr>
-              <th className="text-white font-bold text-left px-6 py-4">#</th>
-              <th className="text-white font-bold text-left px-6 py-4">Name</th>
-              <th className="text-white font-bold text-left px-6 py-4">
+              <th className="text-white font-bold text-left px-6 py-4 w-2/12">
+                #
+              </th>
+              <th className="text-white font-bold text-left px-6 py-4 w-8/12">
+                Name
+              </th>
+              <th className="text-white font-bold text-left px-6 py-4 w-2/12">
                 Score
               </th>
             </tr>
           </thead>
           <tbody>
-          {donorData && donorData.length>0 ?
-            donorData.map((org,index)=>
-              (
+            {donorData && donorData.length > 0 ? (
+              donorData.map((org, index) => (
                 <>
-               <TableRow rank={index+1} name={org.name} score={parseInt(org.numberOfPeopleFeed)*5} />
+                  <TableRow
+                    rank={index + 1}
+                    name={org.name}
+                    score={parseInt(org.numberOfPeopleFeed) * 5}
+                  />
                 </>
-              )   
-            )
-          :
-          <h1>Loading...</h1>
-          }
-            
+              ))
+            ) : (
+              <h1>Loading...</h1>
+            )}
           </tbody>
         </table>
       )}
@@ -100,27 +108,44 @@ const Leaderboard = () => {
         <table className="bg-gray-900 rounded-lg overflow-hidden w-full">
           <thead>
             <tr>
-              <th className="text-white font-bold text-left px-6 py-4">#</th>
-              <th className="text-white font-bold text-left px-6 py-4">Name</th>
-              <th className="text-white font-bold text-left px-6 py-4">
+              <th className="text-white font-bold text-left px-6 py-4 w-2/12">
+                #
+              </th>
+              <th className="text-white font-bold text-left px-6 py-4 w-8/12">
+                Name
+              </th>
+              <th className="text-white font-bold text-left px-6 py-4 w-2/12">
                 Score
               </th>
             </tr>
           </thead>
           <tbody>
-          {distributorData && distributorData.length>0?
-            distributorData.map((org,index)=>
-              (
+            <tr>
+              <td className="text-white font-bold text-left px-6 py-4 ">1</td>
+              <td className="text-white font-bold text-left px-6 py-4 ">
+                suresh yadav suraj adhikari thapa gurung acharya sanket 32 @
+                gmail . com
+              </td>
+              <td className="text-white font-bold text-left px-6 py-4 ">200</td>
+            </tr>
+
+            {distributorData && distributorData.length > 0 ? (
+              distributorData.map((org, index) => (
                 <>
-               <TableRow rank={index+1} name={org.name} score={parseInt(org.numberOfPeopleFeed)*5} />
+                  <TableRow
+                    rank={index + 1}
+                    name={org.name}
+                    score={parseInt(org.numberOfPeopleFeed) * 5}
+                  />
                 </>
-              )   
-            )
-          :
-          <tr>
-            <td colSpan="3" className="text-white">Loading...</td>
-          </tr>        
-            }
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3" className="text-white">
+                  Loading...
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       )}

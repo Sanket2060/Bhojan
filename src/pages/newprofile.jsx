@@ -63,10 +63,7 @@ export default function NewProfile() {
           <div className="text-center">
             <p>
               {isEditing ? (
-                <input
-                  type="text"
-                  // Add appropriate attributes and styling for the input field
-                />
+                <input type="text" />
               ) : (
                 "Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia delectus minus fugiat ex sint dignissimos voluptates rerum ea maiores incidunt quis suscipit dicta tempora facere magni, blanditiis consequatur doloribus ipsam!"
               )}
