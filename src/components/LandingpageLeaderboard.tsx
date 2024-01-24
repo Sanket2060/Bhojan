@@ -15,7 +15,11 @@ const LandingpageLeaderboard = ({ topContributors }) => {
           }}
         >
           <div className="lg:w-[32rem] w-[100%]">
-            <div className="border-orange-300 border-4 rounded-full w-[100%] h-[100%] relative left-0 ">
+            <div
+              className={`border-x-orange-300  ${
+                index === 1 ? "border-s-8" : "border-e-8" // Add border-s-8 class for index 2
+              } rounded-full w-[100%] h-[100%] relative  `}
+            >
               <img
                 className=" object-cover rounded-full"
                 src={User} // temporarily using User, replace with contributor.image
