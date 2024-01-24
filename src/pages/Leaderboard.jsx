@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import TableRow from "../components/tableRow";
+import TableRow from "../components/TableRow";
 import axios from "axios";
 const Leaderboard = () => {
   const [activeSection, setActiveSection] = useState("organizations");
