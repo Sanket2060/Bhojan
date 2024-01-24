@@ -4,7 +4,7 @@ import Accomplishment from "../components/Accomplishment.jsx";
 // import Accordion from "../components/Accordion.jsx";
 import AccordionItem from "../components/AccordionItem";
 import Footer from "../components/Footer";
-
+import axios from "axios";
 import PendingDistributions from "../components/PendingDistributions";
 import WelcomeBack from "../components/WelcomeBack.jsx";
 //icons
@@ -15,16 +15,21 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiFolder } from "react-icons/fi";
 import { BiCloud } from "react-icons/bi";
 import HowToDistribute from "../components/HowToDistribute";
-
+import { useSelector } from 'react-redux';
 // import { useNavigate } from "react-router-dom";
 
 const Volunteer = () => {
   //   const navigate = useNavigate();
-
+  const distributeRef=useRef();
+  const [distributeRefState,setDistributeRefState]=useState();
   // const handleLogout = () => {
   //   // logout
   //   navigate("/login");
   // };
+  const userDetails = useSelector((state) => state.auth.userDetails);
+  // const [usersPendingDistribution,setUsersPendingDistributions]=useState([]);
+
+
 
   const SidebarMenu = [
     { name: "Homepage", link: "/landingpage", icon: MdOutlineDashboard },
@@ -49,7 +54,7 @@ const Volunteer = () => {
       margin: true,
     },
   ];
-  const userName = "John";
+  // const userName = "John";
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [AccordionOpen, setAccordionOpen] = useState(false);
@@ -86,50 +91,7 @@ const Volunteer = () => {
   const [isDistribute, setIsDistribute] = useState(false);
   const [isReserved, setIsReserved] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState(null);
-  const [accordionItems, setAccordionItems] = useState([
-    {
-      title: "Opportunity 1",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-    {
-      title: "Opportunity 2",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-    {
-      title: "Opportunity 3",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-    {
-      title: "Opportunity 4",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-    {
-      title: "Opportunity 5",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-    {
-      title: "Opportunity 6",
-      location: "pokhara",
-      description: "Plates available: 10",
-      listedOn: "2024-01-10",
-      plates: 10,
-    },
-  ]);
+  const [accordionItems, setAccordionItems] = useState([]);
   const [expandedItem, setExpandedItem] = useState(null);
 
   const [pendingItems, setPendingItems] = useState([]);
@@ -149,9 +111,59 @@ const Volunteer = () => {
     setAccordionItems((prevItems) => prevItems.filter((_, i) => i !== index));
     setPendingItems([...pendingItems, selectedOpportunity]);
     // Scroll to the "Pending Listings" section
-    pendingListingsRef.current.scrollIntoView({ behavior: "smooth" });
+    // pendingListingsRef.current.scrollIntoView({ behavior: "smooth" });
     AhandleToggle(index);
   };
+
+  const currentActiveListings=async()=>{
+    try {
+      const response=await axios.get('http://localhost:9005/api/v1/getData/active-listings',{
+        },{
+        })
+      console.log(response.data.data);
+      setAccordionItems(response.data.data.result);
+      // setActiveListings(response.data);
+      
+      
+    } catch (error) {
+      console.log("Error at listing active orders at donor",error);
+    }
+  }
+  const retainAllData=()=>{
+    currentActiveListings();
+    getUsersPendingDistributions();
+  }
+
+  // distributeRef.current.onClick(retainAllData);
+
+  const getUsersPendingDistributions=async()=>{
+    try {
+      const response=await axios.post('http://localhost:9005/api/v1/order/pending-listings-for-distributor',{
+        _id:userDetails._id
+      },{
+        headers: {
+          'Content-Type': 'application/json',  //says data at body is at json format
+        },
+        withCredentials: true, // Send cookies with the request
+      })
+      console.log(response.data.data.runningOrders);
+      setPendingItems(response.data.data.runningOrders)
+      // setAccordionItems(response.data.data.result);
+      // setActiveListings(response.data);
+      
+     
+
+      
+    } catch (error) {
+      console.log("Error at listing active orders at donor",error);
+    }
+  }
+
+  useEffect(()=>{
+    getUsersPendingDistributions();
+  },[])
+
+
 
   return (
     <div className="flex">
@@ -167,12 +179,12 @@ const Volunteer = () => {
       >
         <div className="md:col-span-1 justify-center pt-10 m-3">
           <div className=" flex flex-col relative  bg-cyan-100 rounded-tr-[40%] rounded-tl-[50%] lg:rounded-tr-[50%] lg:rounded-tl-[90%]  ">
-            <WelcomeBack userName={userName} />
+            <WelcomeBack userName={userDetails.username} />
           </div>
 
-          {pendingItems.length > 0 && (
+          {pendingItems?.length > 0 && (
             <div
-              ref={pendingListingsRef}
+              // ref={pendingListingsRef}
               id="PendingListings"
               className="mt-10"
             >
@@ -193,7 +205,7 @@ const Volunteer = () => {
                   {accordionItems.length === 0 ? (
                     <p className="text-gray-500">No active listings.</p>
                   ) : (
-                    accordionItems.map((item, index) => (
+                    accordionItems?.map((item, index) => (
                       <AccordionItem
                         key={index}
                         item={item}
@@ -203,6 +215,9 @@ const Volunteer = () => {
                         onDistribute={handleDistribute}
                         ariaControls={`accordion-item-${index}`}
                         ariaExpanded={expandedItem === index}
+                        getUsersPendingDistributions
+                        ref={distributeRef}
+                        retainAllData={retainAllData}
                       />
                     ))
                   )}

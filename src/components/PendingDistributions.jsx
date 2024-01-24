@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "./Button";
 import Confirmation from "./Confirmation";
 import { toast, ToastContainer } from "react-toastify";
@@ -7,6 +7,9 @@ const PendingDistributions = ({ pendingItems, onCancelDistribution }) => {
   const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
   const [canceledItemIndex, setCanceledItemIndex] = React.useState(null);
 
+  useEffect(()=>{
+   console.log("Pending Items:",pendingItems);
+  },[])
   const openConfirmation = (index) => {
     setCanceledItemIndex(index);
     setConfirmationOpen(true);
@@ -32,15 +35,16 @@ const PendingDistributions = ({ pendingItems, onCancelDistribution }) => {
           {pendingItems.map((item, index) => (
             <div key={index} className="mb-8 p-4 bg-yellow-100 rounded-md">
               <h2 className="text-lg font-medium text-gray-900">
-                {item.title}{" "}
+                {item.order?item.order?.title:item.title}{" "}
                 <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
-                  {item.plates} Plates
+                  {item.order?item.order?.foodForNumberOfPeople:item.foodForNumberOfPeople} Plates
                 </span>
               </h2>
-              <p>Name: {item.name}</p>
-              <p>Location: {item.location}</p>
-              <p>Number: {item.number}</p>
-              <p>Closing Time: {item.closingTime}</p>
+              <p>Name: {item.order?item.order?.title:item.title}</p>
+              <p>Location: {item.order?item.order?.address:item.address}</p>
+              <p>Contact: {item.order?item.order?.contact:item.contact}</p>
+              <p>Closing Time: {item.order?item.order?.closingTime:item.closingTime} hrs</p>  
+              {/* donor ra distributor ma differently code pathako le esto gareko */}
 
               <div className="flex justify-center mt-4">
                 <Button
