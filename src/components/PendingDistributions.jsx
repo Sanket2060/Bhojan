@@ -35,15 +35,16 @@ const PendingDistributions = ({ pendingItems, onCancelDistribution }) => {
           {pendingItems.map((item, index) => (
             <div key={index} className="mb-8 p-4 bg-yellow-100 rounded-md">
               <h2 className="text-lg font-medium text-gray-900">
-                {item.order.title}{" "}
+                {item.order?item.order?.title:item.title}{" "}
                 <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
-                  {item.plates} Plates
+                  {item.order?item.order?.foodForNumberOfPeople:item.foodForNumberOfPeople} Plates
                 </span>
               </h2>
-              <p>Name: {item.order.title}</p>
-              <p>Location: {item.order.address}</p>
-              <p>Contact: {item.order.contact}</p>
-              <p>Closing Time: {item.order.closingTime} hrs</p>
+              <p>Name: {item.order?item.order?.title:item.title}</p>
+              <p>Location: {item.order?item.order?.address:item.address}</p>
+              <p>Contact: {item.order?item.order?.contact:item.contact}</p>
+              <p>Closing Time: {item.order?item.order?.closingTime:item.closingTime} hrs</p>  
+              {/* donor ra distributor ma differently code pathako le esto gareko */}
 
               <div className="flex justify-center mt-4">
                 <Button
