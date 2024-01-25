@@ -26,6 +26,7 @@ const PendingDistributions = ({ pendingItems, onCancelDistribution, onOpenComple
     setConfirmationOpen(false);
   };
 
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-4">Pending Distributions</h1>
@@ -71,7 +72,7 @@ const PendingDistributions = ({ pendingItems, onCancelDistribution, onOpenComple
         </div>
       )}
       <Confirmation
-        isOpen={isConfirmationOpen}
+        // orderId={pendingItems[canceledItemIndex]?.order?._id} //chatgpt code: Pass relevant information        isOpen={isConfirmationOpen}
         onClose={closeConfirmation}
         onConfirm={onConfirm}
         message="Confirm cancellation?"

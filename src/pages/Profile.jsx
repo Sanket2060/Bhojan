@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import profilepic from "../assets/devImages/default.jpg";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Accomplishment from "../components/Accomplishment";
 import axios from "axios";
 import { TbPhotoEdit } from "react-icons/tb";
-
+import {  useSelector } from "react-redux";
 const Profile = () => {
   const { register, handleSubmit, formState } = useForm();
   const params = useParams();
@@ -14,6 +14,42 @@ const Profile = () => {
   const [error, setError] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const userDetails=useSelector((state)=>state.auth.userDetails);
+  const [userData, setUserData] = useState({
+    name: "",
+    username: "",
+    email: "",
+    address: "",
+    number: "",
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+       if (userDetails) {
+         const response = await axios.post(
+           `http://localhost:9005/api/v1/getData/getdetailsfromname`,{
+             name:userDetails?.name
+           }
+         );
+ 
+         const user = response.data.data;
+         console.log(user)
+         setUserData({
+           name: user.name,
+           username: user.username,
+           email: user.email,
+           address: user.address,
+           number: user.contact,
+         });
+       }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // const [userUpload,setUserUpload]=useState(avater);
   const registerUser = async ({ name, address, contactno, profilepic }) => {
@@ -82,6 +118,8 @@ const Profile = () => {
       }
     }
   };
+
+  
 
   return (
     <div className="flex justify-center items-center  ">
