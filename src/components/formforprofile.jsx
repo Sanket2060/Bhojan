@@ -83,7 +83,7 @@ const UserProfileForm = () => {
   return (
     <>
       {isEditing && (
-        <div className="flex justify-center items-center md:h-[74vh] w-[80%] m-auto relative shadow-2xl overflow-hidden ">
+        <div className="flex justify-center items-center md:h-[74vh] md:w-[80%] m-auto relative shadow-2xl overflow-hidden ">
           <form
             className="max-w-96 "
             action=""
