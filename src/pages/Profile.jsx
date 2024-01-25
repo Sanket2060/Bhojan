@@ -3,7 +3,7 @@ import profilepic from "../assets/devImages/default.jpg";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Accomplishment from "../components/Accomplishment";
+import ProfileAccomplishment from "../components/ProfileAccomplishment";
 import axios from "axios";
 import { TbPhotoEdit } from "react-icons/tb";
 import {  useSelector } from "react-redux";
@@ -122,8 +122,8 @@ const Profile = () => {
   
 
   return (
-    <div className="flex justify-center items-center  ">
-      <div className="bg-gradient-to-b from-red-400 to-orange-300  absolute w-screen h-[40vh] top-0"></div>
+    <div className="flex justify-center items-center ">
+      <div className="bg-gradient-to-b from-cyan-400 absolute w-screen h-[40vh] top-0"></div>
       <div className="w-[100vw] justify-between scroll-pt-40 sm:w-[48rem] mt-40 mb-20 sm:p-20 md:shadow-xl z-10 bg-[rgba(255,255,255,.9)] sm:rounded-3xl">
         <form
           action=""
@@ -224,14 +224,14 @@ const Profile = () => {
             </h1>
             <h2 className="text-xl self-center">@username{params.username}</h2>
           </div>
-          <div className="relative top-[-8rem] ">
-            <Accomplishment
+          <div className="relative top-[-8rem]">
+            <ProfileAccomplishment
               totalFoodSaved={500}
               ourCommunity={200}
               totalPeopleServed={800}
-              totalFoodSavedText="Total Food Saved"
-              ourCommunityText="Our Community"
-              totalPeopleServedText="Total People Served"
+              totalFoodSavedText="Food Saved"
+              ourCommunityText="Rank"
+              totalPeopleServedText="People Served"
             />
           </div>
           <div className="relative top-[-6rem] p-4 md:p-0">
@@ -364,10 +364,6 @@ const Profile = () => {
             </div>
           </div>
         </form>
-
-        <div className="Error mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600">
-          {error}
-        </div>
       </div>
     </div>
   );
