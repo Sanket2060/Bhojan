@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Confirmation(props) {
-  const { isOpen, onClose, onConfirm, message } = props;
+  const { isOpen, onClose, onConfirm, message,orderId } = props;
 
   if (!isOpen) {
     return <></>;

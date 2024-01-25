@@ -14,6 +14,7 @@ import { FiLogOut } from "react-icons/fi";
 import { FiFolder } from "react-icons/fi";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import CompletedDistribution from "../components/CompletedDistribution.jsx";
 
 // import { useNavigate } from "react-router-dom";
 // const navigate = useNavigate();
@@ -45,7 +46,7 @@ const Donor = () => {
   //sidebar
   const SidebarMenu = [
     { name: "Homepage", link: "/", icon: MdOutlineDashboard },
-    { name: "User", link: "/", icon: AiOutlineUser },
+    { name: "User", link: "/profile", icon: AiOutlineUser },
     {
       name: "Active listings",
       link: "/",
@@ -93,7 +94,7 @@ const Donor = () => {
   const [confirmationData, setConfirmationData] = useState(null);
   const handleOpenComplete = (index) => {
     setConfirmationData(activeListings[index]); // Set the data for confirmation
-    openComplete(index); // Open the confirmation modal
+    // openComplete(index); // Open the confirmation modal
   };
 
   const handleFormSubmit = async (data) => {
@@ -271,7 +272,7 @@ const Donor = () => {
             id="Completed"
             className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 wrapper gap-4 col-span-2 lg:col-span-1"
           >
-            <ConfirmDistribution
+            <CompletedDistribution
               confirmationData={confirmationData}
               onCancelDistribution={handleCancelDistribution}
             />

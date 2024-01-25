@@ -160,6 +160,7 @@ const Volunteer = () => {
   }
 
   useEffect(()=>{
+    currentActiveListings();
     getUsersPendingDistributions();
   },[])
 

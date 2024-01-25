@@ -28,11 +28,11 @@ const CompletedDistribution = ({ completedItems }) => {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-4">Completed Distributions</h1>
-      {completedItems.length === 0 ? (
+      {completedItems?.length === 0 ? (
         <p className="text-gray-500">No completed distributions.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {completedItems.map((item, index) => (
+          {completedItems?.map((item, index) => (
             <div key={index} className="mb-8 p-4 bg-green-100 rounded-md">
               <h2 className="text-lg font-medium text-gray-900">
                 {item.title}{" "}
