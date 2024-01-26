@@ -120,7 +120,7 @@ const Volunteer = () => {
       const response=await axios.get('http://localhost:9005/api/v1/getData/active-listings',{
         },{
         })
-      console.log(response.data.data);
+      console.log("Current active listings for user are:",response.data.data);
       setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
       
@@ -130,6 +130,7 @@ const Volunteer = () => {
     }
   }
   const retainAllData=()=>{
+    console.log("Retain all data called");
     currentActiveListings();
     getUsersPendingDistributions();
   }
@@ -146,7 +147,7 @@ const Volunteer = () => {
         },
         withCredentials: true, // Send cookies with the request
       })
-      console.log(response.data.data.runningOrders);
+      // console.log(response.data.data.runningOrders);
       setPendingItems(response.data.data.runningOrders)
       // setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
