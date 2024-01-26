@@ -12,7 +12,6 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute,getUsersP
   const [countdown, setCountdown] = useState(5 * 60); // 5 minutes in seconds
   const [capVal, setCapVal] = useState(null);
   const userDetails = useSelector((state) => state.auth.userDetails);
-  console.log("Item:",item);
 
   //activate for recaptcha
   const handleRecaptchaChange = (value) => {
@@ -93,7 +92,7 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute,getUsersP
           },
           withCredentials: true, // Send cookies with the request
         })
-      console.log(response);
+      console.log("Distributor added to order successfully",response);
       console.log(response.data.data);
       // setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
-import PartnerSingleBox from "../components/PartnerSingleBox";
 import Accomplishment from "../components/Accomplishment";
 import FoodDonation from "../assets/FoodDonation.jpg";
 import AutoScrollPartners from "../components/PartnerArea";
@@ -127,7 +126,7 @@ const LandingPage = () => {
           <div className="text-[#ff4c70]">Across Nepal</div>
         </div>
 
-        <AutoScrollPartners />
+        <AutoScrollPartners topContributorsData={topContributorsData} />
       </div>
 
       <div className="overflow-hidden">

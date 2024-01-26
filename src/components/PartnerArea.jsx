@@ -1,22 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PartnerSingleBox from "./PartnerSingleBox"; // Import your Partner component
 
-const AutoScrollPartners = () => {
+const AutoScrollPartners = ({ topContributorsData }) => {
+  useEffect(()=>{
+    console.log("Top contributors data:",topContributorsData)
+  },[topContributorsData]);
   return (
-    <div className=" wrapper relative overflow-hidden">
+    <div className="wrapper relative overflow-hidden">
       <div
         className="flex items-center space-x-8 relative z-0"
         style={{
-          width: `${(3 + 1) * (1800 + 8)}px`, // Added one more set of partners for the loop
+          width: `${(topContributorsData.length + 1) * (1800 + 8)}px`,
           whiteSpace: "nowrap",
-          animation: "scroll 60s linear infinite", // Adjust the duration based on your preference
+          animation: "scroll 60s linear infinite",
         }}
       >
-        {Array.from({ length: 20 }, (_, index) => (
+        {topContributorsData?.map((contributor, index) => (
           <PartnerSingleBox
             key={index}
-            companyName={`Partner ${(index % 10) + 1}`}
-            location={`Location ${(index % 10) + 1}`}
+            companyName={contributor.name} // Assuming the contributor object has a 'name' property
+            location={contributor.address} // Assuming the contributor object has an 'address' property
           />
         ))}
       </div>
@@ -33,8 +36,7 @@ const AutoScrollPartners = () => {
         }
 
         .gradient-left {
-          background: linear-gradient(to left, rgba(255, 255, 255, 0), rgb(243, 244, 246)
-          90%);
+          background: linear-gradient(to left, rgba(255, 255, 255, 0), rgb(243, 244, 246) 90%);
         }
 
         .gradient-right {

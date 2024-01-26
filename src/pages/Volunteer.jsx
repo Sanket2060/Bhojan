@@ -124,19 +124,18 @@ const Volunteer = () => {
 
   const currentActiveListings = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:9005/api/v1/getData/active-listings",
-        {},
-        {}
-      );
-      console.log(response.data.data);
+      const response=await axios.get('http://localhost:9005/api/v1/getData/active-listings',{
+        },{
+        })
+      console.log("Current active listings for user are:",response.data.data);
       setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {
       console.log("Error at listing active orders at donor", error);
     }
-  };
-  const retainAllData = () => {
+  }
+  const retainAllData=()=>{
+    console.log("Retain all data called");
     currentActiveListings();
     getUsersPendingDistributions();
   };
@@ -145,20 +144,16 @@ const Volunteer = () => {
 
   const getUsersPendingDistributions = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:9005/api/v1/order/pending-listings-for-distributor",
-        {
-          _id: userDetails._id,
+      const response=await axios.post('http://localhost:9005/api/v1/order/pending-listings-for-distributor',{
+        _id:userDetails._id
+      },{
+        headers: {
+          'Content-Type': 'application/json',  //says data at body is at json format
         },
-        {
-          headers: {
-            "Content-Type": "application/json", //says data at body is at json format
-          },
-          withCredentials: true, // Send cookies with the request
-        }
-      );
-      console.log(response.data.data.runningOrders);
-      setPendingItems(response.data.data.runningOrders);
+        withCredentials: true, // Send cookies with the request
+      })
+      // console.log(response.data.data.runningOrders);
+      setPendingItems(response.data.data.runningOrders)
       // setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {

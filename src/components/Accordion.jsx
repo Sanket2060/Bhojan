@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import AccordionItem from "./AccordionItem";
 
@@ -11,6 +11,10 @@ function Accordion({ items, onDistribute }) {
     );
 
   };
+  useEffect(()=>{
+    console.log("Accordion items to be displayed are:",items);
+
+  },[items]);
 
   return (
     <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-4 col-span-2 lg:col-span-1" >

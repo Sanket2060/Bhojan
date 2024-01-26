@@ -47,6 +47,12 @@ const DonorForm = ({ onFormSubmit }) => {
     console.log(formData);
     // e.preventDefault();
     onFormSubmit(formData);
+    setFormData({
+      title: "",
+      foodItem: "",
+      quantity: "",
+      expirationTime: "",
+    })
     try {
       
     } catch (error) {

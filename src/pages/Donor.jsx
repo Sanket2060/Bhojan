@@ -83,7 +83,7 @@ const Donor = () => {
   ];
 
   const [submittedItems, setSubmittedItems] = useState([]);
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [recentOrderDetails, setRecentOrderDetails] = useState();
   const [activeListings, setActiveListings] = useState([]);
@@ -94,13 +94,15 @@ const Donor = () => {
     //  addOrder();
     // setPendingItems((prevItems) => [...prevItems, data]);
     setSubmittedItems((prevItems) => [...prevItems, data]);
+    
     // setisDistribute=(true);
   };
   useEffect(() => {
-    if (formSubmitted == true) {
+    if (formData) {
+      console.log("formdata:",formData);
       addOrder();
     }
-  }, [formSubmitted]);
+  }, [formData]);
 
   const addOrder = async () => {
     try {
@@ -121,7 +123,7 @@ const Donor = () => {
             withCredentials: true, // Send cookies with the request
           }
         );
-        console.log(response);
+        console.log("Order added successfully",response);
         setRecentOrderDetails(response);
       } else {
         console.log("No data recieved for forms");
@@ -145,7 +147,7 @@ const Donor = () => {
           withCredentials: true, // Send cookies with the request
         }
       );
-      console.log(response.data.data);
+      console.log("Donors active listings:",response.data.data);
       setActiveListings(response.data.data);
       // setActiveListings(response.data);
     } catch (error) {

@@ -17,8 +17,8 @@ const PendingDistributions = ({
 
   useEffect(() => {
     console.log("Pending Items:", pendingItems);
-  }, []);
-  const openCancelConfirmation = (index) => {
+  }, [pendingItems]);
+  const openConfirmation = (index) => {
     setCanceledItemIndex(index);
     setConfirmationOpen(true);
   };
