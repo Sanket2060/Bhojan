@@ -6,6 +6,7 @@ import WelcomeBack from "../components/WelcomeBack.jsx";
 import DonorForm from "../components/DonorForm.jsx";
 import PendingDistributions from "../components/PendingDistributions";
 import HowToDonate from "../components/HowToDonate";
+import CompletedDistribution from "../components/CompletedDistribution.jsx";
 //icons
 import { MdOutlineDashboard } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
@@ -81,21 +82,12 @@ const Donor = () => {
     },
   ];
 
-  //welcome back ___ (username)
-  // const userName = "John";
-  const [pendingItems, setPendingItems] = useState([]);
   const [submittedItems, setSubmittedItems] = useState([]);
   const [formData, setFormData] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [recentOrderDetails, setRecentOrderDetails] = useState();
   const [activeListings, setActiveListings] = useState([]);
-  //completed dist (naya)
-  const [confirmationData, setConfirmationData] = useState(null);
-  const handleOpenComplete = (index) => {
-    setConfirmationData(activeListings[index]); // Set the data for confirmation
-    openComplete(index); // Open the confirmation modal
-  };
-
+  const [completedListings, setCompletedListings] = useState([]);
   const handleFormSubmit = async (data) => {
     setFormData(data);
     setFormSubmitted(true);
@@ -166,17 +158,28 @@ const Donor = () => {
   }, [recentOrderDetails]);
 
   const handleCancelDistribution = (index) => {
-    const canceledItem = pendingItems[index];
+    console.log("Cancel button clicked for index", index);
     // Remove the item from pending distribution
-    setPendingItems((prevItems) => prevItems.filter((_, i) => i !== index));
-    setFormData(null);
-    setFormSubmitted(false);
+    setActiveListings((prevItems) => prevItems.filter((_, i) => i !== index));
   };
   const handleSubmitAnother = () => {
     // Reset to allow another submission
     setFormData(null);
     setFormSubmitted(false);
   };
+
+  const handleComplete = (completedItem) => {
+    ///complte ma pathauna lai -->
+    setCompletedListings((prevItems) => [...prevItems, completedItem]);
+  
+    //remove from pending dist
+
+  //   setActiveListings((prevItems) =>
+  //     prevItems.filter((item) => item.id !== completedItem.id)
+  //   );
+  
+  };
+
   const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -196,22 +199,30 @@ const Donor = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  const handleToggle = () => {
+    setOpen(!open);
+  };
   return (
     <div className="flex">
       <div
         className={`w-1/5`}
-        style={{ width: isMobile ? " 0px" : open ? "20%" : "0" }}
+        style={{ width: isMobile ? " 0px" : open ? "20%" : "2%" }}
       >
-        <Sidebar menus={SidebarMenu} />
+        <Sidebar
+          menus={SidebarMenu}
+          handleToggle={handleToggle}
+          isOpen={open}
+        />
       </div>
       <div
         className="flex-1"
         style={{ marginLeft: isMobile ? "0px" : open ? "0%" : "0" }}
       >
         <div className="md:col-span-1 justify-center pt-10 m-3">
-          <div className=" flex flex-col relative  bg-cyan-100 rounded-tr-[40%] rounded-tl-[50%] lg:rounded-tr-[50%] lg:rounded-tl-[90%]  ">
+          <div className="flex flex-col bg-cyan-100 rounded-md p-6 shadow-sm">
             <WelcomeBack userName={userDetails.username} />
           </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="col-span-1">
               <div className="container mx-auto p-4 wrapper">
@@ -223,20 +234,7 @@ const Donor = () => {
                   <DonorForm onFormSubmit={handleFormSubmit} />
 
                   {/* ) : ( */}
-                  <div>
-                    <PendingDistributions
-                      pendingItems={activeListings}
-                      onCancelDistribution={handleCancelDistribution}
-                      onOpenComplete={handleOpenComplete} // Pass naya func to open confirmation(copleted)
-                    />
 
-                    <button
-                      onClick={handleSubmitAnother}
-                      className="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-                    >
-                      Submit Another Listing
-                    </button>
-                  </div>
                   {/* )} */}
                 </div>
               </div>
@@ -254,6 +252,28 @@ const Donor = () => {
               </div>
             </div>
           </div>
+          <div>
+            <PendingDistributions
+              pendingItems={activeListings}
+              onCancelDistribution={handleCancelDistribution}
+              isDonorPage={true}
+              onCompleteProp={handleComplete}
+            />
+
+            <button
+              onClick={handleSubmitAnother}
+              className="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+            >
+              Submit Another Listing
+            </button>
+          </div>
+          <div
+            id="Completed"
+            className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 wrapper gap-4 col-span-2 lg:col-span-1"
+          >
+            {" "}
+            <CompletedDistribution completedItems={completedListings} />
+          </div>
           <div
             id="Accomplishment"
             className="justify-center pt-10 mb-auto w-full"
@@ -265,15 +285,6 @@ const Donor = () => {
               totalFoodSavedText="Total Food Saved"
               ourCommunityText="Ranking"
               totalPeopleServedText="Total People Served"
-            />
-          </div>
-          <div
-            id="Completed"
-            className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 wrapper gap-4 col-span-2 lg:col-span-1"
-          >
-            <ConfirmDistribution
-              confirmationData={confirmationData}
-              onCancelDistribution={handleCancelDistribution}
             />
           </div>
         </div>
