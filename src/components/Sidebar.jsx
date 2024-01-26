@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import authslice from "../features/user/authslice";
-export const Sidebar = ({ menus }) => {
-  const [open, setOpen] = useState(false);
+import { useSelector } from "react-redux";
+
+export const Sidebar = ({ menus, handleToggle, isOpen }) => {
   const [isMobile, setIsMobile] = useState(false);
-  const userDetails=useSelector(state=>state.auth.userDetails);
-  const handleToggle = () => {
-    setOpen(!open);
-  };
+  const userDetails = useSelector((state) => state.auth.userDetails);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth <= 768) {
-        setOpen(false);
-      } else {
-        setOpen(true);
-      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -27,26 +18,10 @@ export const Sidebar = ({ menus }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // const logoutUser=()=>{
-  //   console.log("Logout is clicked");
-  //   // if (userDetails._id){
-  //     try {
-  //       const response=axios.post('http://localhost:9005/api/v1/users/logout',{
-  //         withCredentials: true, // Include credentials (cookies) in the request
-  //       });
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.log("Error:",error);
-  //     }
-  //   // }
-  // }
-
-  
-
   return (
     <section>
       {isMobile && (
-        <div className="fixed top-0 right-0 p-3">
+       <div className="fixed top-0 right-0 p-3 py-3">
           <HiMenuAlt3
             size={24}
             className="cursor-pointer text-gray-400 hover:text-gray-500"
@@ -54,10 +29,9 @@ export const Sidebar = ({ menus }) => {
           />
         </div>
       )}
-
-      {isMobile && open && (
+      {isMobile && isOpen && (
         <div className="fixed inset-0 bg-[#ddd4d4] z-50 p-5 font-semibold text-xl overflow-y-auto">
-          <div className="py-3 flex justify-between items-center">
+          <div className="flex justify-between items-center wrapper">
             <p>Khana.com</p>
             <HiMenuAlt3
               size={26}
@@ -96,18 +70,27 @@ export const Sidebar = ({ menus }) => {
           </div>
         </div>
       )}
+       {!isMobile && (
+        <div className="fixed top-0 left-0 p-3">
+          <HiMenuAlt3
+            size={24}
+            className="cursor-pointer text-gray-400 hover:text-gray-500"
+            onClick={handleToggle}
+          />
+        </div>
+      )}
       {!isMobile && (
         <div
-          className={`min-h-screen ${
-            open ? "w-72 bg-[#ddd4d4]" : "w-16"
-          } duration-500 px-4 flex flex-col font-semibold p-1 overflow-y-auto fixed`}
-        >
-          <div className="py-3 flex justify-between items-center">
+        className={`min-h-screen ${
+          isOpen ? "w-72 bg-[#ddd4d4]" : " hidden"
+        } duration-500 px-4 flex flex-col font-semibold p-1 overflow-y-auto fixed`}
+      >
+          <div className="  py-3 flex justify-between items-center">
             <p
               className={`font-bold text-xl cursor-pointer ${
                 !open && "hidden"
               }`}
-              onClick={handleToggle}
+              // onClick={handleToggle}
             >
               Khana
             </p>
