@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import PartnerSingleBox from "./PartnerSingleBox"; // Import your Partner component
 
 const AutoScrollPartners = ({ topContributorsData }) => {
-  useEffect(()=>{
-    console.log("Top contributors data:",topContributorsData)
-  },[topContributorsData]);
+  useEffect(() => {
+    console.log("Top contributors data:", topContributorsData);
+  }, [topContributorsData]);
   return (
-    <div className="wrapper relative overflow-hidden">
+    <div className="wrapper md:w-screen relative overflow-hidden">
       <div
         className="flex items-center space-x-8 relative z-0"
         style={{
-          width: `${(topContributorsData.length + 1) * (1800 + 8)}px`,
+          width: `${(1 + 1) * (1800 + 8)}px`,
           whiteSpace: "nowrap",
           animation: "scroll 60s linear infinite",
         }}
@@ -36,11 +36,19 @@ const AutoScrollPartners = ({ topContributorsData }) => {
         }
 
         .gradient-left {
-          background: linear-gradient(to left, rgba(255, 255, 255, 0), rgb(243, 244, 246) 90%);
+          background: linear-gradient(
+            to left,
+            rgba(255, 255, 255, 0),
+            rgb(243, 244, 246) 90%
+          );
         }
 
         .gradient-right {
-          background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(243, 244, 246) 90%);
+          background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0),
+            rgb(243, 244, 246) 90%
+          );
         }
       `}</style>
     </div>
