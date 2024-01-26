@@ -26,7 +26,7 @@ const LandingpageLeaderboard = ({ topContributors }) => {
               width: "100%",
             }}
           >
-            <div className="lg:w-[32rem] w-[100%]">
+            <div className="lg:w-[32rem]">
               <div
                 className={`border-x-orange-300 ${
                   index === 1 ? "border-s-8" : "border-e-8"
