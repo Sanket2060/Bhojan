@@ -92,10 +92,9 @@ const PendingDistributions = ({
                   />
                 )}
               </div>
-
               <div className="flex justify-center mt-4">
                 <Button
-                  onClick={() => openCancelConfirmation(index)}
+                  onClick={() => openConfirmation(index)}
                   variant="cancel"
                   text="Cancel"
                 />
