@@ -110,6 +110,8 @@ const Volunteer = () => {
     // Move the canceled item back to active listings
     const canceledItem = pendingItems[index];
     setAccordionItems((prevItems) => [...prevItems, canceledItem]);
+
+
   };
   const pendingListingsRef = useRef(null);
   const handleDistribute = (index) => {
@@ -169,6 +171,29 @@ const Volunteer = () => {
   const handleToggle = () => {
     setOpen(!open);
   };
+
+  const cancelOrderForDistributor=async(_id)=>{
+    try {
+      const response = await axios.post(
+        `http://localhost:9005/api/v1/order/cancel-order-for-distributor`
+        ,{
+          _orderId:_id
+        },{
+                  withCredentials: true, // Include credentials (cookies) in the request
+                });
+      console.log("Successfully cancelled order:",response);
+      // setTopContributorsData(response.data.data.topTenDonators);
+    }
+    catch (error) {
+      console.error("Error cancelling order for donor:", error);
+      toast.warning('Error cancelling order');
+    }
+  }
+
+
+
+
+
   return (
     <div className="flex ">
       <div
@@ -196,6 +221,7 @@ const Volunteer = () => {
               <PendingDistributions
                 pendingItems={pendingItems}
                 onCancelDistribution={handleCancelDistribution}
+                cancelOrder={cancelOrderForDistributor}
               />
             </div>
           )}

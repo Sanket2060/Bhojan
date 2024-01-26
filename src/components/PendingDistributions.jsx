@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import Confirmation from "./Confirmation";
 import { toast, ToastContainer } from "react-toastify";
@@ -8,26 +8,38 @@ const PendingDistributions = ({
   onCancelDistribution,
   isDonorPage,
   onCompleteProp,
+  cancelOrder,
+  completeOrder
 }) => {
   const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
   const [canceledItemIndex, setCanceledItemIndex] = React.useState(null);
   const [isCompleteConfirmationOpen, setCompleteConfirmationOpen] =
     React.useState(false);
   const [completedItemIndex, setCompletedItemIndex] = React.useState(null);
-
+  const [cancellingItemOrderId,setCancellingItemOrderId]=useState('');
+  const [completingItemOrderId,setCompletingItemOrderId]=useState('');
   useEffect(() => {
     console.log("Pending Items:", pendingItems);
   }, [pendingItems]);
+
+
+
   const openConfirmation = (index) => {
     setCanceledItemIndex(index);
     setConfirmationOpen(true);
+    // setCancellingItemOrderId(item._id);
   };
+
+
+  
 
   const onConfirmCancel = () => {
     // const canceledItem = pendingItems[canceledItemIndex];
     onCancelDistribution(canceledItemIndex);
     toast.warning("Distribution Cancelled");
     closeCancelConfirmation();
+    cancelOrder(cancellingItemOrderId);
+
     // console.log("cancel called");
   };
   const closeCancelConfirmation = () => {
@@ -38,6 +50,8 @@ const PendingDistributions = ({
   const handleCompleteClick = (index) => {
     setCompletedItemIndex(index);
     setCompleteConfirmationOpen(true);
+    completeOrder(completingItemOrderId);
+
   };
 
   const onConfirmComplete = () => {
@@ -86,7 +100,14 @@ const PendingDistributions = ({
               <div className="absolute top-1/3 right-5 transform -translate-y-1/2">
                 {isDonorPage && (
                   <Button
-                    onClick={() => handleCompleteClick(index)}
+                    onClick={() => 
+                      {
+
+                        handleCompleteClick(index)
+                        setCompletingItemOrderId(item.order ? item.order?._id : item._id)
+                      }
+                    }
+
                     variant="complete"
                     text=""
                   />
@@ -94,7 +115,10 @@ const PendingDistributions = ({
               </div>
               <div className="flex justify-center mt-4">
                 <Button
-                  onClick={() => openConfirmation(index)}
+                  onClick={() =>{ 
+                    openConfirmation(index)
+                    setCancellingItemOrderId(item.order ? item.order?._id : item._id)
+                  }}
                   variant="cancel"
                   text="Cancel"
                 />
@@ -106,7 +130,7 @@ const PendingDistributions = ({
       <Confirmation
         isOpen={isConfirmationOpen}
         onClose={closeCancelConfirmation}
-        onConfirm={onConfirmCancel}
+        onConfirm={()=>{onConfirmCancel()}}
         message="Are you sure you want to CANCEL?"
       />
       <Confirmation

@@ -202,6 +202,44 @@ const Donor = () => {
   const handleToggle = () => {
     setOpen(!open);
   };
+
+  const cancelOrderForDonor=async(_id)=>{
+    try {
+      const response = await axios.post(
+        `http://localhost:9005/api/v1/order/cancel-order-for-donor`,{
+          _orderId:_id
+        },{
+                  withCredentials: true, // Include credentials (cookies) in the request
+                });
+      console.log("Successfully cancelled order:",response);
+      // setTopContributorsData(response.data.data.topTenDonators);
+    }
+    catch (error) {
+      console.error("Error cancelling order for donor:", error);
+    }
+  }
+
+  const completeOrderForDonor=async(_id)=>{
+    try {
+      const response = await axios.post(
+        `http://localhost:9005/api/v1/order/completed-order-for-donor`,{
+          _orderId:_id
+        },{
+                  withCredentials: true, // Include credentials (cookies) in the request
+                });
+      console.log("Successfully completed order:",response);
+      // setTopContributorsData(response.data.data.topTenDonators);
+    }
+    catch (error) {
+      console.error("Error completing order for donor:", error);
+      
+    }
+  }
+
+
+
+
+
   return (
     <div className="flex">
       <div
@@ -258,6 +296,8 @@ const Donor = () => {
               onCancelDistribution={handleCancelDistribution}
               isDonorPage={true}
               onCompleteProp={handleComplete}
+              cancelOrder={cancelOrderForDonor}
+              completeOrder={completeOrderForDonor}
             />
 
             <button
