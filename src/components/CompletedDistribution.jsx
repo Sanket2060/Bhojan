@@ -1,38 +1,29 @@
-import React from "react";
-import Confirmation from "./Confirmation";
-import { toast, ToastContainer } from "react-toastify";
+import React, { useState } from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const CompletedDistribution = ({ completedItems }) => {
-  const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
-  const [selectedItemIndex, setSelectedItemIndex] = React.useState(null);
+  const [isConfirmationOpen, setConfirmationOpen] = useState(false);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(null);
+  const [showMore, setShowMore] = useState(false);
 
-  const openConfirmation = (index) => {
-    setSelectedItemIndex(index);
-    setConfirmationOpen(true);
+  const itemsToShow = showMore ? completedItems : completedItems.slice(0, 4);
+
+  const handleShowMoreClick = () => {
+    setShowMore(true);
   };
 
-  const closeConfirmation = () => {
-    setSelectedItemIndex(null);
-    setConfirmationOpen(false);
-  };
-
-  const onConfirm = () => {
-    // Additional logic for handling completion confirmation if needed
-    // You can call another function or perform any actions specific to completion
-    const completedItem = completedItems[selectedItemIndex];
-    // Perform completion action here if needed
-    toast.success("Distribution Completed");
-    closeConfirmation();
+  const handleShowLessClick = () => {
+    setShowMore(false);
   };
 
   return (
     <div>
       <h1 className="text-3xl font-bold mb-4">Completed Distributions</h1>
-      {completedItems?.length === 0 ? (
+      {itemsToShow && itemsToShow.length === 0 ? (
         <p className="text-gray-500">No completed distributions.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {completedItems?.map((item, index) => (
+          {itemsToShow.map((item, index) => (
             <div key={index} className="mb-8 p-4 bg-green-100 rounded-md">
               <h2 className="text-lg font-medium text-gray-900">
                 {item.title}{" "}
@@ -43,27 +34,32 @@ const CompletedDistribution = ({ completedItems }) => {
               <p>Name: {item.name}</p>
               <p>Location: {item.location}</p>
               <p>Number: {item.number}</p>
-              {/* <p>Closing Time: {item.closingTime}</p> */}
-
-              <div className="flex justify-center mt-4">
-                {/* Additional button or UI elements specific to completed distributions */}
-                {/* <button
-                  onClick={() => openConfirmation(index)}
-                  className="bg-red-500 text-white px-4 py-2 rounded-md"
-                >
-                  Mark as Incomplete
-                </button> */}
-              </div>
             </div>
           ))}
         </div>
       )}
-      <Confirmation
-        isOpen={isConfirmationOpen}
-        onClose={closeConfirmation}
-        onConfirm={onConfirm}
-        message="Confirm completion?"
-      />
+
+      {completedItems.length > 4 && (
+        <div className="mt-4 flex items-center justify-center">
+          {showMore ? (
+            <button
+              onClick={handleShowLessClick}
+              className="flex items-center space-x-2 bg-red-500 text-white py-2 px-4 rounded-full hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-red-800"
+            >
+              <IoIosArrowUp />
+              <span>Show Less</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleShowMoreClick}
+              className="flex items-center space-x-2 bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+            >
+              <IoIosArrowDown />
+              <span>Show More</span>
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };
