@@ -9,46 +9,42 @@ import LandingpageLeaderboard from "../components/LandingpageLeaderboard";
 import { Link } from "react-router-dom";
 import axios from "axios";
 const LandingPage = () => {
-  const [topContributorsData,setTopContributorsData]=useState([]);
-  const getTopDonatorsDataFunc=async()=>{
+  const [topContributorsData, setTopContributorsData] = useState([]);
+  const getTopDonatorsDataFunc = async () => {
     try {
-        const response = await axios.get(
-          `http://localhost:9005/api/v1/getData/get-top-donors`
-        );
-        console.log(response);
-        const users = response.data.data;
-        console.log(users)
-        setTopContributorsData(response.data.data.topTenDonators);
-      }
-      catch (error) {
-        console.error("Error fetching user data:", error);
-      }
+      const response = await axios.get(
+        `http://localhost:9005/api/v1/getData/get-top-donors`
+      );
+      console.log(response);
+      const users = response.data.data;
+      console.log(users);
+      setTopContributorsData(response.data.data.topTenDonators);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
     }
+  };
 
-    useEffect(()=>{
-        getTopDonatorsDataFunc();
-    },[])
-  
-
-
+  useEffect(() => {
+    getTopDonatorsDataFunc();
+  }, []);
 
   // const topContributorsData = [
   //   { companyName: "Top Contributor 1", location: "Location 1" },
   //   { companyName: "Top Contributor 2", location: "Location 2" },
   //   { companyName: "Top Contributor 3", location: "Location 3" },
   // ];
-  const partnersData = [
-    { companyName: "Company 1", location: "Location 1" },
-    { companyName: "Company 2", location: "Location 2" },
-    { companyName: "Company 3", location: "Location 3" },
-    { companyName: "Company 4", location: "Location 4" },
-    { companyName: "Company 5", location: "Location 5" },
-    { companyName: "Company 6", location: "Location 6" },
-    { companyName: "Company 7", location: "Location 7" },
-    { companyName: "Company 8", location: "Location 8" },
-    { companyName: "Company 9", location: "Location 9" },
-    { companyName: "Company 10", location: "Location 10" },
-  ];
+  // const partnersData = [
+  //   { companyName: "Company 1", location: "Location 1" },
+  //   { companyName: "Company 2", location: "Location 2" },
+  //   { companyName: "Company 3", location: "Location 3" },
+  //   { companyName: "Company 4", location: "Location 4" },
+  //   { companyName: "Company 5", location: "Location 5" },
+  //   { companyName: "Company 6", location: "Location 6" },
+  //   { companyName: "Company 7", location: "Location 7" },
+  //   { companyName: "Company 8", location: "Location 8" },
+  //   { companyName: "Company 9", location: "Location 9" },
+  //   { companyName: "Company 10", location: "Location 10" },
+  // ];
   return (
     <>
       <Navbar />
@@ -121,9 +117,9 @@ const LandingPage = () => {
         totalPeopleServedText="Total People Served"
       />
       <div className="flex flex-col bg-gray-100  pb-10 ">
-        <div className="wrapper pb-10 mt-28 lg:mt-32 mb-8 md:font-extrabold font-bold lg:text-7xl md:text-6xl text-5xl flex flex-col items-start">
-          <div className="text-[#261750]">Our Partners</div>
-          <div className="text-[#ff4c70]">Across Nepal</div>
+        <div className="wrapper  pb-10 mt-28 lg:mt-32 mb-8 md:font-extrabold font-bold lg:text-7xl md:text-6xl text-5xl flex flex-col items-start">
+          <div className="text-[#261750] self-center">Our Partners</div>
+          <div className="text-[#ff4c70] self-center">Across Nepal</div>
         </div>
 
         <AutoScrollPartners topContributorsData={topContributorsData} />
