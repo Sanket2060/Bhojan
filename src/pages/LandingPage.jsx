@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
@@ -8,12 +8,36 @@ import FoodDonation from "../assets/FoodDonation.jpg";
 import AutoScrollPartners from "../components/PartnerArea";
 import LandingpageLeaderboard from "../components/LandingpageLeaderboard";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const LandingPage = () => {
-  const topContributorsData = [
-    { companyName: "Top Contributor 1", location: "Location 1" },
-    { companyName: "Top Contributor 2", location: "Location 2" },
-    { companyName: "Top Contributor 3", location: "Location 3" },
-  ];
+  const [topContributorsData,setTopContributorsData]=useState([]);
+  const getTopDonatorsDataFunc=async()=>{
+    try {
+        const response = await axios.get(
+          `http://localhost:9005/api/v1/getData/get-top-donors`
+        );
+        console.log(response);
+        const users = response.data.data;
+        console.log(users)
+        setTopContributorsData(response.data.data.topTenDonators);
+      }
+      catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+
+    useEffect(()=>{
+        getTopDonatorsDataFunc();
+    },[])
+  
+
+
+
+  // const topContributorsData = [
+  //   { companyName: "Top Contributor 1", location: "Location 1" },
+  //   { companyName: "Top Contributor 2", location: "Location 2" },
+  //   { companyName: "Top Contributor 3", location: "Location 3" },
+  // ];
   const partnersData = [
     { companyName: "Company 1", location: "Location 1" },
     { companyName: "Company 2", location: "Location 2" },
