@@ -163,6 +163,8 @@ const Volunteer = () => {
 
   useEffect(() => {
     getUsersPendingDistributions();
+    currentActiveListings();
+
   }, []);
   const handleToggle = () => {
     setOpen(!open);
