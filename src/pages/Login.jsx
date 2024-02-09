@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { login } from "../features/user/authslice";
 
 const Login = () => {
-  const { register, handleSubmit,formState } = useForm();
-  const [error,setError]=useState("")
-  const navigate=useNavigate();
-  const dispatch=useDispatch();
-
+  const { register, handleSubmit, formState } = useForm();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const loginUser = async ({ email, password }) => {
     console.log("At login");
@@ -27,16 +26,14 @@ const Login = () => {
         }
       );
       console.log(response);
-      console.log("Response.data.data.isDonor",response.data.data.isDonor);
-       dispatch(login(response.data.data));
-      if (response){
-      //also store user's data at redux toolkit
-        if (response.data.data.isDonor)
-        {
-          navigate('/donor');
-        }
-        else {
-          navigate('/volunteer');
+      console.log("Response.data.data.isDonor", response.data.data.isDonor);
+      dispatch(login(response.data.data));
+      if (response) {
+        //also store user's data at redux toolkit
+        if (response.data.data.isDonor) {
+          navigate("/donor");
+        } else {
+          navigate("/volunteer");
         }
       }
       // navigate(`/register/${response.data.data.username}/${response.data.data.email}/${params.userId}`);
@@ -68,11 +65,11 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-[#f8c9c9] ">
+    <div className="flex justify-center items-center h-screen bg-[#330000]  ">
       <div className="overflow-hidden  h-screen w-full">
-        <div className="h-[80vw] overflow-clip left-[-30vw] top-[-50vw] absolute bg-pink-100 rounded-full w-[80vw]"></div>
+        <div className="h-[80vw] overflow-clip left-[-30vw] top-[-50vw] absolute bg-[#73605B] rounded-full w-[80vw]"></div>
       </div>
-      <div className=" w-[100vw] h-screen justify-between sm:w-[28rem] pt-[15vh] p-10  sm:h-[40rem]  sm:p-20 shadow-xl z-10 absolute bg-[rgba(255,255,255,.8)] sm:rounded-3xl">
+      <div className=" w-[100vw] h-screen justify-between sm:w-[28rem] pt-[15vh] p-10  sm:h-[40rem]  sm:p-20 shadow-xl z-10 absolute bg-[rgba(255,255,255,.96)] sm:rounded-3xl">
         <h1 className="text-center text-3xl  font-semibold ">
           Log In to Khana
         </h1>
@@ -169,7 +166,7 @@ const Login = () => {
       </div>
 
       <div className="overflow-hidden relative h-screen w-full ">
-        <div className="h-[80vw] overflow-clip absolute right-[-30vw] bottom-[-50vw] bg-yellow-100 rounded-full w-[80vw]"></div>
+        <div className="h-[80vw] overflow-clip absolute right-[-30vw] bottom-[-50vw] bg-[#D09683] rounded-full w-[80vw]"></div>
       </div>
     </div>
   );

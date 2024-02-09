@@ -24,10 +24,16 @@ const Footer = () => {
         </Link>
         <hr className="w-9/12 mx-auto h-px my-8 bg-gray-200 border-0 dark:bg-white"></hr>
         <div className="flex flex-row gap-x-8 place-content-center pb-8">
-          <div>Our goal</div>
+          <div className="font-medium text-white hover:underline  hover:text-blue-200 transition duration-300 ease-in-out cursor-pointer">
+            Our goal
+          </div>
 
-          <div>Our impact</div>
-          <div>Contact us</div>
+          <div className="font-medium text-white hover:underline  hover:text-blue-200 transition duration-300 ease-in-out cursor-pointer">
+            Our impact
+          </div>
+          <div className="font-medium text-white hover:underline  hover:text-blue-200 transition duration-300 ease-in-out cursor-pointer">
+            Contact us
+          </div>
         </div>
         <div className="flex flex-row justify-center items-center">
           {icons.map((Icon, index) => (
@@ -40,9 +46,13 @@ const Footer = () => {
           ))}
         </div>
         <div className="flex flex-row gap-x-8 place-content-center pt-4 pb-8">
-          <div>Terms and Condition</div>
+          <div className="font-medium text-white hover:underline  hover:text-blue-200 transition duration-300 ease-in-out cursor-pointer">
+            Terms and Condition
+          </div>
 
-          <div>Liscence Agreement</div>
+          <div className="font-medium text-white hover:underline  hover:text-blue-200 transition duration-300 ease-in-out cursor-pointer">
+            Liscence Agreement
+          </div>
         </div>
       </div>
     </div>

@@ -76,8 +76,8 @@ const LandingPage = () => {
         <div className="wrapper flex flex-col lg:flex-row items-center justify-center">
           <div className="flex-grow-0 flex-shrink-0 w-full lg:w-1/3 xl:w-1/4">
             <div className="text-3xl text-left">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat
-              iure soluta reprehenderit.
+              In our journey to combat hunger, we're not just providing meals;
+              we're sowing seeds of change.
             </div>
           </div>
           <div className="flex flex-col items-center py-20 mx-auto">
@@ -142,6 +142,12 @@ const LandingPage = () => {
           </p>
           <ol className="text-left mt-6 list-decimal ml-4 text-lg">
             <li className="mb-3">
+              <span className="font-semibold text-[#261750]">Leaderboard:</span>{" "}
+              We have a leaderboard to recognize and appreciate the efforts of
+              those who donate the most. It helps build a sense of community and
+              encourages more donations.
+            </li>
+            <li className="mb-3">
               <span className="font-semibold text-[#261750]">Sign Up:</span>{" "}
               Organizations and volunteers can easily sign up on our platform to
               become a part of the community.
@@ -163,12 +169,6 @@ const LandingPage = () => {
               <span className="font-semibold text-[#261750]">Pickup:</span> Once
               booked, the volunteer or organization can pick up the excess food
               for free and distribute it to those in need.
-            </li>
-            <li className="mb-3">
-              <span className="font-semibold text-[#261750]">Leaderboard:</span>{" "}
-              We have a leaderboard to recognize and appreciate the efforts of
-              those who donate the most. It helps build a sense of community and
-              encourages more donations.
             </li>
           </ol>
           <p className=" mt-6 text-gray-700 text-xl">
