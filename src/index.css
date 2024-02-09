@@ -3,7 +3,12 @@
 @tailwind utilities;
 @layer utilities{ 
     .wrapper {
-        @apply max-w-7xl lg:mx-auto p-5 md:px-10 xl:px-0 ;}
+      @apply max-w-7xl lg:mx-auto p-5 md:px-10 xl:px-0 ;
+    }
+    .link{
+      @apply font-medium text-gray-800 hover:underline  hover:text-blue-700 transition duration-300 ease-in-out;
+    }
+    
 }
 @layer base {
     input[type="number"]::-webkit-inner-spin-button,

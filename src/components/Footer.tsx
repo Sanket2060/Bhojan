@@ -11,7 +11,7 @@ const Footer = () => {
     <div className="overflow-hidden ">
       <div className="flex flex-col relative  bg-[#332163] text-white w-[160%] rounded-tr-[60%] rounded-tl-[50%] left-[-30%] lg:w-[110%] lg:rounded-tr-[90%] lg:rounded-tl-[60%] lg:left-[-5%] ">
         <div className="p-20"></div>
-        <div className="font-extrabold text-xl lg:text-3xl pt-10 text-center">
+        <div className="font-extrabold text-xl md:text-3xl lg:text-3xl  text-center">
           Connecting Plates, Eliminating Waste
           <br />
           Every Bite Rescued makes a Difference
