@@ -220,6 +220,7 @@ const Donor = () => {
   }
 
   const completeOrderForDonor=async(_id)=>{
+    console.log("_id for completing order is:",_id);
     try {
       const response = await axios.post(
         `http://localhost:9005/api/v1/order/completed-order-for-donor`,{

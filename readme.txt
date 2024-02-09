@@ -10,3 +10,4 @@ shadcn ui
 Problems:
 -cookie ma problem xa->Cookie null xa
 -Frontend validation navai backend(api) call vayo
+-Major inconsistency in accessing api's 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const CompletedDistribution = ({ completedItems }) => {
@@ -15,6 +15,10 @@ const CompletedDistribution = ({ completedItems }) => {
   const handleShowLessClick = () => {
     setShowMore(false);
   };
+  useEffect(()=>{
+    console.log(itemsToShow);
+  },[itemsToShow])
+  
 
   return (
     <div>
@@ -23,7 +27,8 @@ const CompletedDistribution = ({ completedItems }) => {
         <p className="text-gray-500">No completed distributions.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {itemsToShow.map((item, index) => (
+          {itemsToShow.map((item, index) => 
+          (
             <div key={index} className="mb-8 p-4 bg-green-100 rounded-md">
               <h2 className="text-lg font-medium text-gray-900">
                 {item.title}{" "}
@@ -31,9 +36,9 @@ const CompletedDistribution = ({ completedItems }) => {
                   {item.plates} Plates
                 </span>
               </h2>
-              <p>Name: {item.name}</p>
-              <p>Location: {item.location}</p>
-              <p>Number: {item.number}</p>
+              <p>Name: {item.order.title}</p>
+              <p>Location: {item.order.address}</p>
+              <p>Number: {item.order.contact}</p>
             </div>
           ))}
         </div>
