@@ -19,7 +19,7 @@
 // const App = () => {
 //   return (
 //     <div>
-      
+
 //       {/* ToastContainer for Toastify */}
 //       <ToastContainer />
 
@@ -68,6 +68,7 @@ import OTP from "./pages/OTP";
 import Register from "./pages/Register";
 import NewProfile from "./pages/newprofile";
 import ProtectedRoute from "./pages/Protected";
+import HelpUs from "./pages/HelpUs";
 
 const App = () => {
   return (
@@ -79,26 +80,36 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/landingpage" element={<LandingPage />} />
-        <Route path="/donor" element={
-          <ProtectedRoute authentication={true}>
-            <Donor/>
-          </ProtectedRoute>
-        }/>
-        <Route path="/volunteer" element={
-          <ProtectedRoute authentication={true}>
-            <Volunteer/>
-          </ProtectedRoute>
-        }/>
+        <Route
+          path="/donor"
+          element={
+            <ProtectedRoute authentication={true}>
+              <Donor />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/volunteer"
+          element={
+            <ProtectedRoute authentication={true}>
+              <Volunteer />
+            </ProtectedRoute>
+          }
+        />
         {/* <ProtectedRoute path="/donor" element={<Donor />} /> */}
         {/* <ProtectedRoute path="/volunteer" element={<Volunteer />} /> */}
         <Route path="*" element={<NotFound />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         {/* <Route path="/profile" element={<Profile />} /> */}
-        <Route path="/newprofile" element={
-        <ProtectedRoute>
-        <NewProfile /> 
-        </ProtectedRoute>}/>
+        <Route
+          path="/newprofile"
+          element={
+            <ProtectedRoute>
+              <NewProfile />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
 
@@ -109,15 +120,16 @@ const App = () => {
           path="/register/:username/:email/:userId"
           element={<Register />}
         />
-
+        <Route path="/helpus" element={<HelpUs />} />
 
         <Route path="/otp/:userId" element={<OTP />} />
-        <Route path="/register/:username/:email/:userId" element={<Register />} />
-
+        <Route
+          path="/register/:username/:email/:userId"
+          element={<Register />}
+        />
       </Routes>
     </div>
   );
 };
 
 export default App;
-
