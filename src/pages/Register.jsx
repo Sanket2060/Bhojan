@@ -3,15 +3,15 @@ import avatar from "../assets/profilepic.jpg";
 import profilepic from "../assets/profilepic.jpg";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { login } from '../features/user/authslice';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "../features/user/authslice";
 const Register = () => {
   const { register, handleSubmit, formState } = useForm();
   const params = useParams();
   const navigate = useNavigate();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const [error, setError] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
@@ -48,12 +48,10 @@ const Register = () => {
       setError("");
       console.log(response.data.data.isDonor);
       dispatch(login(response.data.data));
-      if (response.data.data.isDonor)
-      {
-        navigate('/donor');
-      }
-      else {
-        navigate('/volunteer');
+      if (response.data.data.isDonor) {
+        navigate("/donor");
+      } else {
+        navigate("/volunteer");
       }
     } catch (error) {
       console.log("Error:", error);
@@ -88,11 +86,11 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-[#f8c9c9]">
+    <div className="flex justify-center items-center h-screen  bg-[#73605B]">
       <div className="overflow-hidden  h-screen w-full">
-        <div className="h-[80vw] overflow-clip left-[-30vw] top-[-50vw] absolute bg-pink-100 rounded-full w-[80vw]"></div>
+        <div className="h-[80vw] overflow-clip left-[-30vw] top-[-50vw] absolute bg-gray-300 rounded-full w-[80vw]"></div>
       </div>
-      <div className="w-[100vw]  justify-between sm:w-[30rem] pt-[15vh] p-10  sm:h-[60rem]  sm:p-20 shadow-xl z-10 absolute bg-[rgba(255,255,255,.8)] sm:rounded-3xl">
+      <div className="w-[100vw]  justify-between sm:w-[30rem] pt-[15vh] p-10 h-screen sm:max-h-[50rem]  sm:p-20 shadow-xl z-10 absolute bg-[rgba(255,255,255,.96)] sm:rounded-3xl overflow-auto">
         <h1 className="text-center text-3xl font-semibold ">
           Register to Khana
         </h1>
@@ -130,7 +128,7 @@ const Register = () => {
                 console.log(e.target.value);
                 // setUserUpload(e.target.value)
               }}
-              {...register('profilepic', {
+              {...register("profilepic", {
                 // validate: {
                 //   validFileFormat: (value) => {
                 //     // Custom validation logic for file format
@@ -273,7 +271,7 @@ const Register = () => {
           </div>
         </form>
 
-        <div className="Error mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600">
+        <div className="Error mt-8  p-2 rounded-md  text-sm font-light text-red-600">
           {error}
         </div>
       </div>
