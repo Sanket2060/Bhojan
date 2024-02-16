@@ -14,7 +14,7 @@ const LandingpageLeaderboard = ({ topContributors }) => {
   };
 
   return (
-    <div className="flex flex-col bg-gray-100 pt-10">
+    <div className="flex flex-col bg-gray-100 pt-10 dark:bg-[#1F1A24]">
       {topContributors?.map((contributor, index) =>
         index <= 2 ? (
           <div
@@ -40,9 +40,10 @@ const LandingpageLeaderboard = ({ topContributors }) => {
                   alt="Contributor"
                   onLoad={handleImageLoad}
                   style={{
-                    height: imageHeight && imageHeight < 900
-                      ? `${imageHeight}px`
-                      : "100%"
+                    height:
+                      imageHeight && imageHeight < 900
+                        ? `${imageHeight}px`
+                        : "100%",
                   }}
                 />
               </div>
@@ -56,13 +57,15 @@ const LandingpageLeaderboard = ({ topContributors }) => {
                 <div className="text-2xl text-[#ff4c70] font-bold">
                   {contributor.name}
                 </div>
-                <div className="text-xl text-grey-600">
+                <div className="text-xl text-grey-600 dark:text-gray-200">
                   {contributor.address}
                 </div>
               </div>
             </div>
           </div>
-        ) : <span key={index}></span>
+        ) : (
+          <span key={index}></span>
+        )
       )}
     </div>
   );

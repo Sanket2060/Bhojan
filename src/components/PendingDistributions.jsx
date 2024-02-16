@@ -9,29 +9,24 @@ const PendingDistributions = ({
   isDonorPage,
   onCompleteProp,
   cancelOrder,
-  completeOrder
+  completeOrder,
 }) => {
   const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
   const [canceledItemIndex, setCanceledItemIndex] = React.useState(null);
   const [isCompleteConfirmationOpen, setCompleteConfirmationOpen] =
     React.useState(false);
   const [completedItemIndex, setCompletedItemIndex] = React.useState(null);
-  const [cancellingItemOrderId,setCancellingItemOrderId]=useState('');
-  const [completingItemOrderId,setCompletingItemOrderId]=useState('');
+  const [cancellingItemOrderId, setCancellingItemOrderId] = useState("");
+  const [completingItemOrderId, setCompletingItemOrderId] = useState("");
   useEffect(() => {
     console.log("Pending Items:", pendingItems);
   }, [pendingItems]);
-
-
 
   const openConfirmation = (index) => {
     setCanceledItemIndex(index);
     setConfirmationOpen(true);
     // setCancellingItemOrderId(item._id);
   };
-
-
-  
 
   const onConfirmCancel = () => {
     // const canceledItem = pendingItems[canceledItemIndex];
@@ -51,7 +46,6 @@ const PendingDistributions = ({
     setCompletedItemIndex(index);
     setCompleteConfirmationOpen(true);
     completeOrder(completingItemOrderId);
-
   };
 
   const onConfirmComplete = () => {
@@ -69,7 +63,9 @@ const PendingDistributions = ({
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-4">Pending Distributions</h1>
+      <h1 className="text-3xl font-bold mb-4 dark:text-gray-200">
+        Pending Distributions
+      </h1>
       {pendingItems.length === 0 ? (
         <p className="text-gray-500">No pending distributions.</p>
       ) : (
@@ -77,9 +73,9 @@ const PendingDistributions = ({
           {pendingItems.map((item, index) => (
             <div
               key={index}
-              className="mb-8 p-4 bg-yellow-100 rounded-md relative"
+              className="mb-8 p-4 bg-yellow-100 dark:bg-stone-700 rounded-md relative"
             >
-              <h2 className="text-lg font-medium text-gray-900">
+              <h2 className="text-lg font-medium text-gray-900 dark:text-gray-200">
                 {item.order ? item.order?.title : item.title}{" "}
                 <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
                   {item.order
@@ -88,10 +84,16 @@ const PendingDistributions = ({
                   Plates
                 </span>
               </h2>
-              <p>Name: {item.order ? item.order?.title : item.title}</p>
-              <p>Location: {item.order ? item.order?.address : item.address}</p>
-              <p>Contact: {item.order ? item.order?.contact : item.contact}</p>
-              <p>
+              <p className="dark:text-gray-200">
+                Name: {item.order ? item.order?.title : item.title}
+              </p>
+              <p className="dark:text-gray-200">
+                Location: {item.order ? item.order?.address : item.address}
+              </p>
+              <p className="dark:text-gray-200">
+                Contact: {item.order ? item.order?.contact : item.contact}
+              </p>
+              <p className="dark:text-gray-200">
                 Closing Time:{" "}
                 {item.order ? item.order?.closingTime : item.closingTime} hrs
               </p>
@@ -100,14 +102,12 @@ const PendingDistributions = ({
               <div className="absolute top-1/3 right-5 transform -translate-y-1/2">
                 {isDonorPage && (
                   <Button
-                    onClick={() => 
-                      {
-
-                        handleCompleteClick(index)
-                        setCompletingItemOrderId(item.order ? item.order?._id : item._id)
-                      }
-                    }
-
+                    onClick={() => {
+                      handleCompleteClick(index);
+                      setCompletingItemOrderId(
+                        item.order ? item.order?._id : item._id
+                      );
+                    }}
                     variant="complete"
                     text=""
                   />
@@ -115,9 +115,11 @@ const PendingDistributions = ({
               </div>
               <div className="flex justify-center mt-4">
                 <Button
-                  onClick={() =>{ 
-                    openConfirmation(index)
-                    setCancellingItemOrderId(item.order ? item.order?._id : item._id)
+                  onClick={() => {
+                    openConfirmation(index);
+                    setCancellingItemOrderId(
+                      item.order ? item.order?._id : item._id
+                    );
                   }}
                   variant="cancel"
                   text="Cancel"
@@ -130,7 +132,9 @@ const PendingDistributions = ({
       <Confirmation
         isOpen={isConfirmationOpen}
         onClose={closeCancelConfirmation}
-        onConfirm={()=>{onConfirmCancel()}}
+        onConfirm={() => {
+          onConfirmCancel();
+        }}
         message="Are you sure you want to CANCEL?"
       />
       <Confirmation

@@ -34,7 +34,7 @@ const Leaderboard = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <div className="bg-white to-orange-400 p-8 pt-20 ">
+      <div className="bg-white to-orange-400 p-8 pt-20 dark:bg-[#121212]">
         <header>
           <nav className="rounded-lg overflow-hidden transition duration-300 ease-in-out shadow-xl w-full h-10 mb-3">
             <div className="font-[Poppins] font-bold">
@@ -43,7 +43,7 @@ const Leaderboard = () => {
                   className={`text-xl flex-none  relative transition duration-300 ease-in-out hover:bg-gray-700 hover:text-white xl rounded-lg ${
                     activeSection === "organizations"
                       ? "bg-gray-700 text-white"
-                      : ""
+                      : "dark:text-white"
                   }`}
                 >
                   <a
@@ -57,8 +57,8 @@ const Leaderboard = () => {
                 <li
                   className={`flex text-xl items-center relative transition duration-300 ease-in-out hover:bg-gray-700 hover:text-white xl rounded-lg ${
                     activeSection === "volunteer"
-                      ? "bg-gray-700 text-white"
-                      : ""
+                      ? "bg-gray-700 text-white "
+                      : "dark:text-white"
                   }`}
                 >
                   <a
@@ -148,7 +148,7 @@ const Leaderboard = () => {
           </table>
         )}
       </div>
-      <div className="pt-20">
+      <div className="pt-20 dark:bg-[#121212]">
         <Footer />
       </div>
     </div>

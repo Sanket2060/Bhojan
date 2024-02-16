@@ -21,7 +21,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
   return (
     <section>
       {isMobile && (
-       <div className="fixed top-0 right-0 p-3 py-3">
+        <div className="fixed top-0 right-0 p-3 py-3">
           <HiMenuAlt3
             size={24}
             className="cursor-pointer text-gray-400 hover:text-gray-500"
@@ -30,8 +30,8 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
         </div>
       )}
       {isMobile && isOpen && (
-        <div className="fixed inset-0 bg-[#ddd4d4] z-50 p-5 font-semibold text-xl overflow-y-auto">
-          <div className="flex justify-between items-center wrapper">
+        <div className="fixed inset-0 bg-[#ddd4d4] z-50 p-5 font-semibold text-xl overflow-y-auto dark:bg-stone-800 ">
+          <div className="flex justify-between items-center wrapper dark:text-gray-200">
             <p>Khana.com</p>
             <HiMenuAlt3
               size={26}
@@ -40,7 +40,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
             />
           </div>
           <div
-            className={`mt-4 flex flex-col gap-4 justify-end right-0 ${
+            className={`mt-4 flex flex-col gap-4 justify-end right-0 dark:text-gray-200 ${
               !open && "hidden"
             }`}
           >
@@ -51,7 +51,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 className={` ${
                   menu?.margin &&
                   "pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4"
-                } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md `}
+                } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:text-gray-200 dark:hover:bg-stone-600`}
                 onClick={() => {
                   // e.preventDefault();
                   console.log("Clicked");
@@ -60,7 +60,6 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                   }
                 }}
               >
-
                 <div>{React.createElement(menu.icon, { size: "20" })}</div>
                 <h2 className={`whitespace-pre  ${!open && "translate-x-28"}`}>
                   {menu?.name}
@@ -70,7 +69,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
           </div>
         </div>
       )}
-       {!isMobile && (
+      {!isMobile && (
         <div className="fixed top-0 left-0 p-3">
           <HiMenuAlt3
             size={24}
@@ -81,27 +80,30 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
       )}
       {!isMobile && (
         <div
-        className={`min-h-screen ${
-          isOpen ? "w-72 bg-[#ddd4d4]" : " hidden"
-        } duration-500 px-4 flex flex-col font-semibold p-1 overflow-y-auto fixed`}
-      >
+          className={`min-h-screen ${
+            isOpen ? "w-72 bg-[#ddd4d4]" : " hidden"
+          } duration-500 px-4 flex flex-col font-semibold p-1 overflow-y-auto fixed dark:bg-stone-800 `}
+        >
           <div className="  py-3 flex justify-between items-center">
-            <p
-              className={`font-bold text-xl cursor-pointer ${
+            <Link
+              to="/"
+              className={`font-bold text-xl cursor-pointer dark:text-gray-200 ${
                 !open && "hidden"
               }`}
               // onClick={handleToggle}
             >
               Khana
-            </p>
+            </Link>
             <HiMenuAlt3
               size={26}
-              className="cursor-pointer"
+              className="cursor-pointer dark:text-gray-200"
               onClick={handleToggle}
             />
           </div>
           <div
-            className={`mt-4 flex flex-col gap-4 relative ${!open && "hidden"}`}
+            className={`mt-4 flex flex-col gap-4 dark:text-gray-200 relative ${
+              !open && "hidden"
+            }`}
           >
             <div className="mt-4 flex flex-col gap-4 justify-end right-0">
               {menus?.map((menu, i) => (
@@ -111,7 +113,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                   className={` ${
                     menu?.margin &&
                     "pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4"
-                  } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md`}
+                  } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600`}
                 >
                   <div>{React.createElement(menu.icon, { size: "20" })}</div>
                   <h2

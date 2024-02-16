@@ -3,7 +3,7 @@ import { PiBowlFoodFill } from "react-icons/pi";
 import { BsPeopleFill } from "react-icons/bs";
 import { FaPeopleCarry } from "react-icons/fa";
 
- const Accomplishment = ({
+const Accomplishment = ({
   totalFoodSaved: initialTotalFoodSaved,
   ourCommunity: initialOurCommunity,
   totalPeopleServed: initialTotalPeopleServed,
@@ -59,12 +59,16 @@ import { FaPeopleCarry } from "react-icons/fa";
   };
 
   return (
-    <div className="text-center bgo-[#332163] bg-gradient-to-l from-[#ffafbd] to-[#ffc3a0] 
-     text-[#332163]" ref={intersectionRef}>
+    <div
+      className="text-center  bg-gradient-to-l from-[#ffafbd] to-[#ffc3a0] dark:bg-gradient-to-l dark:from-[#3a3031] dark:to-[#242120]
+     text-[#332163] dark:text-white"
+      ref={intersectionRef}
+    >
       <div className="p-10">
-        {//<h2 className="text-3xl font-bold mb-4 pb-10 ">Accomplishments</h2>
+        {
+          //<h2 className="text-3xl font-bold mb-4 pb-10 ">Accomplishments</h2>
         }
-        
+
         <div className="lg:flex justify-around">
           <div className="flex flex-col">
             <div className="self-center p-5">
@@ -93,4 +97,4 @@ import { FaPeopleCarry } from "react-icons/fa";
   );
 };
 
-export default Accomplishment
+export default Accomplishment;

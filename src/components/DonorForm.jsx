@@ -7,7 +7,7 @@ import PendingDistributions from "./PendingDistributions";
 
 const DonorForm = ({ onFormSubmit }) => {
   const [showForm, setShowForm] = useState(true);
-  const { register, handleSubmit,formState } = useForm();
+  const { register, handleSubmit, formState } = useForm();
 
   const handleCancel = () => {
     setShowForm(false);
@@ -52,12 +52,9 @@ const DonorForm = ({ onFormSubmit }) => {
       foodItem: "",
       quantity: "",
       expirationTime: "",
-    })
+    });
     try {
-      
-    } catch (error) {
-      
-    }
+    } catch (error) {}
     toast.success("Listing Posted");
     // Additional logic if needed after form submission
   };
@@ -71,26 +68,27 @@ const DonorForm = ({ onFormSubmit }) => {
     }
   };
 
-  const createOrder=()=>{
-
-  }
+  const createOrder = () => {};
 
   return (
     <div>
       {showForm ? (
         <>
-          <div className="max-w-md mx-auto mt-8 p-4 bg-gray-50 rounded-md">
-            <h1 className="text-2xl font-bold mb-4">Publish Listing</h1>
-            <form onSubmit={()=>{
-              // handleSubmit(createOrder)
-              handleSubmits()
-            }
-            }>
+          <div className="max-w-md mx-auto mt-8 p-4 bg-gray-50 rounded-md dark:bg-[#1F1A24]  ">
+            <h1 className="text-2xl font-bold mb-4 dark:text-gray-100 ">
+              Publish Listing
+            </h1>
+            <form
+              onSubmit={() => {
+                // handleSubmit(createOrder)
+                handleSubmits();
+              }}
+            >
               {/* form components */}
-              <div className="mb-4">
+              <div className="mb-4 ">
                 <label
                   htmlFor="title"
-                  className="block text-sm font-semibold text-gray-600"
+                  className="block text-sm font-semibold text-gray-600 dark:text-gray-100"
                 >
                   Title
                 </label>
@@ -100,7 +98,7 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="title"
                   value={formData.title}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border-collapse rounded-md dark:bg-gray-700 dark:text-gray-100"
                   required
                 />
               </div>
@@ -109,7 +107,7 @@ const DonorForm = ({ onFormSubmit }) => {
               <div className="mb-4">
                 <label
                   htmlFor="foodItem"
-                  className="block text-sm font-semibold text-gray-600"
+                  className="block text-sm font-semibold text-gray-600 dark:text-gray-100"
                 >
                   Food Item
                 </label>
@@ -119,7 +117,7 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="foodItem"
                   value={formData.foodItem}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border-collapse rounded-md dark:bg-gray-700 dark:text-gray-100"
                   required
                 />
               </div>
@@ -128,7 +126,7 @@ const DonorForm = ({ onFormSubmit }) => {
               <div className="mb-4">
                 <label
                   htmlFor="quantity"
-                  className="block text-sm font-semibold text-gray-600"
+                  className="block text-sm font-semibold text-gray-600 dark:text-gray-100 "
                 >
                   Quantity (Plates)
                 </label>
@@ -138,7 +136,7 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="quantity"
                   value={formData.quantity}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full  border-collapse rounded-md dark:bg-gray-700 dark:text-gray-100"
                   required
                 />
               </div>
@@ -147,7 +145,7 @@ const DonorForm = ({ onFormSubmit }) => {
               <div className="mb-4">
                 <label
                   htmlFor="expirationTime"
-                  className="block text-sm font-semibold text-gray-600"
+                  className="block text-sm font-semibold text-gray-600 dark:text-gray-100"
                 >
                   Available until
                 </label>
@@ -157,20 +155,24 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="expirationTime"
                   value={formData.expirationTime}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full  border-collapse rounded-md dark:bg-gray-700 dark:text-gray-100"
                   required
                 />
               </div>
-              <div className="flex justify-center items-center ">
+              <div className="flex justify-center items-center  ">
+                {localStorage.theme === "dark"
+                  ? console.log("darktheme")
+                  : console.log("lighttheme")}
                 {isRecaptchaLoaded ? (
                   <ReCAPTCHA
                     sitekey="6LeVh08pAAAAAGFv8aKqbVg0H5X5FpZi5XhZPHUo"
                     onChange={handleRecaptchaChange}
+                    theme={localStorage.theme === "dark" ? "dark" : "light"}
                   />
                 ) : (
                   <div className="recaptcha-loading">
                     <div className="spinner-border" role="status">
-                      <span className="visually-hidden">
+                      <span className="visually-hidden dark:text-gray-400">
                         Loading reCAPTCHA...
                       </span>
                     </div>
@@ -181,23 +183,23 @@ const DonorForm = ({ onFormSubmit }) => {
               <ToastContainer />
               {/* Submit Button */}
               <div className="flex justify-center items-center mt-4">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-6 py-3 rounded-full text-lg font-semibold "
-                // disabled={!capVal}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleSubmits();
-                  handleButtonClick();
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white  px-6 py-3 rounded-full text-lg font-semibold "
+                  // disabled={!capVal}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSubmits();
+                    handleButtonClick();
 
-                  // if (capVal) {
-                  // } else {
-                  // console.error("reCAPTCHA validation failed");
-                  // }
-                }}
-              >
-                Post Listing
-              </button>
+                    // if (capVal) {
+                    // } else {
+                    // console.error("reCAPTCHA validation failed");
+                    // }
+                  }}
+                >
+                  Post Listing
+                </button>
               </div>
               {/* <Button onClick={handleCancel} variant="cancel" text="Cancel" /> */}
             </form>

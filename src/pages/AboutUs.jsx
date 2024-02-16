@@ -76,17 +76,17 @@ function AboutUsme(props) {
   const twitter6 = "https://www.twitter.com/";
 
   return (
-    <>
+    <div className="dark:bg-[#121212]">
       <Navbar />
-      <div className="mb-10 wrapper">
-        <div className="bg-violet-100 rounded-full text-6xl text-custom text-center font-bold p-5 hover:text-violet-600">
+      <div className="pb-10 wrapper dark:bg-[#121212]">
+        <div className="bg-violet-100 dark:bg-gray-800 dark:text-gray-200 rounded-full text-6xl text-custom text-center font-bold p-5 hover:text-violet-600">
           About Us
         </div>
         <div className="mt-6 p-5">
-          <span className="text-4xl font-bold text-blue-600 ">
+          <span className="text-4xl font-bold text-blue-600 dark:text-blue-200 ">
             Introduction
           </span>
-          <span className="text-xl block font-light pt-5 pb-5">
+          <span className="text-xl block font-light pt-5 pb-5 dark:text-gray-200">
             Our mission addresses the issue of food wastage occurring daily in
             hotels, party venues, and similar establishments. Simultaneously, we
             recognize that there are economically disadvantaged individuals who
@@ -109,7 +109,7 @@ function AboutUsme(props) {
         </div>
 
         <div>
-          <span className="text-lime-600 font-bold text-3xl p-5 ">
+          <span className="text-lime-600 font-bold text-3xl p-5 dark:text-lime-200">
             Meet Our Teams
           </span>
           <div className="grid grid-cols-1 md:grid-cols-2 mt-4  pt-5 lg:grid-cols-3 gap-8">
@@ -175,11 +175,11 @@ function AboutUsme(props) {
         </div>
 
         <br />
-        <div className="p-5 ">
-          <span className="text-blue-700 font-bold text-4xl md-5 font">
+        <div className="p-5 dark:bg-[#121212] dark:text-gray-200">
+          <span className="text-blue-700 dark:text-blue-200 font-bold text-4xl md-5 font">
             Description
           </span>
-          <span className="block mb-10 text-xl mt-2 font-light pt-5">
+          <span className="block mb-10 text-xl mt-2 font-light pt-5 ">
             We, the students of Pokhara University B Block, are proud to be the
             hosting team for this website. Our dedicated teams are working
             tirelessly to ensure the success of this project, which is geared
@@ -199,7 +199,7 @@ function AboutUsme(props) {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 AboutUsme.propTypes = {};

@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import ReCAPTCHA from "react-google-recaptcha";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 // import Button from "./Button";
 
 import { toast, ToastContainer } from "react-toastify";
 
-function AccordionItem({ item, index, expanded, onToggle, onDistribute,getUsersPendingDistributions,retainAllData }) {
+function AccordionItem({
+  item,
+  index,
+  expanded,
+  onToggle,
+  onDistribute,
+  getUsersPendingDistributions,
+  retainAllData,
+}) {
   const [countdown, setCountdown] = useState(5 * 60); // 5 minutes in seconds
   const [capVal, setCapVal] = useState(null);
   const userDetails = useSelector((state) => state.auth.userDetails);
@@ -54,16 +62,16 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute,getUsersP
 
   const handleButtonClick = async () => {
     // if (!capVal) {
-      console.error("reCAPTCHA validation failed");
-      // Simulating server-side verification delay
-      // await new Promise((resolve) => setTimeout(resolve, 2000));
-      onDistribute(index);
-      onToggle(index);
-      toast.success("Distribution successful!");
-      addDistributorToOrder();
-      // getUsersPendingDistributions();
-      retainAllData();
-      return;
+    console.error("reCAPTCHA validation failed");
+    // Simulating server-side verification delay
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+    onDistribute(index);
+    onToggle(index);
+    toast.success("Distribution successful!");
+    addDistributorToOrder();
+    // getUsersPendingDistributions();
+    retainAllData();
+    return;
     // }
   };
 
@@ -81,33 +89,33 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute,getUsersP
     shadow: "shadow-md",
   };
 
-  const addDistributorToOrder=async()=>{
+  const addDistributorToOrder = async () => {
     try {
-      const response=await axios.post('http://localhost:9005/api/v1/order/add-distributor-to-order',{
-          _id:userDetails._id,
-          _orderId:item._id  //yei nai ho sure??
-        },{
+      const response = await axios.post(
+        "http://localhost:9005/api/v1/order/add-distributor-to-order",
+        {
+          _id: userDetails._id,
+          _orderId: item._id, //yei nai ho sure??
+        },
+        {
           headers: {
-            'Content-Type': 'application/json',  //says data at body is at json format
+            "Content-Type": "application/json", //says data at body is at json format
           },
           withCredentials: true, // Send cookies with the request
-        })
-      console.log("Distributor added to order successfully",response);
+        }
+      );
+      console.log("Distributor added to order successfully", response);
       console.log(response.data.data);
       // setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
-      
-      
     } catch (error) {
-      console.log("Error at listing active orders at donor",error);
+      console.log("Error at listing active orders at donor", error);
     }
-  }
-
-  
+  };
 
   return (
     <div
-      className={`${expanded ? "bg-green-50 p-2 overflow-hidden" : ""}${
+      className={`${expanded ? "bg-green-50  p-2 overflow-hidden" : ""}${
         containerStyle.backgroundColor
       } ${containerStyle.shadow} ${""}`}
     >
@@ -171,9 +179,9 @@ function AccordionItem({ item, index, expanded, onToggle, onDistribute,getUsersP
                 onClick={() => {
                   toast.success("Alerted Donor - Pending Distribution");
                   // if (capVal) {
-                    handleButtonClick();
+                  handleButtonClick();
                   // } else {
-                    // console.error("reCAPTCHA validation failed");
+                  // console.error("reCAPTCHA validation failed");
                   // }
                 }}
               >
