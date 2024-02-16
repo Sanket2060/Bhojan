@@ -115,22 +115,22 @@ function AccordionItem({
 
   return (
     <div
-      className={`${expanded ? "bg-green-50  p-2 overflow-hidden" : ""}${
+      className={`${expanded ? "bg-green-50  overflow-hidden " : ""}${
         containerStyle.backgroundColor
       } ${containerStyle.shadow} ${""}`}
     >
       <button
-        className="flex items-center justify-between w-full py-3 px-4 bg-gray-50 hover:bg-gray-200 focus:outline-none focus:ring-0 relative"
+        className="flex items-center justify-between w-full py-3 px-4 bg-gray-50 hover:bg-gray-200 focus:outline-none focus:ring-0 relative dark:bg-[#1F1A24]"
         onClick={() => onToggle(index)}
       >
-        <span className="text-lg font-medium text-gray-900">
+        <span className="text-lg font-medium text-gray-900 dark:text-gray-200">
           {item.address}{" "}
           <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
             {item.foodForNumberOfPeople} Plates
           </span>
         </span>
         <svg
-          className={`w-4 h-4 ml-2 ${
+          className={`w-4 h-4 ml-2  ${
             expanded ? "text-indigo-500 rotate-180" : "text-gray-400"
           }`}
           fill="currentColor"
@@ -145,14 +145,14 @@ function AccordionItem({
         </svg>
       </button>
       {expanded && (
-        <div className="p-4 ml-4">
+        <div className="p-4  dark:bg-[#1F1A24] dark:text-gray-50">
           {/* Content of the accordion item */}
           <p>Name: {item.title}</p>
           <p>Location: {item.address}</p>
           <p>Number: {item.contact}</p>
           <p>Closing Time: {item.closingTime}</p>
 
-          <div className="flex justify-between items-center text-xs text-gray-500 mt-2 p-2">
+          <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-200 mt-2 p-2">
             <p>Listed on: {item.listedOn}</p>
             <p>
               Booked for: {Math.floor(countdown / 60)}:{countdown % 60} minutes
@@ -174,7 +174,7 @@ function AccordionItem({
 
             <div className="items-end mt-4 sm:mt-0">
               <button
-                className="bg-blue-500 text-white py-2 px-4 sm:py-4 sm:px-7 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 cursor-pointer"
+                className="bg-blue-500 text-white py-2 px-4 sm:py-4 sm:px-7 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 cursor-pointer "
                 // disabled={!capVal}
                 onClick={() => {
                   toast.success("Alerted Donor - Pending Distribution");
