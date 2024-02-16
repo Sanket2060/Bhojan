@@ -54,7 +54,7 @@ const LandingPage = () => {
       <div className="overflow-x-clip hidden lg:block dark:bg-[#121212]">
         <div className="relative ">
           <img
-            className="absolute z-[] lg:w-9/12  lg:right-[-25%]  lg:top-[calc(42rem-0.4*100vw)] dark:bg-[#121212] dark:opacity-70 "
+            className="absolute z-[] lg:w-9/12  lg:right-[-25%]  lg:top-[calc(42rem-0.4*100vw)] dark:bg-[#121212] dark:opacity-90 "
             src={FoodDonation}
           ></img>
         </div>
