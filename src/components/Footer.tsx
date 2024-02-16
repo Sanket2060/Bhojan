@@ -8,21 +8,21 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   const icons = [FaInstagram, SlSocialFacebook, FaXTwitter];
   return (
-    <div className="overflow-hidden ">
-      <div className="flex flex-col relative  bg-[#332163] text-white w-[160%] rounded-tr-[60%] rounded-tl-[50%] left-[-30%] lg:w-[110%] lg:rounded-tr-[90%] lg:rounded-tl-[60%] lg:left-[-5%] ">
+    <div className="overflow-hidden dark:bg-[#121212] ">
+      <div className="flex flex-col relative  bg-[#332163] dark:bg-[#1f1d24] text-white w-[160%] rounded-tr-[60%] rounded-tl-[50%] left-[-30%] lg:w-[110%] lg:rounded-tr-[90%] lg:rounded-tl-[60%] lg:left-[-5%] ">
         <div className="p-20"></div>
-        <div className="font-extrabold text-xl md:text-3xl lg:text-3xl  text-center">
+        <div className="font-extrabold text-xl md:text-3xl lg:text-3xl  text-center dark:text-gray-200">
           Connecting Plates, Eliminating Waste
           <br />
           Every Bite Rescued makes a Difference
         </div>
         <div className="m-10"></div>
         <Link to="./signup" className="self-center items align-middle">
-          <button className="self-center items align-middle select-none  text-center  transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl py-4 px-8 bg-white text-black shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full border-8">
+          <button className="self-center items align-middle select-none  text-center  transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl py-4 px-8 bg-white dark:bg-gray-200 text-black shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full border-8">
             Join the community
           </button>
         </Link>
-        <hr className="w-9/12 mx-auto h-px my-8 bg-gray-200 border-0 dark:bg-white"></hr>
+        <hr className="w-9/12 mx-auto h-px my-8 bg-gray-200 border-0 "></hr>
         <div className="flex flex-row gap-x-8 place-content-center pb-8">
           <div className="font-medium text-white hover:underline  hover:text-blue-200 transition duration-300 ease-in-out cursor-pointer">
             Our goal

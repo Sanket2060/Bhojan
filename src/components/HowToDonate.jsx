@@ -31,13 +31,13 @@ const HowToDonate = ({ isDistribute }) => {
     <div
       className={`rounded transition-opacity duration-1000 ${animationClass}`}
     >
-      <h2 className="mx-auto text-[#261750] self-center md:font-extrabold font-bold lg:text-3xl md:text-2xl text-center text-xl relative">
+      <h2 className="mx-auto text-[#261750] self-center md:font-extrabold font-bold lg:text-3xl md:text-2xl text-center text-xl relative dark:text-blue-200">
         {mainText}
       </h2>
-      <h2 className="mx-auto text-[#261750] self-center lg:text-2xl md:text-xl text-center text-l relative">
+      <h2 className="mx-auto text-[#261750] self-center lg:text-2xl md:text-xl text-center text-l relative dark:text-blue-200">
         {subText1}
       </h2>
-      <h2 className="mx-auto text-[#261750] self-center lg:text-l md:text-l text-center text-m relative">
+      <h2 className="mx-auto text-[#261750] self-center lg:text-l md:text-l text-center text-m relative dark:text-blue-200">
         {subText2}
       </h2>
     </div>

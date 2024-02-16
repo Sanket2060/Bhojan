@@ -23,8 +23,13 @@ const AutoScrollPartners = ({ topContributorsData }) => {
           />
         ))}
       </div>
-      <div className="absolute top-0 left-0 w-20 h-full gradient-left"></div>
-      <div className="absolute top-0 right-0 w-20 h-full gradient-right"></div>
+      {
+        //<div className="absolute top-0 left-0 w-20 h-full gradient-left"></div>
+        //<div className="absolute top-0 right-0 w-20 h-full gradient-right"></div>
+      }
+
+      <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-l from-transparent  to-gray-100 dark:to-[#1F1A24]"></div>
+      <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-r from-transparent  to-gray-100 dark:to-[#1F1A24]"></div>
       <style jsx>{`
         @keyframes scroll {
           0% {
@@ -33,22 +38,6 @@ const AutoScrollPartners = ({ topContributorsData }) => {
           100% {
             transform: translateX(-50%);
           }
-        }
-
-        .gradient-left {
-          background: linear-gradient(
-            to left,
-            rgba(255, 255, 255, 0),
-            rgb(243, 244, 246) 90%
-          );
-        }
-
-        .gradient-right {
-          background: linear-gradient(
-            to right,
-            rgba(255, 255, 255, 0),
-            rgb(243, 244, 246) 90%
-          );
         }
       `}</style>
     </div>

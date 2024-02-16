@@ -61,7 +61,7 @@ const ProfileAccomplishment = ({
   return (
     <div
       className="text-center
-     text-[#332163]"
+     text-[#332163] dark:text-gray-100"
       ref={intersectionRef}
     >
       <div className="p-10">

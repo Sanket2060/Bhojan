@@ -6,7 +6,7 @@
       @apply max-w-7xl lg:mx-auto p-5 md:px-10 xl:px-0 ;
     }
     .link{
-      @apply font-medium text-gray-800 hover:underline  hover:text-blue-700 transition duration-300 ease-in-out;
+      @apply font-medium text-gray-800 hover:underline  hover:text-blue-700 dark:text-cyan-100 dark:hover:text-cyan-200 transition duration-300 ease-in-out;
     }
     
 }

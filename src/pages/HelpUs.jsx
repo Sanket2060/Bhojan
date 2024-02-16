@@ -5,18 +5,18 @@ import { Link } from "react-router-dom";
 
 const HelpUs = () => {
   return (
-    <>
+    <div className="dark:bg-[#121212]">
       <Navbar />
       {/* Your Help Us page content */}
-      <div className="wrapper py-20 px-20">
-        <div className=" mx-auto mt-10">
-          <p className="text-xl text-gray-700  mb-8">
+      <div className="wrapper py-20 px-20 ">
+        <div className=" mx-auto mt-10 ">
+          <p className="text-xl text-gray-700 dark:text-gray-200  mb-8">
             Make us keep going by helping us. We are a non-profit organization
             and we need your help to keep this platform running. You can help us
             by donating to us or by volunteering and serving food to various
             people in need.
           </p>
-          <p className="text-xl text-gray-700 mb-8">
+          <p className="text-xl text-gray-700 dark:text-gray-200 mb-8">
             Welcome to our platform dedicated to reducing food waste and aiding
             those in need. Our site serves as a collaborative hub where
             organizations and volunteers unite to tackle the pressing issue of
@@ -37,7 +37,7 @@ const HelpUs = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -18,22 +18,27 @@ const CompletedDistribution = ({ completedItems }) => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-4">Completed Distributions</h1>
+      <h1 className="text-3xl font-bold mb-4 dark:text-gray-200">
+        Completed Distributions
+      </h1>
       {itemsToShow && itemsToShow.length === 0 ? (
-        <p className="text-gray-500">No completed distributions.</p>
+        <p className="text-gray-500 ">No completed distributions.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {itemsToShow.map((item, index) => (
-            <div key={index} className="mb-8 p-4 bg-green-100 rounded-md">
-              <h2 className="text-lg font-medium text-gray-900">
+            <div
+              key={index}
+              className="mb-8 p-4 bg-green-100 rounded-md dark:bg-stone-800"
+            >
+              <h2 className="text-lg font-medium  text-gray-900">
                 {item.title}{" "}
-                <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
+                <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs ">
                   {item.plates} Plates
                 </span>
               </h2>
-              <p>Name: {item.name}</p>
-              <p>Location: {item.location}</p>
-              <p>Number: {item.number}</p>
+              <p className="dark:text-gray-200">Name: {item.name}</p>
+              <p className="dark:text-gray-200">Location: {item.location}</p>
+              <p className="dark:text-gray-200">Number: {item.number}</p>
             </div>
           ))}
         </div>

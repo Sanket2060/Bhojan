@@ -110,8 +110,6 @@ const Volunteer = () => {
     // Move the canceled item back to active listings
     const canceledItem = pendingItems[index];
     setAccordionItems((prevItems) => [...prevItems, canceledItem]);
-
-
   };
   const pendingListingsRef = useRef(null);
   const handleDistribute = (index) => {
@@ -126,17 +124,19 @@ const Volunteer = () => {
 
   const currentActiveListings = async () => {
     try {
-      const response=await axios.get('http://localhost:9005/api/v1/getData/active-listings',{
-        },{
-        })
-      console.log("Current active listings for user are:",response.data.data);
+      const response = await axios.get(
+        "http://localhost:9005/api/v1/getData/active-listings",
+        {},
+        {}
+      );
+      console.log("Current active listings for user are:", response.data.data);
       setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {
       console.log("Error at listing active orders at donor", error);
     }
-  }
-  const retainAllData=()=>{
+  };
+  const retainAllData = () => {
     console.log("Retain all data called");
     currentActiveListings();
     getUsersPendingDistributions();
@@ -146,16 +146,20 @@ const Volunteer = () => {
 
   const getUsersPendingDistributions = async () => {
     try {
-      const response=await axios.post('http://localhost:9005/api/v1/order/pending-listings-for-distributor',{
-        _id:userDetails._id
-      },{
-        headers: {
-          'Content-Type': 'application/json',  //says data at body is at json format
+      const response = await axios.post(
+        "http://localhost:9005/api/v1/order/pending-listings-for-distributor",
+        {
+          _id: userDetails._id,
         },
-        withCredentials: true, // Send cookies with the request
-      })
+        {
+          headers: {
+            "Content-Type": "application/json", //says data at body is at json format
+          },
+          withCredentials: true, // Send cookies with the request
+        }
+      );
       // console.log(response.data.data.runningOrders);
-      setPendingItems(response.data.data.runningOrders)
+      setPendingItems(response.data.data.runningOrders);
       // setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {
@@ -166,51 +170,50 @@ const Volunteer = () => {
   useEffect(() => {
     getUsersPendingDistributions();
     currentActiveListings();
-
   }, []);
   const handleToggle = () => {
     setOpen(!open);
   };
 
-  const cancelOrderForDistributor=async(_id)=>{
+  const cancelOrderForDistributor = async (_id) => {
     try {
       const response = await axios.post(
-        `http://localhost:9005/api/v1/order/cancel-order-for-distributor`
-        ,{
-          _orderId:_id
-        },{
-                  withCredentials: true, // Include credentials (cookies) in the request
-                });
-      console.log("Successfully cancelled order:",response);
+        `http://localhost:9005/api/v1/order/cancel-order-for-distributor`,
+        {
+          _orderId: _id,
+        },
+        {
+          withCredentials: true, // Include credentials (cookies) in the request
+        }
+      );
+      console.log("Successfully cancelled order:", response);
       // setTopContributorsData(response.data.data.topTenDonators);
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error cancelling order for donor:", error);
-      toast.warning('Error cancelling order');
+      toast.warning("Error cancelling order");
     }
-  }
-
-
-
-
+  };
 
   return (
-    <div className="flex ">
+    <div className="flex dark:bg-[#121212] min-h-screen ">
       <div
         className={`w-1/5 `}
         style={{ width: isMobile ? " 0px" : open ? "20%" : "0" }}
       >
-        <Sidebar menus={SidebarMenu} handleToggle={handleToggle} isOpen={open} />
+        <Sidebar
+          menus={SidebarMenu}
+          handleToggle={handleToggle}
+          isOpen={open}
+        />
       </div>
       <div
         className="flex-1 "
         style={{ marginLeft: isMobile ? "0px" : open ? "0%" : "0" }}
       >
         <div className="md:col-span-1 justify-center pt-10 m-3 overflow-hidden">
-        <div className="flex flex-col bg-cyan-100 rounded-md p-6 shadow-sm">
-  <WelcomeBack userName={userDetails.username} />
-</div>
-
+          <div className="flex flex-col bg-cyan-100 rounded-md p-6 shadow-sm dark:bg-[#1F1A24]">
+            <WelcomeBack userName={userDetails.username} />
+          </div>
 
           {pendingItems?.length > 0 && (
             <div
@@ -228,7 +231,7 @@ const Volunteer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="col-span-1 ">
               <div className="container mx-auto p-4 wrapper">
-                <h1 className="text-3xl font-bold mb-4 text-[#261750] self-center ">
+                <h1 className="text-3xl font-bold mb-4 text-[#261750] dark:text-[#7c58de] self-center ">
                   Active Listings
                 </h1>
 
@@ -259,9 +262,9 @@ const Volunteer = () => {
             <div className="col-span-1 md:col-span-1 md:flex md:items-center md:justify-center  relative">
               {/* Bubbles  */}
               <div className="container mx-auto p-8 wrapper relative z-20">
-                <div className="absolute top-1/4 left-1/4 w-12 h-12 bg-gray-300 rounded-full opacity-50"></div>
-                <div className="absolute top-1/2 right-1/4 w-16 h-16 bg-gray-300 rounded-full opacity-50"></div>
-                <div className="absolute bottom-1/4 left-1/2 w-20 h-20 bg-gray-300 rounded-full opacity-50"></div>
+                <div className="absolute top-1/4 left-1/4 w-12 h-12 bg-gray-300 rounded-full opacity-50 dark:bg-gray-600"></div>
+                <div className="absolute top-1/2 right-1/4 w-16 h-16 bg-gray-300 rounded-full opacity-50 dark:bg-gray-600"></div>
+                <div className="absolute bottom-1/4 left-1/2 w-20 h-20 bg-gray-300 rounded-full opacity-50 dark:bg-gray-600"></div>
                 <HowToDistribute
                   isDistribute={isDistribute}
                   isReserved={isReserved}
