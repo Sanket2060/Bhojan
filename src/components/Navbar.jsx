@@ -25,14 +25,18 @@ const Navbar = () => {
     setDarkMode(!darkMode);
     if (darkMode) {
       document.documentElement.classList.add("dark");
+      localStorage.removeItem("theme");
       localStorage.theme = "dark";
     } else {
       document.documentElement.classList.remove("dark");
+      localStorage.removeItem("theme");
       localStorage.theme = "light";
     }
     // You can also save the user's preference in local storage here
   };
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.theme === "dark" ? false : true
+  );
   return (
     <div className="dark:bg-[#121212] ">
       <ul className="wrapper flex items-center justify-between pt-3">
