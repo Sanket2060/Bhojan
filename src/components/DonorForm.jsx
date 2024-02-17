@@ -10,7 +10,7 @@ const DonorForm = ({ onFormSubmit }) => {
   const { register, handleSubmit, formState } = useForm();
 
   const handleCancel = () => {
-    setShowForm(false);
+    // setShowForm(false);
   };
   const handleRecaptchaChange = (value) => {
     setCapVal(value);
@@ -32,6 +32,7 @@ const DonorForm = ({ onFormSubmit }) => {
     quantity: "",
     expirationTime: "",
   });
+  
 
   // Handle input changes
   const handleInputChange = (e) => {
@@ -53,10 +54,31 @@ const DonorForm = ({ onFormSubmit }) => {
       quantity: "",
       expirationTime: "",
     });
+    if (!formData.title.trim()) {
+      toast.error("Title is required");
+      return;
+    }
+
+    if (!formData.foodItem.trim()) {
+      toast.error("Food Item is required");
+      return;
+    }
+
+    if (!formData.quantity || isNaN(formData.quantity) || formData.quantity <= 0) {
+      toast.error("Quantity must be a positive number");
+      return;
+    }
+
+    if (!formData.expirationTime) {
+      toast.error("Expiration time is required");
+      return;
+    }
+
     try {
     } catch (error) {}
     toast.success("Listing Posted");
     // Additional logic if needed after form submission
+   
   };
 
   const handleButtonClick = () => {
@@ -74,8 +96,8 @@ const DonorForm = ({ onFormSubmit }) => {
     <div>
       {showForm ? (
         <>
-          <div className="max-w-md mx-auto mt-8 p-4 bg-gray-50 rounded-md dark:bg-[#1F1A24]  ">
-            <h1 className="text-2xl font-bold mb-4 dark:text-gray-100 ">
+          <div className="max-w-md mx-auto mt-8 p-4 bg-gray-50 rounded-md dark:bg-[#1F1A24]">
+            <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">
               Publish Listing
             </h1>
             <form
@@ -85,7 +107,7 @@ const DonorForm = ({ onFormSubmit }) => {
               }}
             >
               {/* form components */}
-              <div className="mb-4 ">
+              <div className="mb-4">
                 <label
                   htmlFor="title"
                   className="block text-sm font-semibold text-gray-600 dark:text-gray-100"
@@ -98,11 +120,11 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="title"
                   value={formData.title}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border-collapse rounded-md dark:bg-gray-700 dark:text-gray-100"
+                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
               </div>
-
+  
               {/* Food Item Input */}
               <div className="mb-4">
                 <label
@@ -117,16 +139,16 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="foodItem"
                   value={formData.foodItem}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border-collapse rounded-md dark:bg-gray-700 dark:text-gray-100"
+                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
               </div>
-
+  
               {/* Quantity Input */}
               <div className="mb-4">
                 <label
                   htmlFor="quantity"
-                  className="block text-sm font-semibold text-gray-600 dark:text-gray-100 "
+                  className="block text-sm font-semibold text-gray-600 dark:text-gray-100"
                 >
                   Quantity (Plates)
                 </label>
@@ -136,11 +158,11 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="quantity"
                   value={formData.quantity}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full  border-collapse rounded-md dark:bg-gray-700 dark:text-gray-100"
+                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
               </div>
-
+  
               {/* Expiration Time Input */}
               <div className="mb-4">
                 <label
@@ -150,16 +172,21 @@ const DonorForm = ({ onFormSubmit }) => {
                   Available until
                 </label>
                 <input
-                  type="date"
+                  type="time"
                   id="expirationTime"
                   name="expirationTime"
-                  value={formData.expirationTime}
-                  onChange={handleInputChange}
-                  className="mt-1 p-2 w-full  border-collapse rounded-md dark:bg-gray-700 dark:text-gray-100"
+                  {...register("expirationTime", {
+                    required: "Expiration time is required",
+                  })}
+                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
+                <span className="text-red-500">
+                  {formState.errors.expirationTime?.message}
+                </span>
               </div>
-              <div className="flex justify-center items-center  ">
+  
+              <div className="flex justify-center items-center mb-4">
                 {localStorage.theme === "dark"
                   ? console.log("darktheme")
                   : console.log("lighttheme")}
@@ -179,19 +206,18 @@ const DonorForm = ({ onFormSubmit }) => {
                   </div>
                 )}
               </div>
-
+  
               <ToastContainer />
-              {/* Submit Button */}
+              
               <div className="flex justify-center items-center mt-4">
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white  px-6 py-3 rounded-full text-lg font-semibold "
+                  className="bg-blue-500 text-white px-6 py-3 rounded-full text-lg font-semibold focus:outline-none focus:ring focus:border-blue-300"
                   // disabled={!capVal}
                   onClick={(e) => {
                     e.preventDefault();
                     handleSubmits();
                     handleButtonClick();
-
                     // if (capVal) {
                     // } else {
                     // console.error("reCAPTCHA validation failed");
@@ -201,7 +227,6 @@ const DonorForm = ({ onFormSubmit }) => {
                   Post Listing
                 </button>
               </div>
-              {/* <Button onClick={handleCancel} variant="cancel" text="Cancel" /> */}
             </form>
           </div>
         </>
@@ -210,6 +235,7 @@ const DonorForm = ({ onFormSubmit }) => {
       )}
     </div>
   );
+  
 };
 
 export default DonorForm;
