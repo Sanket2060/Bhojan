@@ -210,7 +210,7 @@ const Volunteer = () => {
         className="flex-1 "
         style={{ marginLeft: isMobile ? "0px" : open ? "0%" : "0" }}
       >
-        <div className="md:col-span-1 justify-center pt-10 m-3 overflow-hidden">
+        <div className="md:col-span-1 justify-center pt-10 m-3 overflow-hidden wrapper">
           <div className="flex flex-col bg-cyan-100 rounded-md p-6 shadow-sm dark:bg-[#1F1A24]">
             <WelcomeBack userName={userDetails.username} />
           </div>

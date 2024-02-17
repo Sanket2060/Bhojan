@@ -7,6 +7,8 @@ import DonorForm from "../components/DonorForm.jsx";
 import PendingDistributions from "../components/PendingDistributions";
 import HowToDonate from "../components/HowToDonate";
 import CompletedDistribution from "../components/CompletedDistribution.jsx";
+
+
 //icons
 import { MdOutlineDashboard } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
@@ -241,7 +243,7 @@ const Donor = () => {
   };
 
   return (
-    <div className="flex dark:bg-[#121212]">
+    <div className="flex dark:bg-[#121212] ">
       <div
         className={`w-1/5`}
         style={{ width: isMobile ? " 0px" : open ? "20%" : "2%" }}
@@ -256,12 +258,12 @@ const Donor = () => {
         className="flex-1"
         style={{ marginLeft: isMobile ? "0px" : open ? "0%" : "0" }}
       >
-        <div className="md:col-span-1 justify-center pt-10 m-3">
+        <div className="md:col-span-1 justify-center pt-10 m-3 wrapper">
           <div className="flex flex-col bg-cyan-100 rounded-md p-6 shadow-sm dark:bg-[#1F1A24]">
             <WelcomeBack userName={userDetails.username} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 wrapper">
             <div className="col-span-1">
               <div className="container mx-auto p-4 wrapper">
                 <h1 className="text-3xl font-bold mb-4 text-[#261750] dark:text-[#7c58de] self-center">
@@ -308,7 +310,7 @@ const Donor = () => {
               </button> */}
           </div>
           <div
-            id="Completed"
+            id="completedDistribution"
             className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 wrapper gap-4 col-span-2 lg:col-span-1"
           >
             <CompletedDistribution completedItems={completedListings} />
