@@ -1,19 +1,20 @@
 import React, { useState } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const CompletedDistribution = ({ completedItems }) => {
   const [isConfirmationOpen, setConfirmationOpen] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
-  const [showMore, setShowMore] = useState(false);
+  const itemsPerPage = 4;
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const itemsToShow = showMore ? completedItems : completedItems.slice(0, 4);
+  const totalPages = Math.ceil(completedItems.length / itemsPerPage);
 
-  const handleShowMoreClick = () => {
-    setShowMore(true);
-  };
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToShow = completedItems.slice(startIndex, endIndex);
 
-  const handleShowLessClick = () => {
-    setShowMore(false);
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -24,46 +25,71 @@ const CompletedDistribution = ({ completedItems }) => {
       {itemsToShow && itemsToShow.length === 0 ? (
         <p className="text-gray-500 ">No completed distributions.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {itemsToShow.map((item, index) => (
-            <div
-              key={index}
-              className="mb-8 p-4 bg-green-100 rounded-md dark:bg-stone-800"
-            >
-              <h2 className="text-lg font-medium  text-gray-900">
-                {item.title}{" "}
-                <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs ">
-                  {item.plates} Plates
-                </span>
-              </h2>
-              <p className="dark:text-gray-200">Name: {item.name}</p>
-              <p className="dark:text-gray-200">Location: {item.location}</p>
-              <p className="dark:text-gray-200">Number: {item.number}</p>
-            </div>
-          ))}
-        </div>
+        <table className="min-w-full border border-gray-300 shadow-sm">
+          <thead className="bg-green-100">
+            <tr>
+              <th className="py-2 px-4 text-left">Title</th>
+              <th className="py-2 px-4 text-left">Plates</th>
+              <th className="py-2 px-4 text-left">Name</th>
+              <th className="py-2 px-4 text-left">Location</th>
+              <th className="py-2 px-4 text-left">Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            {itemsToShow.map((item, index) => (
+              <tr key={index} className="bg-green-100">
+                <td className="py-3 px-4 text-lg font-medium text-gray-900">
+                  {item && item.title ? ( // Add a conditional check
+                    <>
+                      {item.title}{" "}
+                      <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
+                        {item.plates} Plates
+                      </span>
+                    </>
+                  ) : (
+                    "N/A" 
+                  )}
+                </td>
+                <td className="py-3 px-4">
+                  {item && item.plates ? item.plates : "N/A"}
+                </td>
+                <td className="py-3 px-4 dark:text-gray-200">
+                  {item && item.name ? item.name : "N/A"}
+                </td>
+                <td className="py-3 px-4 dark:text-gray-200">
+                  {item && item.location ? item.location : "N/A"}
+                </td>
+                <td className="py-3 px-4 dark:text-gray-200">
+                  {item && item.number ? item.number : "N/A"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
 
       {completedItems.length > 4 && (
-        <div className="mt-4 flex items-center justify-center">
-          {showMore ? (
-            <button
-              onClick={handleShowLessClick}
-              className="flex items-center space-x-2 bg-red-500 text-white py-2 px-4 rounded-full hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-red-800"
-            >
-              <IoIosArrowUp />
-              <span>Show Less</span>
-            </button>
-          ) : (
-            <button
-              onClick={handleShowMoreClick}
-              className="flex items-center space-x-2 bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-            >
-              <IoIosArrowDown />
-              <span>Show More</span>
-            </button>
-          )}
-        </div>
+       <div className="mt-4 flex items-center justify-between">
+       <button
+         onClick={() => handlePageChange(currentPage - 1)}
+         disabled={currentPage === 1}
+         className="flex items-center space-x-2 bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+       >
+         <IoIosArrowBack />
+         <span>Previous Page</span>
+       </button>
+       <span className="text-gray-500">
+         Page {currentPage} of {totalPages}
+       </span>
+       <button
+         onClick={() => handlePageChange(currentPage + 1)}
+         disabled={currentPage === totalPages}
+         className="flex items-center space-x-2 bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+       >
+         <span>Next Page</span>
+         <IoIosArrowForward />
+       </button>
+     </div>
       )}
     </div>
   );

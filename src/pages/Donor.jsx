@@ -88,18 +88,22 @@ const Donor = () => {
   const [recentOrderDetails, setRecentOrderDetails] = useState();
   const [activeListings, setActiveListings] = useState([]);
   const [completedListings, setCompletedListings] = useState([]);
+
   const handleFormSubmit = async (data) => {
     setFormData(data);
     setFormSubmitted(true);
     //  addOrder();
     // setPendingItems((prevItems) => [...prevItems, data]);
     setSubmittedItems((prevItems) => [...prevItems, data]);
+
     // setisDistribute=(true);
   };
   useEffect(() => {
     if (formSubmitted == true) {
       addOrder();
     }
+    setFormData(null);
+    setFormSubmitted(false);
   }, [formSubmitted]);
 
   const addOrder = async () => {
@@ -111,7 +115,7 @@ const Donor = () => {
             _id: userDetails._id,
             foodItems: formData.foodItem,
             platesAvailable: formData.quantity,
-            closingTime: 2,
+            closingTime: formData.expirationTime,
             title: formData.title,
           },
           {
@@ -162,29 +166,27 @@ const Donor = () => {
     // Remove the item from pending distribution
     setActiveListings((prevItems) => prevItems.filter((_, i) => i !== index));
   };
-  const handleSubmitAnother = () => {
-    // Reset to allow another submission
-    setFormData(null);
-    setFormSubmitted(false);
-  };
+  // const handleSubmitAnother = () => {
+  //   // Reset to allow another submission
+  // setFormData(null);
+  // setFormSubmitted(false);
+  // };
 
   const handleComplete = (completedItem) => {
     ///complte ma pathauna lai -->
     setCompletedListings((prevItems) => [...prevItems, completedItem]);
-
     //remove from pending dist
-
-    //   setActiveListings((prevItems) =>
-    //     prevItems.filter((item) => item.id !== completedItem.id)
-    //   );
+    // setActiveListings((prevItems) =>
+    //   prevItems.filter((item) => item.id !== completedItem.id)
+    // );
   };
 
   const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth <= 768) {
+      setIsMobile(window.innerWidth <= 980);
+      if (window.innerWidth <= 980) {
         setOpen(false);
       } else {
         setOpen(true);
@@ -298,12 +300,12 @@ const Donor = () => {
               completeOrder={completeOrderForDonor}
             />
 
-            <button
-              onClick={handleSubmitAnother}
-              className="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-            >
-              Submit Another Listing
-            </button>
+            {/* <button
+                onClick={handleSubmitAnother}
+                className="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+              >
+                Submit Another Listing
+              </button> */}
           </div>
           <div
             id="Completed"
@@ -328,5 +330,5 @@ const Donor = () => {
       </div>
     </div>
   );
-};
-export default Donor;
+  };
+  export default Donor;
