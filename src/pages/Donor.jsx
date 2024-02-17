@@ -91,7 +91,7 @@ const Donor = () => {
   const handleFormSubmit = async (data) => {
     setFormData(data);
     setFormSubmitted(true);
-    //  addOrder();
+     addOrder();
     // setPendingItems((prevItems) => [...prevItems, data]);
     setSubmittedItems((prevItems) => [...prevItems, data]);
     // setisDistribute=(true);
@@ -121,7 +121,7 @@ const Donor = () => {
             withCredentials: true, // Send cookies with the request
           }
         );
-        console.log(response);
+        console.log("Order created successfully",response);
         setRecentOrderDetails(response);
       } else {
         console.log("No data recieved for forms");
@@ -299,6 +299,7 @@ const Donor = () => {
               onCompleteProp={handleComplete}
               cancelOrder={cancelOrderForDonor}
               completeOrder={completeOrderForDonor}
+              currentActiveListings={currentActiveListings}
             />
 
             <button

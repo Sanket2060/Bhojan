@@ -9,7 +9,8 @@ const PendingDistributions = ({
   isDonorPage,
   onCompleteProp,
   cancelOrder,
-  completeOrder
+  completeOrder,
+  currentActiveListings
 }) => {
   const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
   const [canceledItemIndex, setCanceledItemIndex] = React.useState(null);
@@ -51,7 +52,7 @@ const PendingDistributions = ({
     setCompletedItemIndex(index);
     setCompleteConfirmationOpen(true);
     completeOrder(completingItemOrderId);
-
+    currentActiveListings();
   };
 
   const onConfirmComplete = () => {

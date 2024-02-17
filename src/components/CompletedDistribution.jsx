@@ -31,9 +31,9 @@ const CompletedDistribution = ({ completedItems }) => {
           (
             <div key={index} className="mb-8 p-4 bg-green-100 rounded-md">
               <h2 className="text-lg font-medium text-gray-900">
-                {item.title}{" "}
+                {item.order.title}{" "}
                 <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
-                  {item.plates} Plates
+                  {item.order.foodForNumberOfPeople} Plates
                 </span>
               </h2>
               <p>Name: {item.order.title}</p>
