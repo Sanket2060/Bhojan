@@ -69,10 +69,10 @@ const DonorForm = ({ onFormSubmit }) => {
       return;
     }
 
-    if (!formData.expirationTime) {
-      toast.error("Expiration time is required");
-      return;
-    }
+    // if (!formData.expirationTime) {
+    //   toast.error("Expiration time is required");
+    //   return;
+    // }
 
     try {
     } catch (error) {}

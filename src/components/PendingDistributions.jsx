@@ -3,6 +3,9 @@ import Button from "./Button";
 import Confirmation from "./Confirmation";
 import { toast, ToastContainer } from "react-toastify";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import { FaSortUp, FaSortDown } from "react-icons/fa";
+import { FaCheck, FaTimes } from "react-icons/fa";
 import { set } from "react-hook-form";
 
 const PendingDistributions = ({
@@ -142,22 +145,8 @@ const PendingDistributions = ({
         <p className="text-gray-500">No pending distributions.</p>
       ) : (
         <div>
-          <label
-                htmlFor="title"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Search: 
-              </label>
-           <div className="grid grid-cols-2 gap-4">
-             
+          <div className="grid grid-cols-2 gap-4 py-5">
             <div>
-              
-              {/* <label
-                htmlFor="title"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Search by Title
-              </label> */}
               <input
                 type="text"
                 id="title"
@@ -169,12 +158,6 @@ const PendingDistributions = ({
             </div>
 
             <div>
-              {/* <label
-                htmlFor="location"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Search by Location
-              </label> */}
               <input
                 type="text"
                 id="location"
@@ -185,169 +168,216 @@ const PendingDistributions = ({
               />
             </div>
           </div>
-        <table className="min-w-full border border-gray-300 shadow-sm">
-         
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              boxShadow: "0 1px 4px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <thead
+              style={{ background: "#cee3fd", borderBottom: "1px solid #ddd" }}
+              className="dark:bg-primary-dark"
+            >
+              <tr>
+                <th className="py-2 px-4 text-center">Title</th>
+                {!isMobile && (
+                  <>
+                    <th className="py-2 px-4 text-center">
+                      <div className="inline-flex">
+                        {" "}
+                        <button
+                          onClick={() => sortItems("plates")}
+                          className="focus:outline-none"
+                          style={{ fontWeight: "bold", color: "#333" }}
+                        >
+                          <div className="inline-flex">
+                            <span className="mr-2">Plates</span>
+                            {sortOption === "plates" &&
+                            sortDirection === "asc" ? (
+                              <FaSortUp />
+                            ) : (
+                              <FaSortDown />
+                            )}
+                          </div>
+                        </button>{" "}
+                      </div>
+                    </th>
 
-          <thead className="bg-primary dark:bg-primary-dark">
-            <tr>
-              <th className="py-2 px-4 text-left">Title</th>
-              {!isMobile && (
-                <>
-                  <th className="py-2 px-4 text-left">
-                    <button
-                      onClick={() => sortItems("plates")}
-                      className="focus:outline-none"
-                    >
-                      Plates{" "}
-                      {sortOption === "plates" && sortDirection === "asc" ? (
-                        <span>&uarr;</span>
-                      ) : (
-                        <span>&darr;</span>
-                      )}
-                    </button>
-                  </th>
+                    <th className="py-2 px-4 text-center">Name</th>
+                    <th className="py-2 px-4 text-center">
+                      <div className="inline-flex items-center">
+                        <span className="mr-2">Location</span>
+                        <FaMapMarkerAlt />
+                      </div>
+                    </th>
 
-                  <th className="py-2 px-4 text-left">Name</th>
-                  <th className="py-2 px-4 text-left">Location</th>
-
-                  <th className="py-2 px-4 text-left">Contact</th>
-                </>
-              )}
-              <th className="py-2 px-4 text-left">
-                <button
-                  onClick={() => sortItems("closingTime")}
-                  className="focus:outline-none"
-                >
-                  Closing Time{" "}
-                  {sortOption === "closingTime" && sortDirection === "asc" ? (
-                    <span>&uarr;</span>
-                  ) : (
-                    <span>&darr;</span>
-                  )}
-                </button>
-              </th>
-              <th className="py-2 px-4 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedItems.map((item, index) => (
-              <React.Fragment key={index}>
-                <tr
-                  className={`border-b border-gray-300 ${
-                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                  }`}
-                >
-                  <td className="py-3 px-4 font-bold text-gray-800 dark:text-gray-200">
-                    {item.order ? item.order.title : item.title}
-                  </td>
-                  {!isMobile && (
-                    <>
-                      <td className="py-3 px-4 text-right">
-                        <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
-                          {item.order
-                            ? item.order.foodForNumberOfPeople
-                            : item.foodForNumberOfPeople}{" "}
-                          Plates
+                    <th className="py-2 px-4 text-center">
+                      <div className="inline-flex">
+                        {" "}
+                        <span className="mr-2">Contact</span> <FaPhoneAlt />
+                      </div>
+                    </th>
+                  </>
+                )}
+                <th className="py-2 px-4 text-center">
+                  <button
+                    onClick={() => sortItems("closingTime")}
+                    className="focus:outline-none"
+                    style={{ fontWeight: "bold", color: "#333" }}
+                  >
+                    <div className="inline-flex">
+                      <span className="mr-2">Closing Time</span>
+                      {sortOption === "closingTime" &&
+                      sortDirection === "asc" ? (
+                        <span>
+                          <FaSortUp />
                         </span>
-                      </td>
-                      <td className="py-3 px-4 text-gray-800 dark:text-gray-200">
-                        {item.order ? item.order.title : item.title}
-                      </td>
-                      <td className="py-3 px-4 text-gray-800 dark:text-gray-200">
-                        {item.order ? item.order.address : item.address}
-                      </td>
-                      <td className="py-3 px-4 text-gray-800 dark:text-gray-200">
-                        {item.order ? item.order.contact : item.contact}
-                      </td>
-                    </>
-                  )}
-                  <td className="py-3 px-4 text-gray-800 dark:text-gray-200">
-                    {item.order
-                      ? `${item.order.closingTime} hrs`
-                      : `${item.closingTime} hrs`}
-                  </td>
+                      ) : (
+                        <span>
+                          <FaSortDown />
+                        </span>
+                      )}
+                    </div>
+                  </button>
+                </th>
+                <th className="py-2 px-4 text-center">Actions</th>
+              </tr>
+            </thead>
 
-                  <td className="py-3 px-4 flex space-x-2">
+            <tbody className="text-center justify-between items-center">
+              {sortedItems.map((item, index) => (
+                <React.Fragment key={index}>
+                  <tr
+                    className={`border-b border-blue-200 ${
+                      index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                    }`}
+                  >
+                    <td className="py-4 px-4 font-bold text-gray-800 dark:text-gray-200">
+                      {item.order ? item.order.title : item.title}
+                    </td>
                     {!isMobile && (
                       <>
-                        {isDonorPage && (
-                          <Button
-                            onClick={() => {
-                              handleCompleteClick(index);
-                              setCompletingItemOrderId(
-                                item.order ? item.order._id : item._id
-                              );
-                            }}
-                            variant="complete"
-                            text="Complete"
-                          />
-                        )}
-                        <Button
-                          onClick={() => {
-                            openConfirmation(index);
-                            setCancellingItemOrderId(
-                              item.order ? item.order._id : item._id
-                            );
-                          }}
-                          variant="cancel"
-                          text="Cancel"
-                        />
+                        <td className="py-4 px-4 text-right">
+                          <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
+                            {item.order
+                              ? item.order.foodForNumberOfPeople
+                              : item.foodForNumberOfPeople}{" "}
+                            Plates
+                          </span>
+                        </td>
+                        <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
+                          {item.order ? item.order.title : item.title}
+                        </td>
+                        <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
+                          {item.order ? item.order.address : item.address}
+                        </td>
+                        <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
+                          {item.order ? item.order.contact : item.contact}
+                        </td>
                       </>
                     )}
-                    {isMobile && (
-                      <Button
-                        onClick={() =>
-                          setExpandedItemIndex(
-                            expandedItemIndex === index ? null : index,
-                            setShowDetails(!showDetails)
-                          )
-                        }
-                        variant="details"
-                        text={showDetails ? "Hide Details" : "View Details"}
-                      />
-                    )}
-                  </td>
-                </tr>
-                {expandedItemIndex === index && (
-                  <tr>
-                    <td colSpan="7">
-                      <div className="border border-gray-300 shadow-sm p-4">
-                        <p>name: {item.title}</p>
-                        <p>plates: {item.foodForNumberOfPeople}</p>
-                        <p>location: {item.address}</p>
-                        <p>contact: {item.contact}</p>
-                      </div>
-                      <div>
-                        {isDonorPage && (
+                    <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
+                      {item.order
+                        ? `${item.order.closingTime} hrs`
+                        : `${item.closingTime} hrs`}
+                    </td>
+
+                    <td className="py-4 px-4 flex space-x-2">
+                      {!isMobile && (
+                        <>
+                          {isDonorPage && (
+                            <Button
+                              onClick={() => {
+                                handleCompleteClick(index);
+                                setCompletingItemOrderId(
+                                  item.order ? item.order._id : item._id
+                                );
+                              }}
+                              variant="complete"
+                              text={<FaCheck />}
+                            />
+                          )}
                           <Button
                             onClick={() => {
-                              handleCompleteClick(index);
-                              setCompletingItemOrderId(
+                              openConfirmation(index);
+                              setCancellingItemOrderId(
                                 item.order ? item.order._id : item._id
                               );
                             }}
-                            variant="complete"
-                            text="Complete"
+                            variant="cancel"
+                            text="Cancel"
                           />
-                        )}
+                        </>
+                      )}
+                      {isMobile && (
                         <Button
-                          onClick={() => {
-                            openConfirmation(index);
-                            setCancellingItemOrderId(
-                              item.order ? item.order._id : item._id
-                            );
-                          }}
-                          variant="cancel"
-                          text="Cancel"
+                          onClick={() =>
+                            setExpandedItemIndex(
+                              expandedItemIndex === index ? null : index,
+                              setShowDetails(!showDetails)
+                            )
+                          }
+                          variant="viewDetail"
+                          text={showDetails ? "Hide Details" : "View Details"}
                         />
-                      </div>
+                      )}
                     </td>
                   </tr>
-                )}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
+                  {expandedItemIndex === index && (
+                    <tr className="py-5 px-5 m-2">
+                      <td colSpan="7">
+                        <div className="border border-gray-300 shadow-sm p-6 px-6 py-6">
+                          {isDonorPage ? (
+                            <span>
+                              <p>name: {item.order.title}</p>
+                              <p>plates: {item.order.foodForNumberOfPeople}</p>
+                              <p>location: {item.order.address}</p>
+                              <p>contact: {item.order.contact}</p>
+                            </span>
+                          ) : (
+                            <span>
+                              <p>name: {item.title}</p>
+                              <p>plates: {item.foodForNumberOfPeople}</p>
+                              <p>location: {item.address}</p>
+                              <p>contact: {item.contact}</p>
+                            </span>
+                          )}
+                        </div>
+                        <div className="mt-4 pb-4">
+                        
+                          {isDonorPage && (
+                            <Button
+                              onClick={() => {
+                                handleCompleteClick(index);
+                                setCompletingItemOrderId(
+                                  item.order ? item.order._id : item._id
+                                );
+                              }}
+                              variant="complete"
+                              text=""
+                              className="py-3" // Adjust the padding value as needed
+                            />
+                          )}
+                          <Button
+                            onClick={() => {
+                              openConfirmation(index);
+                              setCancellingItemOrderId(
+                                item.order ? item.order._id : item._id
+                              );
+                            }}
+                            variant="cancel"
+                            text="Cancel"
+                            className="py-3" // Adjust the padding value as needed
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
       <div className="mt-4 flex">
@@ -360,10 +390,10 @@ const PendingDistributions = ({
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="flex items-center space-x-2 bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+            className="flex items-center space-x-1 bg-blue-500 text-white py-1 px-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 sm:py-2 sm:px-4"
           >
             <IoIosArrowBack />
-            <span>Previous Page</span>
+            <span className="hidden sm:inline">Previous Page</span>
           </button>
           <span className="text-gray-500">
             Page {currentPage} of {totalPages}
@@ -371,9 +401,9 @@ const PendingDistributions = ({
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="flex items-center space-x-2 bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+            className="flex items-center space-x-1 bg-blue-500 text-white py-1 px-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 sm:py-2 sm:px-4"
           >
-            <span>Next Page</span>
+            <span className="hidden sm:inline">Next Page</span>
             <IoIosArrowForward />
           </button>
         </div>
