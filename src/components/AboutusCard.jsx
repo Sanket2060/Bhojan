@@ -7,7 +7,7 @@ function AboutUsCard(props) {
   const social = [props.instagram, props.facebook, props.twitter];
 
   return (
-    <div className="bg-green-100 m-4 dark:bg-[#1F1A24] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+    <div className="bg-cyan-50 m-4 dark:bg-[#1F1A24] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
       <div className="flex items-center pb-6">
         <img
           className="w-24 h-24 rounded-full mr-4 border-2 border-amber-300"
