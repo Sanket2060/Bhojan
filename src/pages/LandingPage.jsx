@@ -61,20 +61,24 @@ const LandingPage = () => {
       </div>
       <div className="">
         <div className="pt-20 lg:pt-0 "></div>
-        <div className="wrapper pb-10 pt-10 lg:mt-32 mb-8 md:font-extrabold font-bold lg:text-7xl md:text-6xl text-5xl flex flex-col items-start ">
+        <div className="wrapper pb-10 pt-10 lg:mt-32 mb-4 md:font-extrabold font-bold lg:text-7xl md:text-6xl text-5xl flex flex-col items-start ">
           <div className="text-[#261750] dark:text-[#7c58de]">
-            Share the Flavor,
+            <h1 className="lg:text-7xl md:text-6xl text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 text-transparent bg-clip-text">
+                Share the Flavor,
+              </span>
+            </h1>
           </div>
           <div className="text-[#ff4c70]">Multiply the Joy!</div>
         </div>
         <div className="overflow-x-clip lg:hidden ">
           <img className="z-[-10] " src={FoodDonation}></img>
         </div>
-        <div className="wrapper flex flex-col lg:flex-row items-center justify-center ">
-          <div className="flex-grow-0 flex-shrink-0 w-full lg:w-1/3 xl:w-1/4">
+        <div className="wrapper flex flex-col lg:flex-row items-center mb-2 justify-center ">
+          <div className="flex-grow-0 flex-shrink-0 w-full lg:w-1/3 xl:w-3/12">
             <div className="text-3xl text-left dark:text-gray-200">
-              In our journey to combat hunger, we're not just providing meals;
-              we're sowing seeds of change.
+              In our fight against hunger, we don't just feed! We cultivate
+              change.
             </div>
           </div>
           <div className="flex flex-col items-center py-20 mx-auto">
@@ -94,10 +98,12 @@ const LandingPage = () => {
       <div className="flex overflow-hidden ">
         <div className=" flex flex-col pb-20 pt-32 md:font-extrabold font-bold lg:text-7xl md:text-6xl  text-4xl  relative  bg-gray-100  w-[200%]  rounded-tr-[40%]   rounded-tl-[50%] lg:rounded-tr-[50%] lg:rounded-tl-[90%]  dark:bg-[#1F1A24]">
           <div className="mx-auto text-[#261750] self-center dark:text-[#7c58de]">
-            Donate food,
+            <span className="bg-gradient-to-r from-blue-500  to-[#FBB03B] text-transparent bg-clip-text">
+              Donate Food
+            </span>
           </div>
           <div className="mx-auto text-[#ff4c70] self-center">
-            share compassion.
+            Share Compassion.
           </div>
         </div>
       </div>
@@ -114,7 +120,9 @@ const LandingPage = () => {
       <div className="flex flex-col bg-gray-100  pb-10 dark:bg-[#1F1A24] ">
         <div className="wrapper  pb-10 mt-28 lg:mt-32 mb-8 md:font-extrabold font-bold lg:text-7xl md:text-6xl text-5xl flex flex-col items-start">
           <div className="text-[#261750] self-center dark:text-[#7c58de]">
-            Our Partners
+            <span className="bg-gradient-to-r from-blue-500  to-purple-500 text-transparent bg-clip-text">
+              Our Partners
+            </span>
           </div>
           <div className="text-[#ff4c70] self-center">Across Nepal</div>
         </div>
