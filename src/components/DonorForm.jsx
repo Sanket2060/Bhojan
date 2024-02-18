@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 // import Button from "./Button";
 import ReCAPTCHA from "react-google-recaptcha";
-import PendingDistributions from "./PendingDistributions";
+import DistributionTable from "./DistributionTable";
 
 const DonorForm = ({ onFormSubmit }) => {
   const [showForm, setShowForm] = useState(true);
@@ -110,7 +110,7 @@ const DonorForm = ({ onFormSubmit }) => {
               <div className="mb-4">
                 <label
                   htmlFor="title"
-                  className="block text-sm font-semibold text-gray-600 dark:text-gray-100"
+                  className="block text-sm font-semibold dark:border-[#859896] text-gray-600 dark:text-gray-100"
                 >
                   Title
                 </label>
@@ -120,7 +120,7 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="title"
                   value={formData.title}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                  className="mt-1 p-2 w-full border rounded-md dark:border-[#859896] dark:bg-gray-700 dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
               </div>
@@ -139,7 +139,7 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="foodItem"
                   value={formData.foodItem}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:border-[#859896] dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
               </div>
@@ -148,7 +148,7 @@ const DonorForm = ({ onFormSubmit }) => {
               <div className="mb-4">
                 <label
                   htmlFor="quantity"
-                  className="block text-sm font-semibold text-gray-600 dark:text-gray-100"
+                  className="block text-sm font-semibold text-gray-600 dark:border-[#859896] dark:text-gray-100"
                 >
                   Quantity (Plates)
                 </label>
@@ -158,7 +158,7 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="quantity"
                   value={formData.quantity}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:border-[#859896] dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
               </div>
@@ -167,7 +167,7 @@ const DonorForm = ({ onFormSubmit }) => {
               <div className="mb-4">
                 <label
                   htmlFor="expirationTime"
-                  className="block text-sm font-semibold text-gray-600 dark:text-gray-100"
+                  className="block text-sm font-semibold text-gray-600 dark:border-[#859896] dark:text-gray-100"
                 >
                   Available until
                 </label>
@@ -178,7 +178,8 @@ const DonorForm = ({ onFormSubmit }) => {
                   {...register("expirationTime", {
                     required: "Expiration time is required",
                   })}
-                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                 
+                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:border-[#859896] dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
                 <span className="text-red-500">
@@ -231,7 +232,7 @@ const DonorForm = ({ onFormSubmit }) => {
           </div>
         </>
       ) : (
-        <PendingDistributions onCancel={() => setShowForm(true)} />
+        <DistributionTable onCancel={() => setShowForm(true)} />
       )}
     </div>
   );

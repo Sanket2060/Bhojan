@@ -4,9 +4,9 @@ import { Sidebar } from "../components/Sidebar.jsx";
 import Accomplishment from "../components/Accomplishment.jsx";
 import WelcomeBack from "../components/WelcomeBack.jsx";
 import DonorForm from "../components/DonorForm.jsx";
-import PendingDistributions from "../components/PendingDistributions";
+// import PendingDistributions from "../components/PendingDistributions";
 import HowToDonate from "../components/HowToDonate";
-import CompletedDistribution from "../components/CompletedDistribution.jsx";
+import DistributionTable from "../components/DistributionTable";
 
 
 //icons
@@ -293,10 +293,11 @@ const Donor = () => {
             </div>
           </div>
           <div>
-            <PendingDistributions
+            <DistributionTable
               pendingItems={activeListings}
               onCancelDistribution={handleCancelDistribution}
               isDonorPage={true}
+              isCompletedTable={false}
               onCompleteProp={handleComplete}
               cancelOrder={cancelOrderForDonor}
               completeOrder={completeOrderForDonor}
@@ -313,7 +314,15 @@ const Donor = () => {
             id="completedDistribution"
             className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 wrapper gap-4 col-span-2 lg:col-span-1"
           >
-            <CompletedDistribution completedItems={completedListings} />
+             <DistributionTable
+              pendingItems={completedListings}
+              onCancelDistribution={handleCancelDistribution}
+              isDonorPage={false}
+              isCompletedTable={true}
+              onCompleteProp={handleComplete}
+              cancelOrder={cancelOrderForDonor}
+              completeOrder={completeOrderForDonor}
+            />
           </div>
           <div
             id="Accomplishment"
