@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-const CompletedDistribution = ({ completedItems }) => {
+const CompletedDistribution = ({ completedItems=[] }) => {
   const [isConfirmationOpen, setConfirmationOpen] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
   const [showMore, setShowMore] = useState(false);
@@ -16,7 +16,7 @@ const CompletedDistribution = ({ completedItems }) => {
     setShowMore(false);
   };
   useEffect(()=>{
-    console.log(itemsToShow);
+    console.log("All completed orders for user",itemsToShow);
   },[itemsToShow])
   
 
@@ -31,14 +31,14 @@ const CompletedDistribution = ({ completedItems }) => {
           (
             <div key={index} className="mb-8 p-4 bg-green-100 rounded-md">
               <h2 className="text-lg font-medium text-gray-900">
-                {item.order.title}{" "}
+                {item.order?.title || item.title}{" "}
                 <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
-                  {item.order.foodForNumberOfPeople} Plates
+                  {item.order?.foodForNumberOfPeople || item.foodForNumberOfPeople} Plates
                 </span>
               </h2>
-              <p>Name: {item.order.title}</p>
-              <p>Location: {item.order.address}</p>
-              <p>Number: {item.order.contact}</p>
+              <p>Name: {item.order?.title || item.title}</p>
+              <p>Location: {item.order?.address || item.address}</p>
+              <p>Number: {item.order?.contact || item.contact}</p>
             </div>
           ))}
         </div>

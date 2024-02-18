@@ -14,7 +14,7 @@ const DonorForm = ({ onFormSubmit }) => {
   };
   const handleRecaptchaChange = (value) => {
     setCapVal(value);
-    console.log("reCAPTCHA value:", value);
+    // console.log("reCAPTCHA value:", value);
   };
   const [isRecaptchaLoaded, setIsRecaptchaLoaded] = useState(false);
   const [capVal, setCapVal] = useState(null);
@@ -44,7 +44,7 @@ const DonorForm = ({ onFormSubmit }) => {
 
   // Handle form submission
   const handleSubmits = () => {
-    console.log(formData);
+    // console.log("FormData",formData);
     // e.preventDefault();
     onFormSubmit(formData);
     setFormData({

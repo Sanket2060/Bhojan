@@ -10,7 +10,8 @@ const PendingDistributions = ({
   onCompleteProp,
   cancelOrder,
   completeOrder,
-  currentActiveListings
+  currentActiveListings,
+  getAllCompletedOrdersForDonor
 }) => {
   const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
   const [canceledItemIndex, setCanceledItemIndex] = React.useState(null);
@@ -48,11 +49,13 @@ const PendingDistributions = ({
     setConfirmationOpen(false);
   };
 
-  const handleCompleteClick = (index) => {
+  const handleCompleteClick =async (index) => {
     setCompletedItemIndex(index);
     setCompleteConfirmationOpen(true);
-    completeOrder(completingItemOrderId);
-    currentActiveListings();
+    await  completeOrder(completingItemOrderId);
+    await currentActiveListings();
+    await getAllCompletedOrdersForDonor();//??
+    console.log("getAllCompletedOrdersForDonor called");
   };
 
   const onConfirmComplete = () => {

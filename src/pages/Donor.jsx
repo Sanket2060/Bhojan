@@ -28,7 +28,7 @@ import { useSelector } from "react-redux";
 const Donor = () => {
   const [isDistribute, setisDistribute] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
-
+  const [allCompletedOrdersForDonor, setAllCompletedOrdersForDonor]=useState([]);
   // const logoutUser=()=>{
   //   console.log("Logout is clicked");
   //   // if (userDetails._id){
@@ -42,7 +42,9 @@ const Donor = () => {
   //     }
   //   // }
   // }
-
+  useEffect(()=>{
+    console.log("AllcompletedOrdersForDonor is ",allCompletedOrdersForDonor)
+  },[allCompletedOrdersForDonor])
   //sidebar
   const SidebarMenu = [
     { name: "Homepage", link: "/", icon: MdOutlineDashboard },
@@ -124,7 +126,7 @@ const Donor = () => {
         console.log("Order created successfully",response);
         setRecentOrderDetails(response);
       } else {
-        console.log("No data recieved for forms");
+        console.log("No data recieved from forms");
       }
     } catch (error) {
       console.log("Error at adding order", error);
@@ -145,7 +147,7 @@ const Donor = () => {
           withCredentials: true, // Send cookies with the request
         }
       );
-      console.log(response.data.data);
+      console.log("Current Active Listings for donor are",response.data.data);
       setActiveListings(response.data.data);
       // setActiveListings(response.data);
     } catch (error) {
@@ -156,6 +158,29 @@ const Donor = () => {
   useEffect(() => {
     currentActiveListings(); //naya order list garesi feri api call garna paryo
   }, [recentOrderDetails]);
+useEffect(()=>{
+  getAllCompletedOrdersForDonor();
+
+},[])
+  const getAllCompletedOrdersForDonor=async()=>{
+    try {
+      if (userDetails._id) {
+        const response = await axios.post(
+          "http://localhost:9005/api/v1/getData/getAllCompletedOrdersForDonor",
+          {
+            _id: userDetails._id
+          },
+        );
+        // console.log("Fetched All Completed Orders For Donor successfully",response);
+        // console.log(response.data.data.completedOrders);
+        setAllCompletedOrdersForDonor(response.data.data.completedOrders);
+      } else {
+        console.log("No user is logged in to give his/her data");
+      }
+    } catch (error) {
+      console.log("Error at getAllCompletedOrdersForDonor ", error);
+    }
+  }
 
   const handleCancelDistribution = (index) => {
     console.log("Cancel button clicked for index", index);
@@ -300,6 +325,7 @@ const Donor = () => {
               cancelOrder={cancelOrderForDonor}
               completeOrder={completeOrderForDonor}
               currentActiveListings={currentActiveListings}
+              getAllCompletedOrdersForDonor={getAllCompletedOrdersForDonor}
             />
 
             <button
@@ -314,7 +340,7 @@ const Donor = () => {
             className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 wrapper gap-4 col-span-2 lg:col-span-1"
           >
          
-            <CompletedDistribution completedItems={completedListings} />
+         <CompletedDistribution completedItems={allCompletedOrdersForDonor} />
           </div>
           <div
             id="Accomplishment"

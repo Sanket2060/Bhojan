@@ -26,8 +26,8 @@ const Login = () => {
           withCredentials: true, // Include credentials (cookies) in the request
         }
       );
-      console.log(response);
-      console.log("Response.data.data.isDonor",response.data.data.isDonor);
+      console.log("User loggedIn:",response);
+      // console.log("Response.data.data.isDonor",response.data.data.isDonor);
        dispatch(login(response.data.data));
       if (response){
       //also store user's data at redux toolkit
