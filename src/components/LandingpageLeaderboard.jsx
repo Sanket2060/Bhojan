@@ -21,14 +21,14 @@ const LandingpageLeaderboard = ({ topContributors }) => {
             index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
           }`}
         >
-          <div className="block relative ">
+          <div className="block relative hover:scale-105 transform duration-200  ">
             <div
-              className={`border-x-orange-300  ${
-                index === 1 ? "border-s-8" : "border-e-8"
+              className={`border-x-orange-300 shadow-2xl  ${
+                index === 1 ? "md:border-s-[10px]" : "md:border-e-[10px]"
               } rounded-full relative`}
             >
               <img
-                className={`object-cover rounded-full h-[21rem] w-[21rem] 
+                className={`object-cover shadow-2xl  rounded-full h-[21rem] w-[21rem] 
                 {//"$"{
                   //imageHeight && imageHeight < 900 ? "bg-blue-500" : ""
                 //}
@@ -54,7 +54,7 @@ const LandingpageLeaderboard = ({ topContributors }) => {
             }`}
           >
             <div className="p-3">
-              <div className="text-2xl text-[#ff4c70] font-bold">
+              <div className="text-3xl  text-[#ff4c70] font-bold">
                 {contributor.name}
               </div>
               <div className="text-xl text-grey-600 dark:text-gray-200">

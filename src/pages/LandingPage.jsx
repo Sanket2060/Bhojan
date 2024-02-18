@@ -96,7 +96,7 @@ const LandingPage = () => {
         </div>
       </div>
       <div className="flex overflow-hidden ">
-        <div className=" flex flex-col pb-20 pt-32 md:font-extrabold font-bold lg:text-7xl md:text-6xl  text-4xl  relative  bg-gray-100  w-[200%]  rounded-tr-[40%]   rounded-tl-[50%] lg:rounded-tr-[50%] lg:rounded-tl-[90%]  dark:bg-[#1F1A24]">
+        <div className=" flex  shadow-inner  flex-col pb-20 pt-32 md:font-extrabold font-bold lg:text-7xl md:text-6xl  text-4xl  relative  bg-gray-100  w-[200%]  rounded-tr-[40%]   rounded-tl-[50%] lg:rounded-tr-[50%] lg:rounded-tl-[90%]  dark:bg-[#1F1A24]">
           <div className="mx-auto text-[#261750] self-center dark:text-[#7c58de]">
             <span className="bg-gradient-to-r from-blue-500  to-[#FBB03B] text-transparent bg-clip-text">
               Donate Food
@@ -130,7 +130,7 @@ const LandingPage = () => {
         <AutoScrollPartners topContributorsData={topContributorsData} />
       </div>
       <div className="overflow-hidden ">
-        <div className="dark:bg-[#1F1A24] flex flex-col  pt-0 h-[8rem] font-bold text-6xl relative  bg-gray-100   w-[100%]  rounded-br-[55%] rounded-bl-[35%] lg:rounded-br-[95%] lg:rounded-bl-[65%]  "></div>
+        <div className="dark:bg-[#1F1A24] shadow-md flex flex-col  pt-0 h-[8rem] font-bold text-6xl relative  bg-gray-100   w-[100%]  rounded-br-[55%] rounded-bl-[35%] lg:rounded-br-[95%] lg:rounded-bl-[65%]  "></div>
       </div>
       <div className="wrapper p-8">
         <div>
