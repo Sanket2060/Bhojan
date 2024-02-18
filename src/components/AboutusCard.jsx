@@ -1,45 +1,45 @@
 import React from "react";
-import { FaInstagram } from "react-icons/fa";
-import { SlSocialFacebook } from "react-icons/sl";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
 import Icons from "./Icons";
+
 function AboutUsCard(props) {
-  const icons = [FaInstagram, SlSocialFacebook, FaXTwitter];
+  const icons = [FaInstagram, FaFacebook, FaTwitter];
   const social = [props.instagram, props.facebook, props.twitter];
+
   return (
-    <div className="bg-gray-100 dark:bg-[#1F1A24] p-10 flex flex-col rounded-2xl shadow-xl justify-center items-center container mx-auto  w-[24rem]">
-      <img
-        className=" mb-5  border-x-4 flex  w-40 h-40 rounded-full border-x-amber-300 "
-        src={props.image}
-        alt="developer"
-      />
-      {/* <img src={props.image1}/> */}
-
-      <p className="mb-4  flex justify-center text-stone-700 dark:text-stone-200 font-bold text-3xl ">
-        {props.name}
-      </p>
-
-      <detail className="m-1 pt-2 dark:text-gray-200 text-center">
-        {props.desp}
-      </detail>
-
-      <footer className="flex justify-center font-bold m-6 text-blue-600 dark:text-blue-300 text-xl">
-        {props.field}
-      </footer>
-      <span className="flex">
-        <div className="flex flex-row justify-center items-center">
-          {icons.map((Icon, index) => (
-            <div className="p-3">
-              <a href={social[index]} target="_blank">
-                <Icons
-                  key={index}
-                  icon={<Icon size="17" style={{ color: "black" }} />}
-                />
-              </a>
-            </div>
-          ))}
+    <div className="bg-green-100 m-4 dark:bg-[#1F1A24] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+      <div className="flex items-center pb-6">
+        <img
+          className="w-24 h-24 rounded-full mr-4 border-2 border-amber-300"
+          src={props.image}
+          alt="developer"
+        />
+        <div>
+          <p className="text-stone-700 dark:text-stone-200 font-bold text-xl mt-2">
+            {props.name}
+          </p>
+          <p className="text-blue-600 dark:text-blue-300 text-lg mb-2">
+            {props.field}
+          </p>
         </div>
-      </span>
+      </div>
+      <div className="text-gray-600 dark:text-gray-300 mb-6">
+        <p className="mb-4">{props.desp}</p>
+        <hr className="w-full h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
+      </div>
+      <div className="flex justify-center space-x-6">
+        {icons.map((Icon, index) => (
+          <a
+            key={index}
+            href={social[index]}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-blue-500 dark:hover:text-blue-200 transition-colors duration-200"
+          >
+            <Icons key={index} icon={<Icon size="24" />} />
+          </a>
+        ))}
+      </div>
     </div>
   );
 }
