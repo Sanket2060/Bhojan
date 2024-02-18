@@ -5,7 +5,7 @@ import Accomplishment from "../components/Accomplishment.jsx";
 import AccordionItem from "../components/AccordionItem";
 import Footer from "../components/Footer";
 import axios from "axios";
-import PendingDistributions from "../components/PendingDistributions";
+// import PendingDistributions from "../components/PendingDistributions";
 import WelcomeBack from "../components/WelcomeBack.jsx";
 
 //icons
@@ -17,6 +17,7 @@ import { FiFolder } from "react-icons/fi";
 import { BiCloud } from "react-icons/bi";
 import HowToDistribute from "../components/HowToDistribute";
 import { useSelector } from "react-redux";
+import DistributionTable from "../components/DistributionTable.jsx";
 // import { useNavigate } from "react-router-dom";
 
 const Volunteer = () => {
@@ -193,7 +194,19 @@ const Volunteer = () => {
       toast.warning("Error cancelling order");
     }
   };
-
+  const [searchLocationTerm, setSearchLocationTerm] = useState("");
+  const visibleItems = [];
+  const filteredItems = accordionItems.filter((item) => {
+    const itemLocation = item.address || (item.order && item.order.address);
+  
+    if (!itemLocation) {
+      console.error("Invalid item location:", item);
+      return false;
+    }
+  
+    return itemLocation.toLowerCase().includes(searchLocationTerm.toLowerCase());
+  });
+  
   return (
     <div className="flex dark:bg-[#121212] min-h-screen ">
       <div
@@ -221,7 +234,7 @@ const Volunteer = () => {
               id="PendingListings"
               className="mt-10"
             >
-              <PendingDistributions
+              <DistributionTable
                 pendingItems={pendingItems}
                 onCancelDistribution={handleCancelDistribution}
                 cancelOrder={cancelOrderForDistributor}
@@ -235,24 +248,36 @@ const Volunteer = () => {
                   Active Listings
                 </h1>
 
-                <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 wrapper gap-4 col-span-2 lg:col-span-1">
+                <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 wrapper gap-4 col-span-2 lg:col-span-1 dark:border-[#859896] dark:text-gray-100 ">
+                  <div>
+                    <input
+                      type="text"
+                      id="location"
+                      placeholder="Search by Location"
+                      value={searchLocationTerm}
+                      onChange={(e) => setSearchLocationTerm(e.target.value)}
+                      className="border border-gray-300 dark:border-[#859896] rounded-md py-1 px-2 w-full dark:bg-[#555f71] dark:text-[#ffffff]"
+                    />
+                  </div>
                   {accordionItems.length === 0 ? (
                     <p className="text-gray-500">No active listings.</p>
                   ) : (
                     accordionItems?.map((item, index) => (
-                      <AccordionItem
-                        key={index}
-                        item={item}
-                        index={index}
-                        expanded={expandedItem === index}
-                        onToggle={AhandleToggle}
-                        onDistribute={handleDistribute}
-                        ariaControls={`accordion-item-${index}`}
-                        ariaExpanded={expandedItem === index}
-                        getUsersPendingDistributions
-                        ref={distributeRef}
-                        retainAllData={retainAllData}
-                      />
+                      <div>
+                        <AccordionItem
+                          key={index}
+                          item={item}
+                          index={index}
+                          expanded={expandedItem === index}
+                          onToggle={AhandleToggle}
+                          onDistribute={handleDistribute}
+                          ariaControls={`accordion-item-${index}`}
+                          ariaExpanded={expandedItem === index}
+                          getUsersPendingDistributions
+                          ref={distributeRef}
+                          retainAllData={retainAllData}
+                        />
+                      </div>
                     ))
                   )}
                 </div>
