@@ -27,6 +27,7 @@ const Leaderboard = () => {
       const distributorDataResponse = await axios.get(
         "http://localhost:9005/api/v1/getData/get-top-distributors"
       );
+      console.log("Distributor data response",distributorDataResponse);
       setDistributorData(distributorDataResponse.data.data.topTenDistributors);
     } catch (error) {
       console.log(error);
