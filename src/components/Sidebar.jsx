@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Switch from "react-switch";
 
 import { IoMdSunny, IoMdMoon } from "react-icons/io";
 
@@ -51,7 +50,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
       {isMobile && isOpen && (
         <div className="fixed inset-0 bg-[#ddd4d4] z-50 font-semibold text-xl overflow-y-auto dark:bg-stone-800 ">
           <div className="flex justify-between items-center wrapper dark:text-gray-200">
-            <p>Khana.com</p>
+            <p>Khana</p>
             <HiMenuAlt3
               size={26}
               className="cursor-pointer"
@@ -63,46 +62,18 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
               !open && "hidden"
             }`}
           >
-                 <div className={`mt-4 flex items-center ${!isOpen && "hidden"}`}>
-                <label
-                  htmlFor="darkModeToggle"
-                  className="cursor-pointer flex items-center px-2.5"
-                >
-                  <div className="flex items-center ml-auto">
-                    <span
-                      className={`mr-2 ${
-                        darkMode ? "text-black" : "text-white"
-                      }`}
-                    >
-                      <IoMdMoon />
-                    </span>
+            <div
+              className="pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4 group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600 cursor-pointer"
+              onClick={toggleDarkMode}
+            >
+              <div>{darkMode ? <IoMdSunny /> : <IoMdMoon />}</div>
 
-                    <Switch
-                      onChange={toggleDarkMode}
-                      checked={darkMode}
-                      className="react-switch"
-                      id="darkModeToggle"
-                      handleDiameter={25}
-                      offHandleColor={darkMode ? "#262626" : "#ddd"}
-                      uncheckedIcon={null}
-                      checkedIcon={null}
-                    />
-
-                    <span
-                      className={`ml-2 ${
-                        darkMode ? "text-black" : "text-white"
-                      }`}
-                    >
-                      <IoMdSunny />
-                    </span>
-                  </div>
-                  <span
-                    className={`mr-2 text-gray-700 dark:text-gray-200 px-7`}
-                  >
-                    Theme
-                  </span>
-                </label>
-              </div>
+              <h2
+                className={`whitespace-pre px-1 ${!open && "translate-x-28"}`}
+              >
+                Change Theme
+              </h2>
+            </div>
 
             {menus?.map((menu, i) => (
               <div
@@ -167,45 +138,17 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
             }`}
           >
             <div className="mt-4 flex flex-col gap-4 justify-end right-0">
-              <div className={`mt-4 flex items-center ${!isOpen && "hidden"}`}>
-                <label
-                  htmlFor="darkModeToggle"
-                  className="cursor-pointer flex items-center px-2.5"
+              <div
+                className="pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4 group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600 cursor-pointer"
+                onClick={toggleDarkMode}
+              >
+                <div>{darkMode ? <IoMdSunny /> : <IoMdMoon />}</div>
+
+                <h2
+                  className={`whitespace-pre px-1 ${!open && "translate-x-28"}`}
                 >
-                  <div className="flex items-center ml-auto">
-                    <span
-                      className={`mr-2 ${
-                        darkMode ? "text-black" : "text-white"
-                      }`}
-                    >
-                      <IoMdMoon />
-                    </span>
-
-                    <Switch
-                      onChange={toggleDarkMode}
-                      checked={darkMode}
-                      className="react-switch"
-                      id="darkModeToggle"
-                      handleDiameter={25}
-                      offHandleColor={darkMode ? "#262626" : "#ddd"}
-                      uncheckedIcon={null}
-                      checkedIcon={null}
-                    />
-
-                    <span
-                      className={`ml-2 ${
-                        darkMode ? "text-black" : "text-white"
-                      }`}
-                    >
-                      <IoMdSunny />
-                    </span>
-                  </div>
-                  <span
-                    className={`mr-2 text-gray-700 dark:text-gray-200 px-7`}
-                  >
-                    Theme
-                  </span>
-                </label>
+                  Change Theme
+                </h2>
               </div>
 
               {menus?.map((menu, i) => (

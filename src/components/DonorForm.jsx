@@ -96,7 +96,7 @@ const DonorForm = ({ onFormSubmit }) => {
     <div>
       {showForm ? (
         <>
-          <div className="max-w-md mx-auto mt-8 p-4 bg-gray-50 rounded-md dark:bg-[#1F1A24]">
+          <div className="max-w-md mx-auto mt-8 p-10 bg-blue-100 rounded-md dark:bg-[#1F1A24]">
             <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">
               Publish Listing
             </h1>
@@ -110,7 +110,7 @@ const DonorForm = ({ onFormSubmit }) => {
               <div className="mb-4">
                 <label
                   htmlFor="title"
-                  className="block text-sm font-semibold dark:border-[#859896] text-gray-600 dark:text-gray-100"
+                  className="block text-sm font-semibold text-gray-600 dark:text-gray-100"
                 >
                   Title
                 </label>
@@ -120,7 +120,7 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="title"
                   value={formData.title}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border rounded-md dark:border-[#859896] dark:bg-gray-700 dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                  className="mt-1 p-2 w-full border rounded-md dark:border-[#181c1c] dark:bg-gray-700 dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
               </div>
@@ -139,7 +139,7 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="foodItem"
                   value={formData.foodItem}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:border-[#859896] dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:border-[#181c1c] dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
               </div>
@@ -158,7 +158,7 @@ const DonorForm = ({ onFormSubmit }) => {
                   name="quantity"
                   value={formData.quantity}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:border-[#859896] dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:border-[#181c1c] dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
               </div>
@@ -179,7 +179,7 @@ const DonorForm = ({ onFormSubmit }) => {
                     required: "Expiration time is required",
                   })}
                  
-                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:border-[#859896] dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+                  className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:border-[#181c1c] dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                 />
                 <span className="text-red-500">
