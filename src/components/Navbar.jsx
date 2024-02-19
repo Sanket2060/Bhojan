@@ -21,22 +21,28 @@ const Navbar = () => {
       document.body.style.overflow = "visible";
     };
   }, [menuOpen]);
+
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-    if (darkMode) {
+  };
+
+  function getInitialDarkModePreference() {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      return savedTheme === "dark";
+    } else {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+  }
+  const [darkMode, setDarkMode] = useState(getInitialDarkModePreference());
+  useEffect(() => {
+    if (!darkMode) {
       document.documentElement.classList.add("dark");
-      localStorage.removeItem("theme");
-      localStorage.theme = "dark";
     } else {
       document.documentElement.classList.remove("dark");
-      localStorage.removeItem("theme");
-      localStorage.theme = "light";
     }
-    // You can also save the user's preference in local storage here
-  };
-  const [darkMode, setDarkMode] = useState(
-    localStorage.theme === "dark" ? false : true
-  );
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
   return (
     <div className="dark:bg-[#121212] ">
       <ul className="wrapper flex items-center justify-between pt-3">

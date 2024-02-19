@@ -16,6 +16,7 @@ const DistributionTable = ({
   onCompleteProp,
   cancelOrder,
   completeOrder,
+  allCompletedOrdersForDonor
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
@@ -36,9 +37,9 @@ const DistributionTable = ({
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
   const [expandedItemIndex, setExpandedItemIndex] = useState(null);
 
-  useEffect(() => {
-    console.log("Pending Items:", pendingItems);
-  }, [pendingItems]);
+  // useEffect(() => {
+  //   console.log("Pending Items:", pendingItems);
+  // }, [pendingItems]);
 
   const openConfirmation = (index) => {
     setCanceledItemIndex(index);
@@ -110,10 +111,11 @@ const DistributionTable = ({
     setConfirmationOpen(false);
   };
 
-  const handleCompleteClick = (index) => {
+  const handleCompleteClick = async(index) => {
     setCompletedItemIndex(index);
     setCompleteConfirmationOpen(true);
-    completeOrder(completingItemOrderId);
+    await  completeOrder(completingItemOrderId);
+
   };
 
   const onConfirmComplete = () => {

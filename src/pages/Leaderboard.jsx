@@ -1,156 +1,128 @@
 import React, { useEffect, useState } from "react";
-import TableRow from "../components/TableRow";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import TableRow from "../components/TableRow";
+
 const Leaderboard = () => {
   const [activeSection, setActiveSection] = useState("organizations");
   const [donorData, setDonorData] = useState([]);
   const [distributorData, setDistributorData] = useState([]);
+
   const handleSectionChange = (section) => {
     setActiveSection(section);
   };
+
   useEffect(() => {
     getLeaderboardData();
   }, []);
+
   const getLeaderboardData = async () => {
     try {
-      const donorData = await axios.get(
+      const donorDataResponse = await axios.get(
         "http://localhost:9005/api/v1/getData/get-top-donors"
       );
-      setDonorData(donorData.data.data.topTenDonators);
-      console.log(donorData.data.data.topTenDonators);
-      const distributorData = await axios.get(
+      setDonorData(donorDataResponse.data.data.topTenDonators);
+
+      const distributorDataResponse = await axios.get(
         "http://localhost:9005/api/v1/getData/get-top-distributors"
       );
-      setDistributorData(distributorData.data.data.topTenDistributors);
-      console.log(distributorData.data.data.topTenDistributors);
+      setDistributorData(distributorDataResponse.data.data.topTenDistributors);
     } catch (error) {
       console.log(error);
-      // console.log("Error:",error.response.data.message);
     }
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen  dark:bg-[#121212]">
       <Navbar />
-      <div className="bg-white to-orange-400 p-8 pt-20 dark:bg-[#121212]">
-        <header>
-          <nav className="rounded-lg overflow-hidden transition duration-300 ease-in-out shadow-xl w-full h-10 mb-3">
-            <div className="font-[Poppins] font-bold">
-              <ul className="flex justify-center gap-[4vw]">
-                <li
-                  className={`text-xl flex-none  relative transition duration-300 ease-in-out hover:bg-gray-700 hover:text-white xl rounded-lg ${
+      <div className="py-12   px-4 sm:px-6 lg:px-8">
+        <div className="wrapper rounded-xl  mb-16 mt-8 mx-auto">
+          <div className="bg-white dark:bg-gray-900 shadow overflow-hidden sm:rounded-lg">
+            <div className="border-t dark:border-collapse border-gray-200 dark:border-gray-700">
+              <nav className="flex" aria-label="Tabs">
+                <button
+                  onClick={() => handleSectionChange("organizations")}
+                  className={`${
                     activeSection === "organizations"
-                      ? "bg-gray-700 text-white"
-                      : "dark:text-white"
-                  }`}
+                      ? "border-indigo-500 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-500"
+                  } group relative min-w-0 flex-1 inline-flex items-center justify-center py-4 border-b-4 font-medium text-md transition-colors duration-300`}
                 >
-                  <a
-                    href="#"
-                    className="block px-4 py-2"
-                    onClick={() => handleSectionChange("organizations")}
-                  >
-                    Organizations
-                  </a>
-                </li>
-                <li
-                  className={`flex text-xl items-center relative transition duration-300 ease-in-out hover:bg-gray-700 hover:text-white xl rounded-lg ${
+                  Organizations
+                </button>
+                <button
+                  onClick={() => handleSectionChange("volunteer")}
+                  className={`${
                     activeSection === "volunteer"
-                      ? "bg-gray-700 text-white "
-                      : "dark:text-white"
-                  }`}
+                      ? "border-indigo-500 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-500"
+                  } group relative min-w-0 flex-1 inline-flex items-center justify-center py-4 border-b-4 font-medium text-md transition-colors duration-300`}
                 >
-                  <a
-                    href="#"
-                    className="block px-4 py-2"
-                    onClick={() => handleSectionChange("volunteer")}
-                  >
-                    Volunteer
-                  </a>
-                </li>
-              </ul>
+                  Volunteers
+                </button>
+              </nav>
             </div>
-          </nav>
-        </header>
-
-        {activeSection === "organizations" && (
-          <table className="bg-gray-900 rounded-lg overflow-hidden w-full">
-            <thead>
-              <tr>
-                <th className="text-white font-bold text-left px-6 py-4 w-2/12">
-                  #
-                </th>
-                <th className="text-white font-bold text-left px-6 py-4 w-8/12">
-                  Name
-                </th>
-                <th className="text-white font-bold text-left px-6 py-4 w-2/12">
-                  Score
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {donorData && donorData.length > 0 ? (
-                donorData.map((org, index) => (
-                  <>
-                    <TableRow
-                      rank={index + 1}
-                      name={org.name}
-                      score={parseInt(org.numberOfPeopleFeed) * 5}
-                    />
-                  </>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="3" className="text-white p-4 ">
-                    No data found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        )}
-
-        {activeSection === "volunteer" && (
-          <table className="bg-gray-900 rounded-lg overflow-hidden w-full">
-            <thead>
-              <tr>
-                <th className="text-white font-bold text-left px-6 py-4 w-2/12">
-                  #
-                </th>
-                <th className="text-white font-bold text-left px-6 py-4 w-8/12">
-                  Name
-                </th>
-                <th className="text-white font-bold text-left px-6 py-4 w-2/12">
-                  Score
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {distributorData && distributorData.length > 0 ? (
-                distributorData.map((org, index) => (
-                  <>
-                    <TableRow
-                      rank={index + 1}
-                      name={org.name}
-                      score={parseInt(org.numberOfPeopleFeed) * 5}
-                    />
-                  </>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="3" className="text-white p-4 ">
-                    No data found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        )}
+            <div className="bg-white dark:bg-gray-900 shadow overflow-hidden sm:rounded-lg">
+              <div className="px-4 py-1 sm:px-6"></div>
+              <div className="border-t border-gray-200 dark:border-gray-700">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead className="bg-[#2A3132] ">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-sm font-semibold text-gray-50 uppercase tracking-wider"
+                      >
+                        Rank
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-sm font-semibold text-gray-50 uppercase tracking-wider"
+                      >
+                        Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-sm font-semibold text-gray-50 uppercase tracking-wider"
+                      >
+                        Score
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(activeSection === "organizations"
+                      ? donorData
+                      : distributorData
+                    ).map((org, index) => (
+                      <TableRow
+                        key={index}
+                        rank={index + 1}
+                        name={org.name}
+                        score={parseInt(org.numberOfPeopleFeed) * 5}
+                        isDark={index % 2 !== 0} // Alternating row colors
+                      />
+                    ))}
+                    {((activeSection === "organizations" &&
+                      donorData.length === 0) ||
+                      (activeSection === "volunteer" &&
+                        distributorData.length === 0)) && (
+                      <tr>
+                        <td
+                          colSpan="3"
+                          className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200 bg-gray-200 dark:bg-slate-700"
+                        >
+                          No data found
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="pt-20 dark:bg-[#121212]">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };

@@ -30,7 +30,7 @@ import { useSelector } from "react-redux";
 const Donor = () => {
   const [isDistribute, setisDistribute] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
-
+  const [completedListings, setCompletedListings] = useState([]);
   // const logoutUser=()=>{
   //   console.log("Logout is clicked");
   //   // if (userDetails._id){
@@ -44,7 +44,34 @@ const Donor = () => {
   //     }
   //   // }
   // }
-
+  //fetch all pending distributions and completed distributions
+  useEffect(()=>{
+    currentActiveListings();
+    getAllCompletedOrdersForDonor();
+  },[]);
+  const getAllCompletedOrdersForDonor=async()=>{
+    try {
+      if (userDetails._id) {
+        const response = await axios.post(
+          "http://localhost:9005/api/v1/getData/getAllCompletedOrdersForDonor",
+          {
+            _id: userDetails._id
+          },
+        );
+        // console.log("Fetched All Completed Orders For Donor successfully",response);
+        // console.log(response.data.data.completedOrders);
+        setCompletedListings(response.data.data.completedOrders);
+        console.log("Fetched all completed orders for donor");
+      } else {
+        console.log("No user is logged in to give his/her data");
+      }
+    } catch (error) {
+      console.log("Error at getAllCompletedOrdersForDonor ", error);
+    }
+  }
+  useEffect(()=>{
+    console.log("Completed orders are:",completedListings);
+  },[completedListings])
   //sidebar
   const SidebarMenu = [
     { name: "Homepage", link: "/", icon: MdOutlineDashboard },
@@ -89,7 +116,6 @@ const Donor = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [recentOrderDetails, setRecentOrderDetails] = useState();
   const [activeListings, setActiveListings] = useState([]);
-  const [completedListings, setCompletedListings] = useState([]);
 
   const handleFormSubmit = async (data) => {
     setFormData(data);
@@ -127,7 +153,7 @@ const Donor = () => {
             withCredentials: true, // Send cookies with the request
           }
         );
-        console.log(response);
+        console.log("Order Added succesfully");
         setRecentOrderDetails(response);
       } else {
         console.log("No data recieved for forms");
@@ -176,7 +202,7 @@ const Donor = () => {
 
   const handleComplete = (completedItem) => {
     ///complte ma pathauna lai -->
-    setCompletedListings((prevItems) => [...prevItems, completedItem]);
+    // setCompletedListings((prevItems) => [...prevItems, completedItem]);   ?????Sulav ko comment handeko
     //remove from pending dist
     // setActiveListings((prevItems) =>
     //   prevItems.filter((item) => item.id !== completedItem.id)
@@ -236,6 +262,8 @@ const Donor = () => {
         }
       );
       console.log("Successfully completed order:", response);
+      currentActiveListings();//??? Yo duita lai call garera update garam vanera gareko
+      getAllCompletedOrdersForDonor(); //??
       // setTopContributorsData(response.data.data.topTenDonators);
     } catch (error) {
       console.error("Error completing order for donor:", error);
