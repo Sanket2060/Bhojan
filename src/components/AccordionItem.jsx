@@ -68,7 +68,7 @@ function AccordionItem({
     onDistribute(index);
     onToggle(index);
     toast.success("Distribution successful!");
-    addDistributorToOrder();
+    await addDistributorToOrder();
     // getUsersPendingDistributions();
     retainAllData();
     return;

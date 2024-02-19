@@ -262,6 +262,7 @@ const Donor = () => {
         }
       );
       console.log("Successfully completed order:", response);
+      increaseOrderPoints(_id);
       currentActiveListings();//??? Yo duita lai call garera update garam vanera gareko
       getAllCompletedOrdersForDonor(); //??
       // setTopContributorsData(response.data.data.topTenDonators);
@@ -269,6 +270,24 @@ const Donor = () => {
       console.error("Error completing order for donor:", error);
     }
   };
+
+  const increaseOrderPoints=async(_id)=>{
+    try {
+      const response = await axios.post(
+        `http://localhost:9005/api/v1/order/increaseOrderPoints`,
+        {
+          _orderId: _id,
+        },
+        {
+          withCredentials: true, // Include credentials (cookies) in the request
+        }
+      );
+      console.log("Increased order points:", response);
+    } catch (error) {
+      console.error("Error increasing  order points  for donor:", error);
+
+    }
+  }
 
   return (
     <div className="flex dark:bg-[#121212] ">
