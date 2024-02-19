@@ -64,7 +64,7 @@ const Accomplishment = ({
      text-[#332163]  dark:text-white"
       ref={intersectionRef}
     >
-      <div className="p-10 shadow-2xl">
+      <div className="p-10 ">
         <div className="lg:flex justify-around ">
           <div className="flex  hover:scale-105 transform duration-150  flex-col">
             <div className="self-center p-5">
