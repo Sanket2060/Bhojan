@@ -8,9 +8,9 @@ function AboutUsCard(props) {
 
   return (
     <div className="bg-cyan-50 m-4 dark:bg-[#1F1A24] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-      <div className="flex items-center pb-6">
+      <div className="flex items-center pb-8">
         <img
-          className="w-24 h-24 rounded-full mr-4 border-2 border-amber-300"
+          className="w-20 h-20 rounded-full mr-4 "
           src={props.image}
           alt="developer"
         />
@@ -24,7 +24,7 @@ function AboutUsCard(props) {
         </div>
       </div>
       <div className="text-gray-600 dark:text-gray-300 mb-6">
-        <p className="mb-4">{props.desp}</p>
+        <p className="mb-6">{props.desp}</p>
         <hr className="w-full h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
       </div>
       <div className="flex justify-center space-x-6">
@@ -34,7 +34,7 @@ function AboutUsCard(props) {
             href={social[index]}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-blue-500 dark:hover:text-blue-200 transition-colors duration-200"
+            className="hover:text-blue-500 dark:hover:text-blue-800 transition-colors duration-100"
           >
             <Icons key={index} icon={<Icon size="24" />} />
           </a>

@@ -60,31 +60,27 @@ const Accomplishment = ({
 
   return (
     <div
-      className="text-center  bg-gradient-to-l from-[#ffafbd] to-[#ffc3a0] dark:bg-gradient-to-l dark:from-[#3a3031] dark:to-[#242120]
-     text-[#332163] dark:text-white"
+      className="text-center   bg-gradient-to-l from-[#ffafbd] to-[#ffc3a0] dark:bg-gradient-to-l dark:from-[#3a3031] dark:to-[#242120]
+     text-[#332163]  dark:text-white"
       ref={intersectionRef}
     >
-      <div className="p-10">
-        {
-          //<h2 className="text-3xl font-bold mb-4 pb-10 ">Accomplishments</h2>
-        }
-
-        <div className="lg:flex justify-around">
-          <div className="flex flex-col">
+      <div className="p-10 ">
+        <div className="lg:flex justify-around ">
+          <div className="flex  xhover:scale-105 xtransform xduration-150  flex-col">
             <div className="self-center p-5">
               <PiBowlFoodFill size={52} />
             </div>
             <p>{totalFoodSavedText}</p>
             <p className="text-lg font-bold">{totalFoodSaved}</p>
           </div>
-          <div className="flex flex-col">
+          <div className="flex xhover:scale-105 xtransform xduration-150  flex-col">
             <div className="self-center p-5">
               <BsPeopleFill size={52} />
             </div>
             <p>{ourCommunityText}</p>
             <p className="text-lg font-bold">{ourCommunity}</p>
           </div>
-          <div className="flex flex-col">
+          <div className="flex xhover:scale-105 xtransform xduration-150  flex-col">
             <div className="self-center p-5">
               <FaPeopleCarry size={52} />
             </div>
