@@ -21,7 +21,7 @@ const LandingpageLeaderboard = ({ topContributors }) => {
             index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
           }`}
         >
-          <div className="block relative hover:scale-105 transform duration-200  ">
+          <div className="block relative xhover:scale-105 xtransform xduration-200  ">
             <div
               className={`border-x-orange-300 shadow-2xl  ${
                 index === 1 ? "md:border-s-[10px]" : "md:border-e-[10px]"
