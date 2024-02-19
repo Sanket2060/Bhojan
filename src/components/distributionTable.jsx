@@ -137,8 +137,10 @@ const DistributionTable = ({
   };
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-4 dark:text-[#dfd1d1]">
+    <div className={isCompletedTable ? 'bg-green-50 dark:bg-[#1F1A24]' : 'bg-yellow-50 dark:bg-[#1F1A24]'}>
+      
+      <hr className="w-full h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
+      <h1 className="text-3xl font-bold m-4 mt-10 text-[#261750] dark:text-[#7c58de] text-center">
         {isCompletedTable ? "Completed Distributions" : "Pending Distributions"}
       </h1>
       <div className="flex items-center mb-4"></div>
@@ -147,9 +149,12 @@ const DistributionTable = ({
           {isCompletedTable
             ? "No completed distributions."
             : "No pending distributions."}
+            
         </p>
+        
       ) : (
         <div>
+          
           <div className="grid grid-cols-2 gap-4 py-5">
             <div>
               <input
@@ -158,7 +163,7 @@ const DistributionTable = ({
                 placeholder="Search by Title"
                 value={searchTerm}
                 onChange={handleSearchTitle}
-                className="border border-gray-300 dark:border-[#859896] rounded-md py-1 px-2 w-full dark:bg-[#555f71] dark:text-[#ffffff]"
+                className="border border-gray-300 dark:border-gray-500 rounded-md py-1 px-2 w-full dark:bg-[#555f71] dark:text-[#ffffff]"
               />
             </div>
 
@@ -169,7 +174,7 @@ const DistributionTable = ({
                 placeholder="Search by Location"
                 value={locationFilter}
                 onChange={handleSearchLocation}
-                className="border border-gray-300 dark:border-[#859896] rounded-md py-1 px-2 w-full dark:bg-[#555f71] dark:text-[#ffffff]"
+                className="border border-gray-300 dark:border-gray-500 rounded-md py-1 px-2 w-full dark:bg-[#555f71] dark:text-[#ffffff]"
               />
             </div>
           </div>
@@ -179,58 +184,58 @@ const DistributionTable = ({
               borderCollapse: "collapse",
               boxShadow: "0 1px 4px rgba(0, 0, 0, 0.1)",
             }}
+            className="table-auto rounded-xl"
           >
             <thead
-              style={{ background: "#cee3fd", borderBottom: "1px solid #ddd" }}
-              className="dark:bg-[#677183]"
+              style={{ background: "#cee3fd" }}
+              className="dark:bg-[#121a28] border-blue-200 dark:border-gray-700 "
             >
-              <tr className="dark:bg-[#71395a] dark:text-[#fdfdfd]">
-                <th className="py-2 px-4 text-center ">Title</th>
+              <tr className="dark:bg-[#211328] dark:text-[#fdfdfd]">
+                <th className="py-4 px-4 text-center ">Title</th>
                 {!isMobile && (
                   <>
                     <th className="py-2 px-4 text-center">
-                    {(isMobile && !isCompletedTable) ||
-                    (!isMobile && (    
-                      <div className="inline-flex">
-                        <button
-                          onClick={() => sortItems("plates")}
-                         
-                        >
+                      {(isMobile && !isCompletedTable) ||
+                        (!isMobile && (
                           <div className="inline-flex">
-                            <span className="mr-2">Plates</span>
-                            {sortOption === "plates" &&
-                            sortDirection === "asc" ? (
-                              <FaSortUp />
-                            ) : (
-                              <FaSortDown />
-                            )}
+                            <button onClick={() => sortItems("plates")}>
+                              <div className="inline-flex">
+                                <span className="mr-2">Plates</span>
+                                {sortOption === "plates" &&
+                                sortDirection === "asc" ? (
+                                  <FaSortUp />
+                                ) : (
+                                  <FaSortDown />
+                                )}
+                              </div>
+                            </button>
                           </div>
-                        </button>
-                      </div>
-                      ))}
+                        ))}
                     </th>
 
                     <th className="py-2 px-4 text-center">Name</th>
                     <th className="py-2 px-4 text-center">
                       <div className="inline-flex items-center">
-                        <span className="mr-2">Location</span>
-                        <FaMapMarkerAlt />
+                        <span>
+                          <FaMapMarkerAlt />
+                        </span>
+                        <span className="ml-2">Location</span>
                       </div>
                     </th>
 
                     <th className="py-2 px-4 text-center">
-                      <div className="inline-flex">
-                        <span className="mr-2">Contact</span> <FaPhoneAlt />
+                      <div className="inline-flex items-center">
+                        <span>
+                          <FaPhoneAlt />
+                        </span>
+                        <span className="ml-2">Contact</span>{" "}
                       </div>
                     </th>
                   </>
                 )}
                 <th className="py-2 px-4 text-center">
-                  <button
-                    onClick={() => sortItems("closingTime")}  
-                    
-                  >
-                    <div className="inline-flex">
+                  <button onClick={() => sortItems("closingTime")}>
+                    <div className="inline-flex items">
                       <span className="mr-2">Closing Time</span>
                       {sortOption === "closingTime" &&
                       sortDirection === "asc" ? (
@@ -251,20 +256,31 @@ const DistributionTable = ({
               </tr>
             </thead>
 
-            <tbody className="text-center justify-between items-center">
+            <tbody className="text-center">
               {sortedItems.map((item, index) => (
                 <React.Fragment key={index}>
                   <tr
-                    className={`border-b border-blue-200 ${
-                      index % 2 === 0 ? "bg-gray-100 dark:bg-[#212633]" : "bg-white dark:bg-[#252d3d]"
+                    className={`border-b dark:border-blue-200${
+                      index % 2 === 0
+                        ? "bg-gray-100 dark:bg-[#212633] border-gray-200 dark:border-gray-700"
+                        : "bg-white dark:bg-[#252d3d] border-gray-200 dark:border-gray-800"
                     }`}
                   >
-                    <td className="py-4 px-4 font-bold text-gray-800 dark:text-gray-200">
+                    <td
+                      className="py-4 px-4 font-bold text-gray-800 dark:text-gray-200"
+                      style={{
+                        overflowX: "auto",
+                        maxWidth: "150px",
+                        wordBreak: "break-word",
+                        whiteSpace: "pre-line",
+                      }}
+                    >
                       {item.order ? item.order.title : item.title}
                     </td>
+
                     {(isMobile && !isCompletedTable) ||
                       (!isMobile && (
-                        <td className="py-4 px-4 text-center">
+                        <td className="py-4 px-4 ">
                           <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
                             {item.order
                               ? item.order.foodForNumberOfPeople
@@ -275,9 +291,18 @@ const DistributionTable = ({
                       ))}
                     {!isMobile && (
                       <>
-                        <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
+                        <td
+                      className="py-4 px-4 font-bold text-gray-800 dark:text-gray-200"
+                      style={{
+                        overflowX: "auto",
+                        maxWidth: "150px",
+                        wordBreak: "break-word",
+                        whiteSpace: "pre-line",
+                      }}
+                    >
                           {item.order ? item.order.title : item.title}
                         </td>
+
                         <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
                           {item.order ? item.order.address : item.address}
                         </td>
@@ -293,7 +318,7 @@ const DistributionTable = ({
                     </td>
                     {!isCompletedTable && (
                       <>
-                        <td className="py-4 px-4 flex space-x-2">
+                        <td className="py-4 px-4 flex space-x-2 ">
                           {!isMobile && (
                             <>
                               {isDonorPage && (
@@ -305,7 +330,6 @@ const DistributionTable = ({
                                     );
                                   }}
                                   variant="complete"
-                                  text={<FaCheck />}
                                 />
                               )}
                               <Button
@@ -339,50 +363,100 @@ const DistributionTable = ({
                     )}
                   </tr>
                   {expandedItemIndex === index && (
-                    <tr className="py-5 px-5 m-2">
-                      <td colSpan="7">
-                        <div className="border border-gray-300 shadow-sm p-6 px-6 py-6">
+                    <tr className="py-5 px-5 m-2 text-gray-200">
+                       <td
+                      className="py-4 px-4 font-bold text-gray-800 dark:text-gray-200"
+                      style={{
+                        overflowX: "auto",
+                        maxWidth: "150px",
+                        wordBreak: "break-word",
+                        whiteSpace: "pre-line",
+                      }}
+                    >
+                        <div className="border border-gray-300 dark:border-gray-700 shadow-sm p-6 px-6 py-6 text-left">
                           {isDonorPage ? (
                             <span>
-                              <p>name: {item.order.title}</p>
-                              <p>plates: {item.order.foodForNumberOfPeople}</p>
-                              <p>location: {item.order.address}</p>
-                              <p>contact: {item.order.contact}</p>
+                              <p>
+                                <p className="font-bold inline-flex mr-2">
+                                  Name:
+                                </p>
+                                {item.order.title}
+                              </p>
+                              <p>
+                                <p className="font-bold inline-flex mr-2">
+                                  Plates:
+                                </p>
+                                {item.order.foodForNumberOfPeople}
+                              </p>
+                              <p>
+                                <p className="font-bold inline-flex mr-2">
+                                  Location:
+                                </p>
+                                {item.order.address}
+                              </p>
+                              <p>
+                                <p className="font-bold inline-flex mr-2">
+                                  Contact:
+                                </p>
+                                {item.order.contact}
+                              </p>
                             </span>
                           ) : (
                             <span>
-                              <p>name: {item.title}</p>
-                              <p>plates: {item.foodForNumberOfPeople}</p>
-                              <p>location: {item.address}</p>
-                              <p>contact: {item.contact}</p>
+                              <p>
+                                <p className="font-bold inline-flex mr-2">
+                                  Name:
+                                </p>
+                                {item.title}
+                              </p>
+                              <p>
+                                <p className="font-bold inline-flex mr-2">
+                                  Plates:
+                                </p>
+                                {item.foodForNumberOfPeople}
+                              </p>
+                              <p>
+                                <p className="font-bold inline-flex mr-2">
+                                  Location:
+                                </p>
+                                {item.address}
+                              </p>
+                              <p>
+                                <p className="font-bold inline-flex mr-2">
+                                  Contact:
+                                </p>
+                                {item.contact}
+                              </p>
                             </span>
                           )}
                         </div>
-                        <div className="mt-4 pb-4">
-                          {isDonorPage && (
+                        <div className="mt-4 pb-4 flex justify-center gap-4 ">
+                          <div className="self-center">
+                            {isDonorPage && (
+                              <Button
+                                onClick={() => {
+                                  handleCompleteClick(index);
+                                  setCompletingItemOrderId(
+                                    item.order ? item.order._id : item._id
+                                  );
+                                }}
+                                variant="complete"
+                                text=""
+                              />
+                            )}
+                          </div>
+                          <div className="self-center">
                             <Button
                               onClick={() => {
-                                handleCompleteClick(index);
-                                setCompletingItemOrderId(
+                                openConfirmation(index);
+                                setCancellingItemOrderId(
                                   item.order ? item.order._id : item._id
                                 );
                               }}
-                              variant="complete"
-                              text=""
-                              className="py-3" // Adjust the padding value as needed
+                              variant="cancel"
+                              text="Cancel"
                             />
-                          )}
-                          <Button
-                            onClick={() => {
-                              openConfirmation(index);
-                              setCancellingItemOrderId(
-                                item.order ? item.order._id : item._id
-                              );
-                            }}
-                            variant="cancel"
-                            text="Cancel"
-                            className="py-3" // Adjust the padding value as needed
-                          />
+                          </div>
                         </div>
                       </td>
                     </tr>
@@ -394,9 +468,11 @@ const DistributionTable = ({
         </div>
       )}
       <div className="mt-4 flex">
-        <span className="mr-2 text-gray-500">
-          Page {currentPage} of {totalPages}
-        </span>
+        {totalPages > 1 && (
+          <span className="mr-2 text-gray-500">
+            Page {currentPage} of {totalPages}
+          </span>
+        )}
       </div>
       {pendingItems.length > itemsPerPage && (
         <div className="mt-4 flex items-center justify-between">
