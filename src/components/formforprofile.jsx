@@ -33,7 +33,7 @@ const UserProfileForm = () => {
       );
 
       const response = await axios.post(
-        "http://localhost:9005/api/v1/users/complete-registration",
+        "https://api.khana.me/api/v1/users/complete-registration",
         formData,
         {
           withCredentials: true, // Include credentials (cookies) in the request
