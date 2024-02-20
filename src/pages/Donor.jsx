@@ -35,7 +35,7 @@ const Donor = () => {
   //   console.log("Logout is clicked");
   //   // if (userDetails._id){
   //     try {
-  //       const response=axios.post('http://localhost:9005/api/v1/users/logout',{
+  //       const response=axios.post('https://api.khana.me/api/v1/users/logout',{
   //         withCredentials: true, // Include credentials (cookies) in the request
   //       });
   //       console.log(response);
@@ -53,7 +53,7 @@ const Donor = () => {
     try {
       if (userDetails._id) {
         const response = await axios.post(
-          "http://localhost:9005/api/v1/getData/getAllCompletedOrdersForDonor",
+          "https://api.khana.me/api/v1/getData/getAllCompletedOrdersForDonor",
           {
             _id: userDetails._id
           },
@@ -97,7 +97,7 @@ const Donor = () => {
       onClick: async () => {
         try {
           const response = await axios.post(
-            "http://localhost:9005/api/v1/users/logout",
+            "https://api.khana.me/api/v1/users/logout",
             {
               withCredentials: true, // Include credentials (cookies) in the request
             }
@@ -138,7 +138,7 @@ const Donor = () => {
     try {
       if (formData) {
         const response = await axios.post(
-          "http://localhost:9005/api/v1/order/create-order",
+          "https://api.khana.me/api/v1/order/create-order",
           {
             _id: userDetails._id,
             foodItems: formData.foodItem,
@@ -166,7 +166,7 @@ const Donor = () => {
   const currentActiveListings = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:9005/api/v1/order/active-listings-for-donor",
+        "https://api.khana.me/api/v1/order/active-listings-for-donor",
         {
           _id: userDetails._id,
         },
@@ -235,7 +235,7 @@ const Donor = () => {
   const cancelOrderForDonor = async (_id) => {
     try {
       const response = await axios.post(
-        `http://localhost:9005/api/v1/order/cancel-order-for-donor`,
+        `https://api.khana.me/api/v1/order/cancel-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -253,7 +253,7 @@ const Donor = () => {
   const completeOrderForDonor = async (_id) => {
     try {
       const response = await axios.post(
-        `http://localhost:9005/api/v1/order/completed-order-for-donor`,
+        `https://api.khana.me/api/v1/order/completed-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -274,7 +274,7 @@ const Donor = () => {
   const increaseOrderPoints=async(_id)=>{
     try {
       const response = await axios.post(
-        `http://localhost:9005/api/v1/order/increaseOrderPoints`,
+        `https://api.khana.me/api/v1/order/increaseOrderPoints`,
         {
           _orderId: _id,
         },
