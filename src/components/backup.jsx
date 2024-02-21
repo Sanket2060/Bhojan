@@ -1,23 +1,20 @@
-//chaiyenaaaa
-
 // import React, { useEffect, useState } from "react";
-
 // import Button from "./Button";
 // import Confirmation from "./Confirmation";
 // import { toast, ToastContainer } from "react-toastify";
 // import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 // import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 // import { FaSortUp, FaSortDown } from "react-icons/fa";
-// import { FaCheck, FaTimes } from "react-icons/fa";
-// import { set } from "react-hook-form";
 
-// const PendingDistributions = ({
+// const DistributionTable = ({
 //   pendingItems,
 //   onCancelDistribution,
 //   isDonorPage,
+//   isCompletedTable,
 //   onCompleteProp,
 //   cancelOrder,
 //   completeOrder,
+//   allCompletedOrdersForDonor,
 // }) => {
 //   const [searchTerm, setSearchTerm] = useState("");
 //   const [locationFilter, setLocationFilter] = useState("");
@@ -38,9 +35,9 @@
 //   const isMobile = window.matchMedia("(max-width: 768px)").matches;
 //   const [expandedItemIndex, setExpandedItemIndex] = useState(null);
 
-//   useEffect(() => {
-//     console.log("Pending Items:", pendingItems);
-//   }, [pendingItems]);
+//   // useEffect(() => {
+//   //   console.log("Pending Items:", pendingItems);
+//   // }, [pendingItems]);
 
 //   const openConfirmation = (index) => {
 //     setCanceledItemIndex(index);
@@ -112,10 +109,10 @@
 //     setConfirmationOpen(false);
 //   };
 
-//   const handleCompleteClick = (index) => {
+//   const handleCompleteClick = async (index) => {
 //     setCompletedItemIndex(index);
 //     setCompleteConfirmationOpen(true);
-//     completeOrder(completingItemOrderId);
+//     await completeOrder(completingItemOrderId);
 //   };
 
 //   const onConfirmComplete = () => {
@@ -139,16 +136,31 @@
 //   };
 
 //   return (
-//     <div>
-//       <h1 className="text-3xl font-bold mb-4 dark:text-gray-800">
-//         Pending Distributions
+//     <div
+//       className={
+//         isCompletedTable
+//           ? "bg-green-50 dark:bg-[#1F1A24]"
+//           : "bg-yellow-50 dark:bg-[#1F1A24]"
+//       }
+//     >
+//       <hr className="w-full h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
+//       <h1 className="text-3xl font-bold m-4 mt-10 text-[#261750] dark:text-[#7c58de] text-center">
+//         {isCompletedTable
+//           ? "Completed Distributions"
+//           : isDonorPage
+//           ? "Active Listings"
+//           : "Pending Distributions"}
 //       </h1>
 //       <div className="flex items-center mb-4"></div>
 //       {visibleItems.length === 0 ? (
-//         <p className="text-gray-500">No pending distributions.</p>
+//         <p className="text-gray-500 text-center pb-5">
+//           {isCompletedTable
+//             ? "⭐No completed distributions yet.⭐"
+//             : "⭐ No food scheduled for distribution. ⭐"}
+//         </p>
 //       ) : (
 //         <div>
-//           <div className="grid grid-cols-2 gap-4 py-5">
+//           <div className="grid grid-cols-2 gap-4 py-5 px-3">
 //             <div>
 //               <input
 //                 type="text"
@@ -156,7 +168,7 @@
 //                 placeholder="Search by Title"
 //                 value={searchTerm}
 //                 onChange={handleSearchTitle}
-//                 className="border border-gray-300 rounded-md py-1 px-2 w-full"
+//                 className="border border-gray-300 dark:border-gray-500 rounded-md py-1 px-2 w-full dark:bg-[#555f71] dark:text-[#ffffff]"
 //               />
 //             </div>
 
@@ -167,33 +179,29 @@
 //                 placeholder="Search by Location"
 //                 value={locationFilter}
 //                 onChange={handleSearchLocation}
-//                 className="border border-gray-300 rounded-md py-1 px-2 w-full"
+//                 className="border border-gray-300 dark:border-gray-500 rounded-md py-1 px-2 w-full dark:bg-[#555f71] dark:text-[#ffffff]"
 //               />
 //             </div>
 //           </div>
-//           <table
-//             style={{
-//               width: "100%",
-//               borderCollapse: "collapse",
-//               boxShadow: "0 1px 4px rgba(0, 0, 0, 0.1)",
-//             }}
-//           >
-//             <thead
-//               style={{ background: "#cee3fd", borderBottom: "1px solid #ddd" }}
-//               className="dark:bg-primary-dark"
+//           <div className="p-3">
+//             <table
+//               style={{
+//                 width: "100%",
+//                 borderCollapse: "collapse",
+//                 boxShadow: "0 1px 4px rgba(0, 0, 0, 0.1)",
+//               }}
+//               className="table-auto rounded-xl"
 //             >
-//               <tr>
-//                 <th className="py-2 px-4 text-center">Title</th>
-//                 {!isMobile && (
-//                   <>
+//               <thead
+//                 style={{ background: "#cee3fd" }}
+//                 className="dark:bg-[#121a28] border-blue-200 dark:border-gray-700 "
+//               >
+//                 <tr className="dark:bg-[#211328] dark:text-[#fdfdfd]">
+//                   <th className="py-4 px-4 text-center ">Title</th>
+//                   {isMobile && isCompletedTable && (
 //                     <th className="py-2 px-4 text-center">
 //                       <div className="inline-flex">
-//                         {" "}
-//                         <button
-//                           onClick={() => sortItems("plates")}
-//                           className="focus:outline-none"
-//                           style={{ fontWeight: "bold", color: "#333" }}
-//                         >
+//                         <button onClick={() => sortItems("plates")}>
 //                           <div className="inline-flex">
 //                             <span className="mr-2">Plates</span>
 //                             {sortOption === "plates" &&
@@ -203,193 +211,295 @@
 //                               <FaSortDown />
 //                             )}
 //                           </div>
-//                         </button>{" "}
+//                         </button>
 //                       </div>
 //                     </th>
-
-//                     <th className="py-2 px-4 text-center">Name</th>
-//                     <th className="py-2 px-4 text-center">
-//                       <div className="inline-flex items-center">
-//                         <span className="mr-2">Location</span>
-//                         <FaMapMarkerAlt />
-//                       </div>
-//                     </th>
-
-//                     <th className="py-2 px-4 text-center">
-//                       <div className="inline-flex">
-//                         {" "}
-//                         <span className="mr-2">Contact</span> <FaPhoneAlt />
-//                       </div>
-//                     </th>
-//                   </>
-//                 )}
-//                 <th className="py-2 px-4 text-center">
-//                   <button
-//                     onClick={() => sortItems("closingTime")}
-//                     className="focus:outline-none"
-//                     style={{ fontWeight: "bold", color: "#333" }}
-//                   >
-//                     <div className="inline-flex">
-//                       <span className="mr-2">Closing Time</span>
-//                       {sortOption === "closingTime" &&
-//                       sortDirection === "asc" ? (
-//                         <span>
-//                           <FaSortUp />
-//                         </span>
-//                       ) : (
-//                         <span>
-//                           <FaSortDown />
-//                         </span>
-//                       )}
-//                     </div>
-//                   </button>
-//                 </th>
-//                 <th className="py-2 px-4 text-center">Actions</th>
-//               </tr>
-//             </thead>
-
-//             <tbody className="text-center justify-between items-center">
-//               {sortedItems.map((item, index) => (
-//                 <React.Fragment key={index}>
-//                   <tr
-//                     className={`border-b border-blue-200 ${
-//                       index % 2 === 0 ? "bg-gray-100" : "bg-white"
-//                     }`}
-//                   >
-//                     <td className="py-4 px-4 font-bold text-gray-800 dark:text-gray-200">
-//                       {item.order ? item.order.title : item.title}
-//                     </td>
-//                     {!isMobile && (
-//                       <>
-//                         <td className="py-4 px-4 text-right">
-//                           <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
-//                             {item.order
-//                               ? item.order.foodForNumberOfPeople
-//                               : item.foodForNumberOfPeople}{" "}
-//                             Plates
+//                   )}
+//                   {!isMobile && (
+//                     <>
+//                       <th className="py-2 px-4 text-center">
+//                         <div className="inline-flex">
+//                           <button onClick={() => sortItems("plates")}>
+//                             <div className="inline-flex">
+//                               <span className="mr-2">Plates</span>
+//                               {sortOption === "plates" &&
+//                               sortDirection === "asc" ? (
+//                                 <FaSortUp />
+//                               ) : (
+//                                 <FaSortDown />
+//                               )}
+//                             </div>
+//                           </button>
+//                         </div>
+//                       </th>
+//                       <th className="py-2 px-4 text-center">Food item</th>
+//                       <th className="py-2 px-4 text-center">
+//                         <div className="inline-flex items-center">
+//                           <span>
+//                             <FaMapMarkerAlt />
 //                           </span>
-//                         </td>
-//                         <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
-//                           {item.order ? item.order.title : item.title}
-//                         </td>
-//                         <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
-//                           {item.order ? item.order.address : item.address}
-//                         </td>
-//                         <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
-//                           {item.order ? item.order.contact : item.contact}
-//                         </td>
-//                       </>
-//                     )}
-//                     <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
-//                       {item.order
-//                         ? `${item.order.closingTime} hrs`
-//                         : `${item.closingTime} hrs`}
-//                     </td>
+//                           <span className="ml-2">Location</span>
+//                         </div>
+//                       </th>
 
-//                     <td className="py-4 px-4 flex space-x-2">
-//                       {!isMobile && (
-//                         <>
-//                           {isDonorPage && (
-//                             <Button
-//                               onClick={() => {
-//                                 handleCompleteClick(index);
-//                                 setCompletingItemOrderId(
-//                                   item.order ? item.order._id : item._id
-//                                 );
-//                               }}
-//                               variant="complete"
-//                               text={<FaCheck />}
-//                             />
-//                           )}
-//                           <Button
-//                             onClick={() => {
-//                               openConfirmation(index);
-//                               setCancellingItemOrderId(
-//                                 item.order ? item.order._id : item._id
-//                               );
-//                             }}
-//                             variant="cancel"
-//                             text="Cancel"
-//                           />
-//                         </>
-//                       )}
-//                       {isMobile && (
-//                         <Button
-//                           onClick={() =>
-//                             setExpandedItemIndex(
-//                               expandedItemIndex === index ? null : index,
-//                               setShowDetails(!showDetails)
-//                             )
-//                           }
-//                           variant="viewDetail"
-//                           text={showDetails ? "Hide Details" : "View Details"}
-//                         />
-//                       )}
-//                     </td>
-//                   </tr>
-//                   {expandedItemIndex === index && (
-//                     <tr className="py-5 px-5 m-2">
-//                       <td colSpan="7">
-//                         <div className="border border-gray-300 shadow-sm p-6 px-6 py-6">
-//                           {isDonorPage ? (
+//                       <th className="py-2 px-4 text-center">
+//                         <div className="inline-flex items-center">
+//                           <span>
+//                             <FaPhoneAlt />
+//                           </span>
+//                           <span className="ml-2">Contact</span>{" "}
+//                         </div>
+//                       </th>
+//                     </>
+//                   )}
+//                   {!isCompletedTable && (
+//                     <th className="py-2 px-4 text-center">
+//                       <button onClick={() => sortItems("closingTime")}>
+//                         <div className="inline-flex items">
+//                           <span className="mr-2">Closing Time</span>
+//                           {sortOption === "closingTime" &&
+//                           sortDirection === "asc" ? (
 //                             <span>
-//                               <p>name: {item.order.title}</p>
-//                               <p>plates: {item.order.foodForNumberOfPeople}</p>
-//                               <p>location: {item.order.address}</p>
-//                               <p>contact: {item.order.contact}</p>
+//                               <FaSortUp />
 //                             </span>
 //                           ) : (
 //                             <span>
-//                               <p>name: {item.title}</p>
-//                               <p>plates: {item.foodForNumberOfPeople}</p>
-//                               <p>location: {item.address}</p>
-//                               <p>contact: {item.contact}</p>
+//                               <FaSortDown />
 //                             </span>
 //                           )}
 //                         </div>
-//                         <div className="mt-4 pb-4">
-                        
-//                           {isDonorPage && (
-//                             <Button
-//                               onClick={() => {
-//                                 handleCompleteClick(index);
-//                                 setCompletingItemOrderId(
-//                                   item.order ? item.order._id : item._id
-//                                 );
-//                               }}
-//                               variant="complete"
-//                               text=""
-//                               className="py-3" // Adjust the padding value as needed
-//                             />
-//                           )}
-//                           <Button
-//                             onClick={() => {
-//                               openConfirmation(index);
-//                               setCancellingItemOrderId(
-//                                 item.order ? item.order._id : item._id
-//                               );
-//                             }}
-//                             variant="cancel"
-//                             text="Cancel"
-//                             className="py-3" // Adjust the padding value as needed
-//                           />
-//                         </div>
-//                       </td>
-//                     </tr>
+//                       </button>
+//                     </th>
 //                   )}
-//                 </React.Fragment>
-//               ))}
-//             </tbody>
-//           </table>
+//                   {!isCompletedTable && (
+//                     <th className="py-2 px-4 text-center">Actions</th>
+//                   )}
+//                   {isMobile && isCompletedTable && (
+//                     <th className="py-2 px-4 text-center">Actions</th>
+//                   )}
+//                 </tr>
+//               </thead>
+
+//               <tbody className="text-center w-full">
+//                 {sortedItems.map((item, index) => (
+//                   <React.Fragment key={index}>
+//                     <tr
+//                       className={`border-b dark:border-blue-200 w-full${
+//                         index % 2 === 0
+//                           ? "bg-gray-100 dark:bg-[#212633] border-gray-200 dark:border-gray-700"
+//                           : "bg-white dark:bg-[#252d3d] border-gray-200 dark:border-gray-800"
+//                       }`}
+//                     >
+//                       <td
+//                         className="py-4 px-4 font-bold text-gray-800 dark:text-gray-200"
+//                         style={{
+//                           overflowX: "auto",
+//                           maxWidth: "150px",
+//                           wordBreak: "break-word",
+//                           whiteSpace: "pre-line",
+//                         }}
+//                       >
+//                         {item.order ? item.order.title : item.title}
+//                       </td>
+
+//                       {!isMobile && (
+//                         <td className="py-4 px-4 ">
+//                           <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
+//                             {item.order
+//                               ? item.order.foodForNumberOfPeople
+//                               : item.foodForNumberOfPeople}
+//                             Plates
+//                           </span>
+//                         </td>
+//                       )}
+
+//                       {isMobile && isCompletedTable && (
+//                         <td className="py-4 px-4 ">
+//                           <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
+//                             {item.order
+//                               ? item.order.foodForNumberOfPeople
+//                               : item.foodForNumberOfPeople}
+//                             Plates
+//                           </span>
+//                         </td>
+//                       )}
+
+//                       {!isMobile && (
+//                         <>
+//                           <td
+//                             className="py-4 px-4 font-bold text-gray-800 dark:text-gray-200"
+//                             style={{
+//                               overflowX: "auto",
+//                               maxWidth: "150px",
+//                               wordBreak: "break-word",
+//                               whiteSpace: "pre-line",
+//                             }}
+//                           >
+//                             {item.order ? item.order.foodItems : item.foodItems}
+//                           </td>
+
+//                           <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
+//                             {item.order ? item.order.address : item.address}
+//                           </td>
+//                           <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
+//                             {item.order ? item.order.contact : item.contact}
+//                           </td>
+//                         </>
+//                       )}
+//                       {!isCompletedTable && (
+//                         <td className="py-4 px-4 text-gray-800 dark:text-gray-200">
+//                           {item.order
+//                             ? `${item.order.closingTime} hrs`
+//                             : `${item.closingTime} hrs`}
+//                         </td>
+//                       )}
+//                       {/* {!isCompletedTable && (
+//                         <> */}
+//                           <td className="py-4 px-4 flex space-x-2  ">
+//                             {!isMobile && !isCompletedTable && (
+//                               <>
+//                                 {isDonorPage && (
+//                                   <Button
+//                                     onClick={() => {
+//                                       handleCompleteClick(index);
+//                                       setCompletingItemOrderId(
+//                                         item.order ? item.order._id : item._id
+//                                       );
+//                                     }}
+//                                     variant="complete"
+//                                   />
+//                                 )}
+//                                 <Button
+//                                   onClick={() => {
+//                                     openConfirmation(index);
+//                                     setCancellingItemOrderId(
+//                                       item.order ? item.order._id : item._id
+//                                     );
+//                                   }}
+//                                   variant="cancel"
+//                                   text="Cancel"
+//                                 />
+//                               </>
+//                             )}
+//                             {isMobile && (
+//                               <Button
+//                                 onClick={() =>
+//                                   setExpandedItemIndex(
+//                                     expandedItemIndex === index ? null : index,
+//                                     setShowDetails(!showDetails)
+//                                   )
+//                                 }
+//                                 variant="viewDetail"
+//                                 text={
+//                                   showDetails ? "Hide Details" : "View Details"
+//                                 }
+//                               />
+//                             )}
+//                           </td>
+//                         {/* </>
+//                       )} */}
+//                     </tr>
+//                     {expandedItemIndex === index && (
+//                       <tr>
+//                         <td colSpan="7">
+//                           <div className="border border-gray-300 dark:border-gray-700 shadow-sm p-6 px-6 py-6 text-left">
+//                             {isDonorPage ? (
+//                               <span>
+//                                 <p>
+//                                   <p className="font-bold inline-flex mr-2">
+//                                     Name:
+//                                   </p>
+//                                   {item.order.title}
+//                                 </p>
+//                                 <p>
+//                                   <p className="font-bold inline-flex mr-2">
+//                                     Plates:
+//                                   </p>
+//                                   {item.order.foodForNumberOfPeople}
+//                                 </p>
+//                                 <p>
+//                                   <p className="font-bold inline-flex mr-2">
+//                                     Location:
+//                                   </p>
+//                                   {item.order.address}
+//                                 </p>
+//                                 <p>
+//                                   <p className="font-bold inline-flex mr-2">
+//                                     Contact:
+//                                   </p>
+//                                   {item.order.contact}
+//                                 </p>
+//                               </span>
+//                             ) : (
+//                               <span>
+//                                 <p>
+//                                   <p className="font-bold inline-flex mr-2">
+//                                     Name:
+//                                   </p>
+//                                   {item.foodItems}
+//                                 </p>
+//                                 <p>
+//                                   <p className="font-bold inline-flex mr-2">
+//                                     Plates:
+//                                   </p>
+//                                   {item.foodForNumberOfPeople}
+//                                 </p>
+//                                 <p>
+//                                   <p className="font-bold inline-flex mr-2">
+//                                     Location:
+//                                   </p>
+//                                   {item.address}
+//                                 </p>
+//                                 <p>
+//                                   <p className="font-bold inline-flex mr-2">
+//                                     Contact:
+//                                   </p>
+//                                   {item.contact}
+//                                 </p>
+//                               </span>
+//                             )}
+//                           </div>
+//                           <div className="mt-4 pb-4 flex justify-center gap-4 ">
+//                             <div className="self-center">
+//                               {isDonorPage && (
+//                                 <Button
+//                                   onClick={() => {
+//                                     handleCompleteClick(index);
+//                                     setCompletingItemOrderId(
+//                                       item.order ? item.order._id : item._id
+//                                     );
+//                                   }}
+//                                   variant="complete"
+//                                   text=""
+//                                 />
+//                               )}
+//                             </div>
+//                             <div className="self-center">
+//                               <Button
+//                                 onClick={() => {
+//                                   openConfirmation(index);
+//                                   setCancellingItemOrderId(
+//                                     item.order ? item.order._id : item._id
+//                                   );
+//                                 }}
+//                                 variant="cancel"
+//                                 text="Cancel"
+//                               />
+//                             </div>
+//                           </div>
+//                         </td>
+//                       </tr>
+//                     )}
+//                   </React.Fragment>
+//                 ))}
+//               </tbody>
+//             </table>
+//           </div>
 //         </div>
 //       )}
-//       <div className="mt-4 flex">
-//         <span className="mr-2 text-gray-500">
-//           Page {currentPage} of {totalPages}
-//         </span>
-//       </div>
+
 //       {pendingItems.length > itemsPerPage && (
-//         <div className="mt-4 flex items-center justify-between">
+//         <div className="mt-4 flex items-center justify-between pb-5 px-5">
 //           <button
 //             onClick={() => handlePageChange(currentPage - 1)}
 //             disabled={currentPage === 1}
@@ -428,4 +538,4 @@
 //     </div>
 //   );
 // };
-// export default PendingDistributions;
+// export default DistributionTable;

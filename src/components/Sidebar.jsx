@@ -11,20 +11,25 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-    if (darkMode) {
+  };
+
+  function getInitialDarkModePreference() {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      return savedTheme === "dark";
+    } else {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+  }
+  const [darkMode, setDarkMode] = useState(getInitialDarkModePreference());
+  useEffect(() => {
+    if (!darkMode) {
       document.documentElement.classList.add("dark");
-      localStorage.removeItem("theme");
-      localStorage.theme = "dark";
     } else {
       document.documentElement.classList.remove("dark");
-      localStorage.removeItem("theme");
-      localStorage.theme = "light";
     }
-    // You can also save the user's preference in local storage here
-  };
-  const [darkMode, setDarkMode] = useState(
-    localStorage.theme === "dark" ? false : true
-  );
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
