@@ -21,13 +21,15 @@ const HowToDonate = ({ isDistribute }) => {
   if (isDistribute) {
     mainText = "Item scheduled for distribution";
     subText1 = "Interested volunteer will contact you";
-    subText2 = "Thank you";
+    subText2 = "(You can fill the for again for multiple donations)";
   } else {
     mainText = "How To Donate";
     subText1 = "Fill the form and click 'post listing'";
     subText2 = "It's that easy!!!";
   }
+
   return (
+    
     <div
       className={`rounded transition-opacity duration-1000 ${animationClass}`}
     >

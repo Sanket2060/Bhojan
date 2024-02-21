@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 //components
 import { Sidebar } from "../components/Sidebar.jsx";
 import Accomplishment from "../components/Accomplishment.jsx";
@@ -7,7 +7,6 @@ import DonorForm from "../components/DonorForm.jsx";
 // import PendingDistributions from "../components/PendingDistributions";
 import HowToDonate from "../components/HowToDonate";
 import DistributionTable from "../components/DistributionTable";
-
 
 //icons
 import { MdOutlineDashboard } from "react-icons/md";
@@ -28,7 +27,7 @@ import { useSelector } from "react-redux";
 // };
 
 const Donor = () => {
-  const [isDistribute, setisDistribute] = useState(false);
+  const [isDistribute, setIsDistribute] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
   const [completedListings, setCompletedListings] = useState([]);
   // const logoutUser=()=>{
@@ -45,18 +44,18 @@ const Donor = () => {
   //   // }
   // }
   //fetch all pending distributions and completed distributions
-  useEffect(()=>{
+  useEffect(() => {
     currentActiveListings();
     getAllCompletedOrdersForDonor();
-  },[]);
-  const getAllCompletedOrdersForDonor=async()=>{
+  }, []);
+  const getAllCompletedOrdersForDonor = async () => {
     try {
       if (userDetails._id) {
         const response = await axios.post(
           "https://api.khana.me/api/v1/getData/getAllCompletedOrdersForDonor",
           {
-            _id: userDetails._id
-          },
+            _id: userDetails._id,
+          }
         );
         // console.log("Fetched All Completed Orders For Donor successfully",response);
         // console.log(response.data.data.completedOrders);
@@ -68,24 +67,24 @@ const Donor = () => {
     } catch (error) {
       console.log("Error at getAllCompletedOrdersForDonor ", error);
     }
-  }
-  useEffect(()=>{
-    console.log("Completed orders are:",completedListings);
-  },[completedListings])
+  };
+  useEffect(() => {
+    console.log("Completed orders are:", completedListings);
+  }, [completedListings]);
   //sidebar
   const SidebarMenu = [
     { name: "Homepage", link: "/", icon: MdOutlineDashboard },
     { name: "User", link: "/profile", icon: AiOutlineUser },
     {
       name: "Active listings",
-      link: "/",
+      link: "#CompletedDistributions",
       icon: TbReportAnalytics,
       margin: true,
     },
-    { name: "Past listings", link: "/", icon: FiFolder },
+    { name: "Past listings", link: "", icon: FiFolder },
     {
       name: "Difference you made",
-      link: "/#Accomplishment",
+      link: "#accomplishment",
       icon: AiOutlineHeart,
       margin: true,
     },
@@ -124,7 +123,7 @@ const Donor = () => {
     // setPendingItems((prevItems) => [...prevItems, data]);
     setSubmittedItems((prevItems) => [...prevItems, data]);
 
-    // setisDistribute=(true);
+    setisDistribute(true);
   };
   useEffect(() => {
     if (formSubmitted == true) {
@@ -208,8 +207,12 @@ const Donor = () => {
     //   prevItems.filter((item) => item.id !== completedItem.id)
     // );
   };
+  const pendingListingsRef = useRef();
+  const completedDistributionRef = useRef();
+  const accomplishmentRef = useRef();
 
   const [isMobile, setIsMobile] = useState(false);
+
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const handleResize = () => {
@@ -290,39 +293,52 @@ const Donor = () => {
   }
 
   return (
-    <div className="flex dark:bg-[#121212] bg-gray-100">
+    <div className="flex dark:bg-[#121212]">
       <div
         className={`w-1/5`}
-        style={{ width: isMobile ? " 0px" : open ? "18.7%" : "2%" }}
+        style={{ width: isMobile ? " 0px" : open ? "18.7%" : "0%" }}
       >
         <Sidebar
           menus={SidebarMenu}
           handleToggle={handleToggle}
           isOpen={open}
+          scrollToActiveListings={() =>
+            pendingListingsRef.current.scrollIntoView({ behavior: "smooth" })
+          }
+          scrollToAccomplishment={() =>
+            accomplishmentRef.current.scrollIntoView({ behavior: "smooth" })
+          }
+          scrollToCompletedDistributions={() =>
+            completedDistributionRef.current.scrollIntoView({
+              behavior: "smooth",
+            })
+          }
         />
       </div>
       <div
         className="flex-1"
-        style={{ marginLeft: isMobile ? "0px" : open ? "0%" : "0" }}
+        style={{ marginLeft: isMobile ? "0px" : open ? "0%" : "2.8%" }}
       >
-        <div className="md:col-span-1 justify-center pt-10 m-3 wrapper">
+        <div className="md:col-span-1 justify-center pt-2 ">
           <div className="flex flex-col bg-blue-100 rounded-md p-6 shadow-sm dark:bg-[#1F1A24]">
             <WelcomeBack userName={userDetails.username} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 wrapper bg-pink-100 dark:bg-gray-900">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 dark:bg-gray-900">
             <div className="col-span-1">
-                <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 wrapper gap-4 col-span-2 lg:col-span-1">
-                  {/* {!formSubmitted ? ( */}
-                  <DonorForm onFormSubmit={handleFormSubmit} />
-                </div>
+              <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 wrapper gap-4 col-span-2 lg:col-span-1 mb-5">
+                <DonorForm
+                  onFormSubmit={handleFormSubmit}
+                  setIsDistribute={setIsDistribute}
+                />
+              </div>
             </div>
 
-            <div className="col-span-1 md:col-span-1 md:flex md:items-center md:justify-center ">
+            <div className="col-span-1 md:col-span-1 md:flex md:items-center md:justify-center">
               <div className="container mx-auto p-8 wrapper relative z-20">
-                <div className="absolute top-1/4 left-1/4 w-12 h-12 bg-gray-300 rounded-full opacity-50 dark:bg-gray-600"></div>
-                <div className="absolute top-1/2 right-1/4 w-16 h-16 bg-gray-300 rounded-full opacity-50 dark:bg-gray-600"></div>
-                <div className="absolute bottom-1/4 left-1/2 w-20 h-20 bg-gray-300 rounded-full opacity-50 dark:bg-gray-600"></div>
+                <div className="absolute top-1/4 left-1/4 w-12 h-12 bg-yellow-300 rounded-full opacity-75 dark:bg-yellow-700"></div>
+                <div className="absolute top-1/2 right-1/4 w-16 h-16 bg-red-300 rounded-full opacity-75 dark:bg-red-700"></div>
+                <div className="absolute bottom-1/4 left-1/2 w-20 h-20 bg-green-300 rounded-full opacity-75 dark:bg-green-700"></div>
                 <HowToDonate
                   isDistribute={isDistribute}
                   // isReserved={isReserved}
@@ -330,7 +346,7 @@ const Donor = () => {
               </div>
             </div>
           </div>
-          <div className="m-4">
+          <div id="CompletedDistributions">
             <DistributionTable
               pendingItems={activeListings}
               onCancelDistribution={handleCancelDistribution}
@@ -348,11 +364,8 @@ const Donor = () => {
                 Submit Another Listing
               </button> */}
           </div>
-          <div
-            id="completedDistribution"
-            className="m-4"
-          >
-             <DistributionTable
+          <div id="completedDistribution">
+            <DistributionTable
               pendingItems={completedListings}
               onCancelDistribution={handleCancelDistribution}
               isDonorPage={false}
@@ -362,11 +375,8 @@ const Donor = () => {
               completeOrder={completeOrderForDonor}
             />
           </div>
-           <hr className="w-full h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
-          <div
-            id="Accomplishment"
-            className="  p-3"
-          >
+          <hr className="w-full h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
+          <div id="Accomplishment">
             <Accomplishment
               totalFoodSaved={500}
               ourCommunity={1}
@@ -380,5 +390,5 @@ const Donor = () => {
       </div>
     </div>
   );
-  };
-  export default Donor;
+};
+export default Donor;

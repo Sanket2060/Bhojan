@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useSelector } from "react-redux";
 import axios from "axios";
-
 // import Button from "./Button";
-
+import { MapPin, Phone, Clock, User } from "react-feather";
 import { toast, ToastContainer } from "react-toastify";
+import Confirmation from "./Confirmation";
+import { FaBowlFood } from "react-icons/fa6";
 
 function AccordionItem({
   item,
@@ -62,17 +63,21 @@ function AccordionItem({
 
   const handleButtonClick = async () => {
     // if (!capVal) {
-    console.error("reCAPTCHA validation failed");
+    // console.error("reCAPTCHA validation failed");
+    // toast.error("reCAPTCHA validation failed");
     // Simulating server-side verification delay
     // await new Promise((resolve) => setTimeout(resolve, 2000));
+
     onDistribute(index);
     onToggle(index);
-    toast.success("Distribution successful!");
+    // toast.success("Distribution successful!");
     await addDistributorToOrder();
+    console.log("Distribution successful!");
+   
     // getUsersPendingDistributions();
     retainAllData();
+    toast.success("Alerted Donor - Pending Distribution");
     return;
-    // }
   };
 
   // const handleConfirmAction = () => {
@@ -88,7 +93,22 @@ function AccordionItem({
     backgroundColor: "bg-white",
     shadow: "shadow-md",
   };
-
+  const formatDateTime = (createdAt) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: true,
+    };
+    const formattedDate = new Date(createdAt).toLocaleDateString(
+      "en-US",
+      options
+    );
+    return formattedDate;
+  };
   const addDistributorToOrder = async () => {
     try {
       const response = await axios.post(
@@ -112,54 +132,103 @@ function AccordionItem({
       console.log("Error at listing active orders at donor", error);
     }
   };
-
+  const contact = item.order ? item.order.contact : item.contact;
+  const maskContact = (contact) => {
+    return "●●●●●●●●●●"; 
+  };
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
   return (
     <div
       className={`${expanded ? "bg-green-50  overflow-hidden " : ""}${
         containerStyle.backgroundColor
       } ${containerStyle.shadow} ${""}`}
     >
-      <button
-        className="flex items-center justify-between w-full py-3 px-4 bg-gray-50 hover:bg-gray-200 focus:outline-none focus:ring-0 relative dark:bg-[#1F1A24]"
-        onClick={() => onToggle(index)}
-      >
-        <span className="text-lg font-medium text-gray-900 dark:text-gray-200">
-          {item.address}{" "}
-          <span className="bg-blue-400 text-white px-2 py-1 rounded-full text-xs">
-            {item.foodForNumberOfPeople} Plates
-          </span>
-        </span>
-        <svg
-          className={`w-4 h-4 ml-2  ${
-            expanded ? "text-indigo-500 rotate-180" : "text-gray-400"
-          }`}
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </button>
-      {expanded && (
-        <div className="p-4  dark:bg-[#1F1A24] dark:text-gray-50">
-          {/* Content of the accordion item */}
-          <p>Name: {item.title}</p>
-          <p>Location: {item.address}</p>
-          <p>Number: {item.contact}</p>
-          <p>Closing Time: {item.closingTime}</p>
+      {/* {expanded && ( */}
+      <div className="p-4  dark:bg-[#1F1A24] dark:text-gray-50">
+        {/* Content of the accordion item */}
+        <div className="bg-white dark:bg-[#1F1A24] p-4 rounded-md shadow-md relative">
+          <p className="text-lg text-center pb-2 border-b font-semibold text-gray-800 dark:text-gray-200">
+            {item.title}
+          </p>
+          <div className="mt-2">
+            <p className="flex items-center text-gray-600 dark:text-gray-300 m-1">
+              <FaBowlFood className="mr-3" /> Food Item:{" "}
+              {item.order ? item.order.foodItems : item.foodItems}
+            </p>
+            <p className="flex items-center text-gray-600 dark:text-gray-300">
+              <MapPin className="mr-2" /> Location:{" "}
+              {item.order ? item.order.address : item.address}
+            </p>
+            <p className="flex items-center text-gray-600 dark:text-gray-300">
+              <User className="mr-2" /> Plates: {item.foodForNumberOfPeople}
+            </p>
+            <p className="inline-flex mr-2">Contact:</p>
+            <p
+              className=" items-center text-gray-600 dark:text-gray-300 inline-flex"
+              style={{
+                filter: !expanded ? "blur(5px)" : "none",
+              }}
+            >
+               {!expanded ? maskContact(contact) : contact}
+            </p>
+            <p className="flex items-center text-gray-600 dark:text-gray-300">
+              <Clock className="mr-2" /> Closing Time: {item.closingTime}
+            </p>
+          </div>
+          <div className="flex justify-between flex-col sm:flex-row">
+            {expanded && (
+              <>
+                <button
+                  className="md:absolute p-3 md:top-1/2 md:right-4 md:transform md:-translate-y-1/2 md:py-3 md:px-6 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-0 dark:bg-red-600 dark:hover:bg-red-700"
+                  onClick={() => setConfirmationOpen(true)}
+                >
+                  Cancel booking
+                </button>
+                <Confirmation
+                  isOpen={confirmationOpen}
+                  onClose={() => setConfirmationOpen(false)}
+                  onConfirm={() => {
+                    setConfirmationOpen(false);
+                    onToggle(index);
+                  }}
+                  message={`Cancel booking of "${item.title}"?`}
+                />
+              </>
+            )}
+            {!expanded && (
+              <>
+                <button
+                  className="md:absolute p-3 md:top-1/2 md:right-4 md:transform md:-translate-y-1/2 md:py-3 md:px-6  bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-0 dark:bg-gray-600 dark:hover:bg-gray-700"
+                  onClick={() => setConfirmationOpen(true)}
+                >
+                  Book distribution
+                </button>
+                <Confirmation
+                  isOpen={confirmationOpen}
+                  onClose={() => setConfirmationOpen(false)}
+                  onConfirm={() => {
+                    setConfirmationOpen(false);
+                    onToggle(index);
+                  }}
+                  message={`Book distribution for "${item.title}"?`}
+                />
+              </>
+            )}
+          </div>
+        </div>
 
-          <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-200 mt-2 p-2">
-            <p>Listed on: {item.listedOn}</p>
+        <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-200 mt-2 p-2 s">
+          <p>Listed on: {formatDateTime(item.createdAt)}</p>
+          {expanded && (
             <p>
               Booked for: {Math.floor(countdown / 60)}:{countdown % 60} minutes
             </p>
-          </div>
+          )}
+        </div>
+        {expanded && (
           <div className="flex flex-col sm:flex-row justify-between items-center">
-            {/* {isRecaptchaLoaded ? (
+            {isRecaptchaLoaded ? (
               <ReCAPTCHA
                 sitekey="6LeVh08pAAAAAGFv8aKqbVg0H5X5FpZi5XhZPHUo"
                 onChange={handleRecaptchaChange}
@@ -170,27 +239,28 @@ function AccordionItem({
                   <span className="visually-hidden">Loading reCAPTCHA...</span>
                 </div>
               </div>
-             )}  */}
+            )}
 
             <div className="items-end mt-4 sm:mt-0">
               <button
-                className="bg-blue-500 text-white py-2 px-4 sm:py-4 sm:px-7 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 cursor-pointer "
+                className="bg-blue-500 text-white py-2 px-4 sm:py-4 sm:px-7 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 cursor-pointer"
                 // disabled={!capVal}
                 onClick={() => {
-                  toast.success("Alerted Donor - Pending Distribution");
-                  // if (capVal) {
-                  handleButtonClick();
-                  // } else {
-                  // console.error("reCAPTCHA validation failed");
-                  // }
+                  if (capVal) {
+                    handleButtonClick();
+                  } else {
+                    console.error("reCaptcha validation failed");
+                    toast.error("reCaptcha validation failed");
+                  }
                 }}
               >
-                I'll distribute
+                Confirm distribution
               </button>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+      {/* )} */}
     </div>
   );
 }
