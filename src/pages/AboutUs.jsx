@@ -51,8 +51,8 @@ function AboutUsme(props) {
   );
   const [field4, setField4] = useState("Project Manager");
   const [image4, Image4] = useState(D);
-  const facebook4 = "https://www.facebook.com/";
-  const instagram4 = "https://www.instagram.com/";
+  const facebook4 = "https://www.facebook.com/sulav.charya";
+  const instagram4 = "https://www.instagram.com/su7av_acharya";
   const twitter4 = "https://www.twitter.com/";
 
   const [name5, setName5] = useState("Mitesh Lamsal");

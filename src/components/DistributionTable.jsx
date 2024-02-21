@@ -137,11 +137,7 @@ const DistributionTable = ({
 
   return (
     <div
-      className={
-        isCompletedTable
-          ? "bg-green-50 dark:bg-[#1F1A24]"
-          : "bg-yellow-50 dark:bg-[#1F1A24]"
-      }
+      className={isCompletedTable ? " dark:bg-[#1F1A24]" : " dark:bg-[#1F1A24]"}
     >
       <hr className="w-full h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
       <h1 className="text-3xl font-bold m-4 mt-10 text-[#261750] dark:text-[#7c58de] text-center">
@@ -192,11 +188,11 @@ const DistributionTable = ({
               }}
               className="table-auto rounded-xl"
             >
-              <thead
+              <thead  
                 style={{ background: "#cee3fd" }}
-                className="dark:bg-[#121a28] border-blue-200 dark:border-gray-700 "
+                className="dark:bg-[#121a28] border-blue-200  dark:border-gray-700 "
               >
-                <tr className="dark:bg-[#211328] dark:text-[#fdfdfd]">
+                <tr className="dark:bg-[#211328] dark:text-[#fdfdfd] ">
                   <th className="py-4 px-4 text-center ">Title</th>
                   {isMobile && isCompletedTable && (
                     <th className="py-2 px-4 text-center">
@@ -288,7 +284,11 @@ const DistributionTable = ({
                         index % 2 === 0
                           ? "bg-gray-100 dark:bg-[#212633] border-gray-200 dark:border-gray-700 dark:text-white"
                           : "bg-white dark:bg-[#252d3d] border-gray-200 dark:border-gray-800 dark:text-white"
-                      } ${expandedItemIndex === index ? "bg-green-200 dark:bg-[#4a2e64]" : ""}`}
+                      } ${
+                        expandedItemIndex === index
+                          ? "bg-green-200 dark:bg-[#4a2e64]"
+                          : ""
+                      }`}
                     >
                       <td
                         className="py-4 px-4 font-bold text-gray-800 dark:text-gray-200"

@@ -20,15 +20,15 @@ const HowToDistribute = ({ isReserved, isDistribute }) => {
   if (isDistribute) {
     mainText = "Item scheduled for distribution";
     subText1 = "Please pickup from donor's location";
-    subText2 = "Distribute";
+    subText2 = "You can distribute other listings as well";
   } else if (isReserved) {
     mainText = "Item is reserved for 5 mins";
     subText1 = "Please contact distributor and verify";
-    subText2 = "Click 'i'll distribute' to Confirm, close the item to cancel";
+    subText2 = "Click 'i'll distribute' to Confirm";
   } else {
     mainText = "How To Distribute";
-    subText1 = "Please expand the item you want to deliver";
-    subText2 = "Expanding will reserve the item for 5 minutes";
+    subText1 = "Book the item you'd like to distribute";
+    subText2 = "Booked item will be reserved for 5 minutes";
   }
 
   return (

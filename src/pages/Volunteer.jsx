@@ -245,8 +245,9 @@ const Volunteer = () => {
           )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="col-span-1 ">
-              <div className="container mx-auto p-4 wrapper">
-                <h1 className="text-3xl font-bold mb-4 text-[#261750] dark:text-[#7c58de] self-center ">
+              
+              <div className="container px-6">
+                <h1 className="text-3xl font-bold mb-4 text-[#261750] dark:text-[#7c58de] self-center text-center ">
                   Active Listings
                 </h1>
                 <input

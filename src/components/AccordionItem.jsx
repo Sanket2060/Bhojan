@@ -18,7 +18,8 @@ function AccordionItem({
   getUsersPendingDistributions,
   retainAllData,
 }) {
-  const [countdown, setCountdown] = useState(5 * 60); // 5 minutes in seconds
+  const [countdown, setCountdown] = useState(5 * 60);
+
   const [capVal, setCapVal] = useState(null);
   const userDetails = useSelector((state) => state.auth.userDetails);
 
@@ -43,12 +44,12 @@ function AccordionItem({
       // Start the countdown when the accordion item is expanded
       countdownInterval = setInterval(() => {
         setCountdown((prevCountdown) => prevCountdown - 1);
-      }, 1000000);
+      }, 1000);
       toast.success("Reserved for 5 min");
     }
 
     return () => {
-      clearInterval(countdownInterval);
+      setCountdown(5 * 60);
     };
   }, [expanded]);
 
@@ -62,18 +63,18 @@ function AccordionItem({
   }, [countdown, index, onToggle]);
 
   const handleButtonClick = async () => {
-    // if (!capVal) {
-    // console.error("reCAPTCHA validation failed");
-    // toast.error("reCAPTCHA validation failed");
-    // Simulating server-side verification delay
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    onDistribute(index);
-    onToggle(index);
+    if (!capVal) {
+      console.error("reCAPTCHA validation failed");
+      toast.error("reCAPTCHA validation failed");
+      // Simulating server-side verification delay
+      // await new Promise((resolve) => setTimeout(resolve, 2000));
+      // onToggle(index);
+    } else onDistribute(index);
+    // onToggle(index);
     // toast.success("Distribution successful!");
     await addDistributorToOrder();
     console.log("Distribution successful!");
-   
+
     // getUsersPendingDistributions();
     retainAllData();
     toast.success("Alerted Donor - Pending Distribution");
@@ -109,6 +110,46 @@ function AccordionItem({
     );
     return formattedDate;
   };
+
+  const closingTimeWithCountdown = (createdAt, closingTimeInHours) => {
+    const closingTimeInMilliseconds = closingTimeInHours * 60 * 60 * 1000;
+
+    // Convert createdAt to a Date object
+    const itemCreatedAt = new Date(createdAt);
+
+    // Calculate the closing date by adding closing time to createdAt
+    const closingDate = new Date(
+      itemCreatedAt.getTime() + closingTimeInMilliseconds
+    );
+
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: true,
+    };
+
+    const formattedClosingDate = closingDate.toLocaleDateString(
+      "en-US",
+      options
+    );
+
+    // Calculate the remaining countdown time
+    const countdown1 = Math.max(
+      0,
+      Math.floor((closingDate.getTime() - Date.now()) / 1000)
+    );
+
+    return { formattedClosingDate, countdown1 };
+  };
+  const { formattedClosingDate, countdown1 } = closingTimeWithCountdown(
+    item.createdAt,
+    item.closingTime
+  );
+
   const addDistributorToOrder = async () => {
     try {
       const response = await axios.post(
@@ -132,9 +173,10 @@ function AccordionItem({
       console.log("Error at listing active orders at donor", error);
     }
   };
+
   const contact = item.order ? item.order.contact : item.contact;
   const maskContact = (contact) => {
-    return "●●●●●●●●●●"; 
+    return "●●●●●●●●●●";
   };
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -145,7 +187,8 @@ function AccordionItem({
       } ${containerStyle.shadow} ${""}`}
     >
       {/* {expanded && ( */}
-      <div className="p-4  dark:bg-[#1F1A24] dark:text-gray-50">
+      <div className={`p-4 dark:bg-[#1F1A24] dark:text-gray-50 ${countdown1 === 0 ? 'bg-red-100' : ''}`}>
+
         {/* Content of the accordion item */}
         <div className="bg-white dark:bg-[#1F1A24] p-4 rounded-md shadow-md relative">
           <p className="text-lg text-center pb-2 border-b font-semibold text-gray-800 dark:text-gray-200">
@@ -163,17 +206,29 @@ function AccordionItem({
             <p className="flex items-center text-gray-600 dark:text-gray-300">
               <User className="mr-2" /> Plates: {item.foodForNumberOfPeople}
             </p>
-            <p className="inline-flex mr-2">Contact:</p>
-            <p
-              className=" items-center text-gray-600 dark:text-gray-300 inline-flex"
-              style={{
-                filter: !expanded ? "blur(5px)" : "none",
-              }}
-            >
-               {!expanded ? maskContact(contact) : contact}
+            <p className="flex items-center text-gray-600 dark:text-gray-300 ">
+              <Phone className="mr-2" />
+              Contact:
+              <p
+                className=" items-center text-gray-600 dark:text-gray-300 inline-flex"
+                style={{
+                  filter: !expanded ? "blur(5px)" : "none",
+                }}
+              >
+                {!expanded ? maskContact(contact) : contact}
+              </p>
             </p>
             <p className="flex items-center text-gray-600 dark:text-gray-300">
-              <Clock className="mr-2" /> Closing Time: {item.closingTime}
+              <Clock className="mr-2" /> Closes at:{" "}
+              {countdown1 === 0 ? (
+                "closed"
+              ) : (
+                <>
+                  {formattedClosingDate} (in {Math.floor(countdown1 / 3600)}:
+                  {Math.floor((countdown1 % 3600) / 60)}:{countdown1 % 60}{" "}
+                  minutes)
+                </>
+              )}
             </p>
           </div>
           <div className="flex justify-between flex-col sm:flex-row">
