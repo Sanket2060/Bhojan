@@ -47,7 +47,7 @@ function AboutUsme(props) {
 
   const [name4, setName4] = useState("Sulav Acharya");
   const [desp4, setDesp4] = useState(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis saepe eos nihil laborum placeat alias omnis aliquid, quaerat ex amet quasi fugiat nemo ullam, voluptatibus obcaecati et autem repellendus velit!  or pursues or desires to obtain pain of itself"
+    "Hey there! I'm Sulav, the friendly face behind the scenes. I love keeping things smooth, connecting with folks, and adding a dash of humor along the way. Teamwork? We work as a team, and together, we overcome anything.  Got a question, feedback, or just wanna chat? Don't be shy, come say hi!"
   );
   const [field4, setField4] = useState("Project Manager");
   const [image4, Image4] = useState(D);
