@@ -46,7 +46,7 @@ function AboutUsme(props) {
   const facebook3 = "https://www.facebook.com/";
   const instagram3 = "https://www.instagram.com/manishthemanic/";
   const twitter3 = "https://www.twitter.com/";
-  const linkedin3 = "https://www.linkedin.com/";
+  const linkedin3 = "https://www.linkedin.com/in/manic-production-10a92420a";
 
   const [name4, setName4] = useState("Sulav Acharya");
   const [desp4, setDesp4] = useState(
@@ -61,7 +61,7 @@ function AboutUsme(props) {
 
   const [name5, setName5] = useState("Mitesh Lamsal");
   const [desp5, setDesp5] = useState(
-    "Hello. I'm Mitesh Lamsal, the one behid that smooth signup/login interface. I didn't just throw together some login fields and call it a day, I crafted every element user-friendly and intuitive. Tthe next time you effortlessly log in and think 'wow, this is smooth!', remember me."
+    "Hello. I'm Mitesh Lamsal, the one behind that smooth signup/login interface. I didn't just throw together some login fields and call it a day, I crafted every element user-friendly and intuitive. Tthe next time you effortlessly log in and think 'wow, this is smooth!', remember me."
   );
   const [field5, setField5] = useState("Login Page");
   const [image5, Image5] = useState(E);
