@@ -11,11 +11,15 @@ import axios from "axios";
 const LandingPage = () => {
   const [topContributorsData, setTopContributorsData] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
+  const [organizationDetails,setOrganizationDetails]=useState([]);
+  const [numberOfPeopleFeed, setNumberOfPeopleFeed] = useState(0);
+const [community, setCommunity] = useState(0);
+const [foodSaved, setFoodSaved] = useState(0);
 
   const getTopDonatorsDataFunc = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:9005/api/v1/getData/get-top-donors`
+        `https://api.khana.me/api/v1/getData/get-top-donors`
       );
       console.log(response);
       const users = response.data.data;
@@ -25,9 +29,30 @@ const LandingPage = () => {
       console.error("Error fetching user data:", error);
     }
   };
+  const getOrganizationDetails=async()=>{
+    try {
+      const response = await axios.get(
+        `https://api.khana.me/api/v1/getData/getOrganizationDetails`
+      );
+      console.log(response);
+      const bhojan = response.data.data.bhojan;
+      console.log("org details",bhojan);
+      setOrganizationDetails(bhojan);
+      setNumberOfPeopleFeed(bhojan.numberOfPeopleFeed);
+      setCommunity(bhojan.community);
+      setFoodSaved(bhojan.foodSaved);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
 
+  useEffect(()=>{
+      console.log("Organization details: ",organizationDetails);
+      // console.log("community is ",organizationDetails.community);
+  },[organizationDetails])
   useEffect(() => {
     getTopDonatorsDataFunc();
+    getOrganizationDetails();
   }, []);
 
   // const topContributorsData = [
@@ -98,7 +123,7 @@ const LandingPage = () => {
       <div className="flex overflow-hidden ">
         <div className=" flex  shadow-inner  flex-col pb-20 pt-32 md:font-extrabold font-bold lg:text-7xl md:text-6xl  text-4xl  relative  bg-gray-100  w-[200%]  rounded-tr-[40%]   rounded-tl-[50%] lg:rounded-tr-[50%] lg:rounded-tl-[90%]  dark:bg-[#1F1A24]">
           <div className="mx-auto text-[#261750] self-center dark:text-[#7c58de]">
-            <span className="bg-gradient-to-r from-blue-500  to-[#FBB03B] text-transparent bg-clip-text">
+            <span className="bg-gradient-to-r from-blue-500  to-purple-500 text-transparent bg-clip-text">
               Donate Food
             </span>
           </div>
@@ -109,14 +134,17 @@ const LandingPage = () => {
       </div>
       <LandingpageLeaderboard topContributors={topContributorsData} />
       <div className="p-20 bg-gray-100 dark:bg-[#1F1A24]"></div>
-      <Accomplishment
-        totalFoodSaved={500}
-        ourCommunity={200}
-        totalPeopleServed={800}
+      {
+        (foodSaved && community && numberOfPeopleFeed)?
+        <Accomplishment
+        totalFoodSaved={Number(foodSaved)}
+        ourCommunity={Number(community)}
+        totalPeopleServed={Number(numberOfPeopleFeed)}
         totalFoodSavedText="Total Food Saved"
         ourCommunityText="Our Community"
         totalPeopleServedText="Total People Served"
-      />
+        />:<div></div>
+      }
       <div className="flex flex-col bg-gray-100  pb-10 dark:bg-[#1F1A24] ">
         <div className="wrapper  pb-10 mt-28 lg:mt-32 mb-8 md:font-extrabold font-bold lg:text-7xl md:text-6xl text-5xl flex flex-col items-start">
           <div className="text-[#261750] self-center dark:text-[#7c58de]">
@@ -130,7 +158,7 @@ const LandingPage = () => {
         <AutoScrollPartners topContributorsData={topContributorsData} />
       </div>
       <div className="overflow-hidden ">
-        <div className="dark:bg-[#1F1A24] shadow-md flex flex-col  pt-0 h-[8rem] font-bold text-6xl relative  bg-gray-100   w-[100%]  rounded-br-[55%] rounded-bl-[35%] lg:rounded-br-[95%] lg:rounded-bl-[65%]  "></div>
+        <div className="dark:bg-[#1F1A24]  flex flex-col  pt-0 h-[8rem] font-bold text-6xl relative  bg-gray-100   w-[100%]  rounded-br-[55%] rounded-bl-[35%] lg:rounded-br-[95%] lg:rounded-bl-[65%]  "></div>
       </div>
       <div className="wrapper p-8">
         <div>

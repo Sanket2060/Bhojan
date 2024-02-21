@@ -136,7 +136,7 @@ const Volunteer = () => {
   const currentActiveListings = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:9005/api/v1/getData/active-listings",
+        "https://api.khana.me/api/v1/getData/active-listings",
         {},
         {}
       );
@@ -158,7 +158,7 @@ const Volunteer = () => {
   const getUsersPendingDistributions = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:9005/api/v1/order/pending-listings-for-distributor",
+        "https://api.khana.me/api/v1/order/pending-listings-for-distributor",
         {
           _id: userDetails._id,
         },
@@ -170,6 +170,7 @@ const Volunteer = () => {
         }
       );
       // console.log(response.data.data.runningOrders);
+      console.log("From users pending distribution at volunteer:",response);
       setPendingItems(response.data.data.runningOrders);
       // setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
@@ -189,7 +190,7 @@ const Volunteer = () => {
   const cancelOrderForDistributor = async (_id) => {
     try {
       const response = await axios.post(
-        `http://localhost:9005/api/v1/order/cancel-order-for-distributor`,
+        `https://api.khana.me/api/v1/order/cancel-order-for-distributor`,
         {
           _orderId: _id,
         },

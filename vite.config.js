@@ -8,7 +8,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server:{
     // proxy:{
-    //   '/v1':'http://localhost:9005/api'
+    //   '/v1':'https://api.khana.me/api'
     // }
   },
   plugins: [react()],

@@ -17,6 +17,9 @@ const Accomplishment = ({
 
   const intersectionRef = useRef(null);
 
+  useEffect(()=>{
+    console.log("TotalFoodSAved from accomplishment is ",totalFoodSaved);
+  },[totalFoodSaved,ourCommunity,totalFoodSaved])
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -66,21 +69,21 @@ const Accomplishment = ({
     >
       <div className="p-10 ">
         <div className="lg:flex justify-around ">
-          <div className="flex  hover:scale-105 transform duration-150  flex-col">
+          <div className="flex  xhover:scale-105 xtransform xduration-150  flex-col">
             <div className="self-center p-5">
               <PiBowlFoodFill size={52} />
             </div>
             <p>{totalFoodSavedText}</p>
             <p className="text-lg font-bold">{totalFoodSaved}</p>
           </div>
-          <div className="flex hover:scale-105 transform duration-150  flex-col">
+          <div className="flex xhover:scale-105 xtransform xduration-150  flex-col">
             <div className="self-center p-5">
               <BsPeopleFill size={52} />
             </div>
             <p>{ourCommunityText}</p>
             <p className="text-lg font-bold">{ourCommunity}</p>
           </div>
-          <div className="flex hover:scale-105 transform duration-150  flex-col">
+          <div className="flex xhover:scale-105 xtransform xduration-150  flex-col">
             <div className="self-center p-5">
               <FaPeopleCarry size={52} />
             </div>

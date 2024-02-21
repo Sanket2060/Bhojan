@@ -70,8 +70,10 @@ function AccordionItem({
 
     onDistribute(index);
     onToggle(index);
+    // toast.success("Distribution successful!");
+    await addDistributorToOrder();
     console.log("Distribution successful!");
-    addDistributorToOrder();
+   
     // getUsersPendingDistributions();
     retainAllData();
     toast.success("Alerted Donor - Pending Distribution");
@@ -110,7 +112,7 @@ function AccordionItem({
   const addDistributorToOrder = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:9005/api/v1/order/add-distributor-to-order",
+        "https://api.khana.me/api/v1/order/add-distributor-to-order",
         {
           _id: userDetails._id,
           _orderId: item._id, //yei nai ho sure??
