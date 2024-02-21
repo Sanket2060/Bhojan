@@ -9,7 +9,7 @@ import AboutUsCard from "../components/AboutusCard";
 import A from "../assets/devImages/default.jpg";
 import B from "../assets/devImages/default.jpg";
 import C from "../assets/devImages/default.jpg";
-import D from "../assets/devImages/default.jpg";
+import D from "../assets/devImages/sulav.jpg";
 import E from "../assets/devImages/default.jpg";
 import F from "../assets/devImages/default.jpg";
 
