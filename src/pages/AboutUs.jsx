@@ -114,6 +114,7 @@ function AboutUsme(props) {
               instagram={instagram1}
               facebook={facebook1}
               twitter={twitter1}
+              linkedin={linkedin1}
             />
             <AboutUsCard
               name={name2}
@@ -123,6 +124,7 @@ function AboutUsme(props) {
               instagram={instagram2}
               facebook={facebook2}
               twitter={twitter2}
+              linkedin={linkedin2}
             />
             <AboutUsCard
               className="lg:hidden xl:hidden"
@@ -133,6 +135,7 @@ function AboutUsme(props) {
               instagram={instagram3}
               facebook={facebook3}
               twitter={twitter3}
+              linkedin={linkedin3}
             />
             <AboutUsCard
               className="md:hidden xl:hidden"
@@ -144,6 +147,7 @@ function AboutUsme(props) {
               facebook={facebook4}
               twitter={twitter4}
               linkedin={linkedin4}
+              
             />
             <AboutUsCard
               className="md:hidden lg:hidden"
@@ -154,6 +158,7 @@ function AboutUsme(props) {
               instagram={instagram5}
               facebook={facebook5}
               twitter={twitter5}
+              linkedin={linkedin5}
             />
             <AboutUsCard
               className="xl:hidden"
@@ -164,6 +169,7 @@ function AboutUsme(props) {
               instagram={instagram6}
               facebook={facebook6}
               twitter={twitter6}
+              linkedin={linkedin6}
             />
           </div>
         </div>
