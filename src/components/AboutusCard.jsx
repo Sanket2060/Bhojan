@@ -1,10 +1,10 @@
 import React from "react";
-import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa";
 import Icons from "./Icons";
 
 function AboutUsCard(props) {
-  const icons = [FaInstagram, FaFacebook, FaTwitter];
-  const social = [props.instagram, props.facebook, props.twitter];
+  const icons = [FaInstagram, FaFacebook, FaTwitter, FaLinkedin];
+  const social = [props.instagram, props.facebook, props.twitter, props.linkedin];
 
   return (
     <div className="bg-cyan-50 m-4 dark:bg-[#1F1A24] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
