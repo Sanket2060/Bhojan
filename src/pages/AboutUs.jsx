@@ -72,7 +72,7 @@ function AboutUsme(props) {
 
   const [name6, setName6] = useState("Manoj Kumar Singh");
   const [desp6, setDesp6] = useState(
-    "Look how amazing this page is! I worked my magic behid it. This page is just one example of my ability to craft experiences. About me? I the onne who makes impossible things possible."
+    "Look how amazing this page is! I worked my magic behid it. This page is just one example of my ability to craft experiences. About me? I am the one who makes impossible things possible."
   );
   const [field6, setField6] = useState("About Us");
   const [image6, Image6] = useState(F);
