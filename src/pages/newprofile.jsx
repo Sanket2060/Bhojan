@@ -62,7 +62,7 @@ export default function NewProfile() {
 
         <hr className="h-0.5 bg-black my-2 md:my-4" />
       </div>
-      <div className="flex justify-center gap-5 ">
+      <div className="flex justify-center gap-5 dark:text-gray-100 ">
         <ProfileAccomplishment
           totalFoodSaved={500}
           ourCommunity={200}
