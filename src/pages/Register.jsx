@@ -12,10 +12,9 @@ const Register = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [error, setError] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
-
+  const [userProvidedImage,setUserProvidedImage]=useState()
   // const [userUpload,setUserUpload]=useState(avater);
   const registerUser = async ({ name, address, contactno, profilepic }) => {
     // console.log("name, address, contactno, profilepic", name, address, contactno, profilepic);
@@ -85,6 +84,15 @@ const Register = () => {
     }
   };
 
+  const [image,setImage]=useState();
+  const onImageChange = (event) => {
+    console.log("On Image Change");
+    if (event.target.files && event.target.files[0]) {
+      console.log("image is being changed");
+      setImage(URL.createObjectURL(event.target.files[0]));
+    }
+   }
+
   return (
     <div className="flex justify-center items-center h-screen  bg-[#73605B]">
       <div className="overflow-hidden  h-screen w-full">
@@ -106,13 +114,13 @@ const Register = () => {
           <div>
             <img
               //  src={userUpload}
-              src={profilepic}
+              src={image||profilepic}
               alt="profilepic"
               id="profilepic"
               className="w-40 h-40 mx-auto my-3 rounded-full  "
             />
             <label
-              for="image"
+              htmlFor="image"
               className="block align-middle select-none  items-center mx-auto text-center transition-all mb-4 p-2 disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full   w-40 cursor-pointer"
             >
               Upload Image
@@ -124,30 +132,14 @@ const Register = () => {
               id="image"
               // name="image"
               className="hidden"
-              onChange={(e) => {
-                console.log(e.target.value);
+              onChange= {e=>{
+                console.log("Image change vayo guys");
+                onImageChange(e)}
+              }
+                
+                // console.log(e.target.value);
                 // setUserUpload(e.target.value)
-              }}
               {...register("profilepic", {
-                // validate: {
-                //   validFileFormat: (value) => {
-                //     // Custom validation logic for file format
-                //     if (value && value.length > 0) {
-                //       const allowedFormats = ['jpg', 'jpeg', 'png'];
-                //       const fileExtension = value[0]?.name.split('.').pop().toLowerCase();
-                //       return allowedFormats.includes(fileExtension) || 'Invalid file format';
-                //     }
-                //     return true; // No file provided, so no validation needed
-                //   },
-                //   maxFileSize: (value) => {
-                //     // Custom validation logic for file size (in bytes)
-                //     if (value && value.length > 0) {
-                //       const maxSize = 1024 * 1024 * 5; // 5 MB
-                //       return value[0]?.size <= maxSize || 'File size exceeds the limit (5 MB)';
-                //     }
-                //     return true; // No file provided, so no validation needed
-                //   },
-                // },
               })}
             />
           </div>
@@ -166,7 +158,7 @@ const Register = () => {
           </div>
 
           <div>
-            <label for="email" className="font-normal text-sm ml-2">
+            <label htmlFor="email" className="font-normal text-sm ml-2">
               Email:
             </label>
 
