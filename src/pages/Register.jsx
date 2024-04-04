@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import avatar from "../assets/profilepic.jpg";
 import profilepic from "../assets/profilepic.jpg";
 import { useParams } from "react-router-dom";
@@ -8,13 +8,14 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../features/user/authslice";
 const Register = () => {
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState, watch } = useForm();
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
-  const [userProvidedImage,setUserProvidedImage]=useState()
+  const [userProvidedImage, setUserProvidedImage] = useState();
+  const [base64,setBase64]=useState();
   // const [userUpload,setUserUpload]=useState(avater);
   const registerUser = async ({ name, address, contactno, profilepic }) => {
     // console.log("name, address, contactno, profilepic", name, address, contactno, profilepic);
@@ -84,14 +85,36 @@ const Register = () => {
     }
   };
 
-  const [image,setImage]=useState();
+  const [image, setImage] = useState(`${avatar}`);
   const onImageChange = (event) => {
     console.log("On Image Change");
     if (event.target.files && event.target.files[0]) {
       console.log("image is being changed");
       setImage(URL.createObjectURL(event.target.files[0]));
     }
-   }
+  }
+  useEffect(() => {
+    console.log(watch("profilepic"));
+    const imageFile = (watch("profilepic"));
+     setImage(imageFile[0]?.name);
+     const reader=new FileReader();
+     reader.onloadend =()=>{
+        const base64string =reader.result;
+        setBase64(base64string);
+        console.log(base64);
+     } 
+     
+     if (imageFile){
+      const blob=new Blob([imageFile[0]],{type:imageFile[0]?.type});
+      console.log(blob);
+      reader.readAsDataURL(blob);
+     }
+     
+        console.log(imageFile[0]);
+    //  console.log(imageFile?.File?.name);
+     setImage(base64);
+  })
+  console.log(image);
 
   return (
     <div className="flex justify-center items-center h-screen  bg-[#73605B]">
@@ -114,7 +137,7 @@ const Register = () => {
           <div>
             <img
               //  src={userUpload}
-              src={image||profilepic}
+              src={image?.length>100?image:profilepic}
               alt="profilepic"
               id="profilepic"
               className="w-40 h-40 mx-auto my-3 rounded-full  "
@@ -130,15 +153,9 @@ const Register = () => {
               type="file"
               accept="image/jpeg, image/jpg, image/png"
               id="image"
-              // name="image"
-              className="hidden"
-              onChange= {e=>{
-                console.log("Image change vayo guys");
-                onImageChange(e)}
-              }
-                
-                // console.log(e.target.value);
-                // setUserUpload(e.target.value)
+              // name="image"  
+              // console.log(e.target.value);
+              // setUserUpload(e.target.value)
               {...register("profilepic", {
               })}
             />
