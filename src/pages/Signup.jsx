@@ -17,7 +17,7 @@ const Signup = () => {
       // api/users/register
       // send register data
       const response = await axios.post(
-        "https://api.khana.me/api/v1/users/register",
+        " https://api.khana.me/api/v1/users/register",
         {
           username,
           email,
@@ -37,7 +37,7 @@ const Signup = () => {
       // handle error
       console.log(error.message);
       // Set error state to display the error message
-      setError(error.message);
+      // setError(error.message);
     }
   };
 
