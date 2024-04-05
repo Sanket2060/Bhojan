@@ -19,7 +19,7 @@ const [foodSaved, setFoodSaved] = useState(0);
   const getTopDonatorsDataFunc = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:9005/api/v1/getData/get-top-donors`
+        `https://api.khana.me/api/v1/getData/get-top-donors`
       );
       console.log(response);
       const users = response.data.data;
@@ -32,7 +32,7 @@ const [foodSaved, setFoodSaved] = useState(0);
   const getOrganizationDetails=async()=>{
     try {
       const response = await axios.get(
-        `http://localhost:9005/api/v1/getData/getOrganizationDetails`
+        `https://api.khana.me/api/v1/getData/getOrganizationDetails`
       );
       console.log(response);
       const bhojan = response.data.data.bhojan;

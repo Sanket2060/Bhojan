@@ -9,13 +9,14 @@ import { useDispatch } from "react-redux";
 import { login } from "../features/user/authslice";
 const Register = () => {
   const { register, handleSubmit, formState, watch } = useForm();
+  const { errors } = formState;
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [userProvidedImage, setUserProvidedImage] = useState();
-  const [base64,setBase64]=useState();
+  const [base64, setBase64] = useState();
   // const [userUpload,setUserUpload]=useState(avater);
   const registerUser = async ({ name, address, contactno, profilepic }) => {
     // console.log("name, address, contactno, profilepic", name, address, contactno, profilepic);
@@ -25,7 +26,20 @@ const Register = () => {
       formData.append("userId", params.userId);
       formData.append("name", name);
       if (!profilepic || !profilepic[0]) {
-        formData.append("avatar", avatar); // Provide the default image
+        console.log("No image provided by user");
+        // Fetch the image, convert to Blob, then to File
+        const response = await fetch(avatar);
+        const blob = await response.blob();
+
+        // Extracting the filename from the URL
+        const urlParts = avatar.split("/");
+        const filename = urlParts[urlParts.length - 1];
+
+        // Creating a File object
+        const file = new File([blob], filename, { type: blob.type });
+
+        formData.append("avatar", file);
+        // formData.append("avatar", avatar); // Provide the default image  //image pathako namiley jasto xa
       } else {
         formData.append("avatar", profilepic[0]);
       }
@@ -35,9 +49,9 @@ const Register = () => {
         "isOrganization",
         selectedOption === "Organization" ? true : false
       );
-
+      console.log("form data:",formData);
       const response = await axios.post(
-        "http://localhost:9005/api/v1/users/complete-registration",
+        "https://api.khana.me/api/v1/users/complete-registration",
         formData,
         {
           withCredentials: true, // Include credentials (cookies) in the request
@@ -70,20 +84,6 @@ const Register = () => {
     setError("");
   };
 
-  const onSubmit = async (data) => {
-    console.log("At first step");
-    // Check if there's an error before calling registerUser
-    if (formState.isValid) {
-      //what does .isValid do??
-      resetError();
-      try {
-        await handleSubmit(registerUser)(data);
-      } catch (error) {
-        // Handle any errors here
-        console.error("Form submission error:", error);
-      }
-    }
-  };
 
   const [image, setImage] = useState(`${avatar}`);
   const onImageChange = (event) => {
@@ -96,23 +96,23 @@ const Register = () => {
   useEffect(() => {
     console.log(watch("profilepic"));
     const imageFile = (watch("profilepic"));
-     setImage(imageFile[0]?.name);
-     const reader=new FileReader();
-     reader.onloadend =()=>{
-        const base64string =reader.result;
-        setBase64(base64string);
-        console.log(base64);
-     } 
-     
-     if (imageFile){
-      const blob=new Blob([imageFile[0]],{type:imageFile[0]?.type});
+    setImage(imageFile[0]?.name);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64string = reader.result;
+      setBase64(base64string);
+      console.log(base64);
+    }
+
+    if (imageFile) {
+      const blob = new Blob([imageFile[0]], { type: imageFile[0]?.type });
       console.log(blob);
       reader.readAsDataURL(blob);
-     }
-     
-        console.log(imageFile[0]);
+    }
+
+    console.log(imageFile[0]);
     //  console.log(imageFile?.File?.name);
-     setImage(base64);
+    setImage(base64);
   })
   console.log(image);
 
@@ -128,16 +128,12 @@ const Register = () => {
         <hr className="border w-full h-1 bg-black my-4" />
         <form
           action=""
-          onSubmit={(e) => {
-            e.preventDefault(); // Prevent default form submission
-            resetError();
-            handleSubmit(onSubmit)(e);
-          }}
+          onSubmit={handleSubmit(registerUser)}
         >
           <div>
             <img
               //  src={userUpload}
-              src={image?.length>100?image:profilepic}
+              src={image?.length > 100 ? image : profilepic}
               alt="profilepic"
               id="profilepic"
               className="w-40 h-40 mx-auto my-3 rounded-full  "
@@ -159,6 +155,8 @@ const Register = () => {
               {...register("profilepic", {
               })}
             />
+
+
           </div>
           <div>
             <label for="username" className="font-normal text-sm ml-2">
@@ -203,16 +201,16 @@ const Register = () => {
               placeholder="Enter your Name"
               required
               {...register("name", {
-                required: true,
-                validate: {
-                  matchPattern: (value) =>
-                    /^[A-Z][a-zA-Z ]*$/.test(value) ||
-                    setError(
-                      "Name should start with capital and shouldn't contain any special characters"
-                    ),
-                },
+                required: "Name is required",
+                pattern: {
+                  value: /^[A-Z][a-zA-Z ]*$/,
+                  message: "Name should start with a capital letter and shouldn't contain any special characters"
+                }
               })}
+
             />
+            <p>{errors.name?.message}</p>
+
           </div>
 
           <div>
@@ -226,14 +224,16 @@ const Register = () => {
               placeholder="Enter your Address"
               required
               {...register("address", {
-                required: true,
-                validate: {
-                  matchPattern: (value) =>
-                    /^[a-zA-Z0-9 ,.-]*$/.test(value) ||
-                    setError("Address should be valid"),
-                },
+                required: "Address is required",
+                pattern: {
+                  value: /^[a-zA-Z0-9 ,.-]*$/,
+                  message: "Address should only contain letters, numbers, spaces, and these characters: ,.-"
+                }
               })}
+
             />
+            <p>{errors.address?.message}</p>
+
           </div>
 
           <div>
@@ -247,15 +247,25 @@ const Register = () => {
               id="contactno"
               placeholder="Enter your Contact No"
               required
+              // {...register("contactno", {
+              //   required: true,
+              //   validate: {
+              //     matchPattern: (value) =>
+              //       /^9\d{9}$/.test(value) ||
+              //       setError("Please enter a valid phone number"),
+              //   },
+              // })}
               {...register("contactno", {
-                required: true,
-                validate: {
-                  matchPattern: (value) =>
-                    /^9\d{9}$/.test(value) ||
-                    setError("Please enter a valid phone number"),
-                },
+                required: "Contact number is required",
+                pattern: {
+                  value: /^9\d{9}$/,
+                  message: "Please enter a valid phone number starting with 9 and having 10 digits in total"
+                }
               })}
+
             />
+            <p>{errors.contactno?.message}</p>
+
           </div>
           <div>
             <select
