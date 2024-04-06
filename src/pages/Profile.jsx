@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import profilepic from "../assets/devImages/default.jpg";
+import avatar from "../assets/profilepic.jpg";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -29,20 +29,21 @@ const Profile = () => {
       try {
         if (userDetails) {
           const response = await axios.post(
-            `https://api.khana.me/api/v1/getData/getdetailsfromname`,
+            ` http://localhost:9005/api/v1/getData/getdetailsfromname`,
             {
               name: userDetails?.name,
             }
           );
 
           const user = response.data.data;
+          // console.log("userdata avatar:",user.user.avatar);
           console.log(user);
           setUserData({
-            name: user.name,
-            username: user.username,
-            email: user.email,
-            address: user.address,
-            number: user.contact,
+            name: user.user.name,
+            username: user.user.username,
+            email: user.user.email,
+            address: user.user.address,
+            number: user.user.contact,
           });
         }
       } catch (error) {
@@ -74,7 +75,7 @@ const Profile = () => {
       );
 
       const response = await axios.post(
-        "https://api.khana.me/api/v1/users/complete-registration",
+        " http://localhost:9005/api/v1/users/complete-registration",
         formData,
         {
           withCredentials: true, // Include credentials (cookies) in the request
@@ -192,7 +193,7 @@ const Profile = () => {
           </div> */}
             <div className="mb-4 relative">
               <img
-                src={profilepic}
+                src={userData?.avatar}
                 alt="profilepic"
                 id="profilepic"
                 className="w-40 h-40 mx-auto border-4 border-yellow-200 my-3 rounded-full relative shadow-2xl top-[-7rem] md:top-[-10rem] self-center"
@@ -222,10 +223,10 @@ const Profile = () => {
 
             <div className="relative top-[-10rem] md:top-[-12rem] flex flex-col p-2">
               <h1 className="text-3xl font-bold p-2 self-center dark:text-gray-200">
-                {params.name}Suraj Adhikari
+                {userData?.name}
               </h1>
               <h2 className="text-xl self-center dark:text-gray-400">
-                @username{params.username}
+                @{userData?.username}
               </h2>
             </div>
             <div className="relative top-[-8rem]">
@@ -252,7 +253,7 @@ const Profile = () => {
                   className="border-2 w-full h-10 px-2 pl-2  border-[#01cc65]  mb-1 rounded-xl  p-2 text-sm focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="name "
                   name="name"
-                  value={params.name}
+                  value={userData?.name}
                   readOnly={!isEditing}
                   required
                   {...register("name", {
@@ -277,7 +278,7 @@ const Profile = () => {
                 </label>
                 <input
                   type="text"
-                  value={params.username}
+                  value={userData.username}
                   readOnly={!isEditing}
                   className="border-2 w-full h-10 px-2 pl-2 border-[#01cc65] mb-1 rounded-xl p-2 text-sm focus:outline-none focus:ring-0 focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                 />
@@ -293,7 +294,7 @@ const Profile = () => {
 
                 <input
                   type=""
-                  value={params.email}
+                  value={userData.email}
                   readOnly={!isEditing}
                   className="border-2 w-full h-10 px-2 pl-2  border-[#01cc65]  mb-1 rounded-xl  p-2 text-sm focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="username"
@@ -312,7 +313,7 @@ const Profile = () => {
                   type="text"
                   className="border-2 w-full h-10 px-2 pl-2  border-[#01cc65] mb-1 rounded-xl p-2 text-sm focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="address"
-                  value={params.address}
+                  value={userData.address}
                   readOnly={!isEditing}
                   required
                   {...register("address", {
@@ -338,7 +339,7 @@ const Profile = () => {
                   type="number"
                   className="border-2 w-full h-10 px-2 pl-2 border-[#01cc65] mb-1 rounded-xl focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 p-2 text-sm dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="contactno"
-                  value={params.number}
+                  value={userData.number}
                   readOnly={!isEditing}
                   required
                   {...register("contactno", {
