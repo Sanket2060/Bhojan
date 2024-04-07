@@ -5,6 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { FaSortUp, FaSortDown } from "react-icons/fa";
+import axios from "axios";
 
 const DistributionTable = ({
   pendingItems,
@@ -15,6 +16,8 @@ const DistributionTable = ({
   cancelOrder,
   completeOrder,
   allCompletedOrdersForDonor,
+  getCompletedOrders,
+  currentActiveListings
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
@@ -109,15 +112,39 @@ const DistributionTable = ({
     setConfirmationOpen(false);
   };
 
-  const handleCompleteClick = async (index) => {
+  const handleCompleteClick = async (index,orderId) => {
+    console.log("HandleCompleteClick");
+    console.log("orderId",orderId);
     setCompletedItemIndex(index);
-    setCompleteConfirmationOpen(true);
-    await completeOrder(completingItemOrderId);
+    setCompleteConfirmationOpen(true);  //confirmation box kholna ko lagi
+    // await completeOrder(orderId);   //yesma matra ho id chaini
   };
 
-  const onConfirmComplete = () => {
+  const onConfirmComplete =async () => {
     if (onCompleteProp && completedItemIndex !== null) {
-      onCompleteProp(pendingItems[completedItemIndex]);
+        try {
+          const response =await  axios.post(
+            ` https://api.khana.me/api/v1/order/completed-order-for-donor`,
+            {
+              _orderId:completingItemOrderId,
+            },
+            {
+              withCredentials: true, // Include credentials (cookies) in the request
+            }
+          );
+          console.log(response);
+        }
+          catch (error){
+          console.log("Can't complete order for donor",error);
+          }
+          try{
+            await getCompletedOrders();
+            await  currentActiveListings();
+          }
+        catch (error) {
+          console.log("Data fetched yet can't bring changes to ui",error);
+        }
+      onCompleteProp(pendingItems[completedItemIndex]);    //yo narakhe yo vanda pailako item lai complete gariraxa
       toast.success("Distribution Completed");
     }
     setCompleteConfirmationOpen(false);
@@ -134,6 +161,11 @@ const DistributionTable = ({
   const handleSearchLocation = (e) => {
     setLocationFilter(e.target.value);
   };
+
+  useEffect(()=>{
+   console.log("Completing item order id changed"); 
+   console.log("value after changing order id",completingItemOrderId);
+  },[completingItemOrderId]);
 
   return (
     <div
@@ -361,11 +393,13 @@ const DistributionTable = ({
                             {isDonorPage && (
                               <Button
                                 onClick={() => {
-                                  handleCompleteClick(index);
+                                 
                                   setCompletingItemOrderId(
                                     item.order ? item.order._id : item._id
                                   );
-                                }}
+                                    handleCompleteClick(index)
+                                  }}
+                                
                                 variant="complete"
                               />
                             )}
@@ -462,10 +496,10 @@ const DistributionTable = ({
                               {isDonorPage && (
                                 <Button
                                   onClick={() => {
-                                    handleCompleteClick(index);
                                     setCompletingItemOrderId(
                                       item.order ? item.order._id : item._id
                                     );
+                                    handleCompleteClick(index);
                                   }}
                                   variant="complete"
                                   text=""
@@ -519,7 +553,7 @@ const DistributionTable = ({
           </button>
         </div>
       )}
-      <Confirmation
+      <Confirmation                      
         isOpen={isConfirmationOpen}
         onClose={closeCancelConfirmation}
         onConfirm={() => {
