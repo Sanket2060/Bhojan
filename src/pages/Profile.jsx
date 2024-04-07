@@ -29,7 +29,7 @@ const Profile = () => {
       try {
         if (userDetails) {
           const response = await axios.post(
-            ` http://localhost:9005/api/v1/getData/getdetailsfromname`,
+            ` https://api.khana.me/api/v1/getData/getdetailsfromname`,
             {
               name: userDetails?.name,
             }
@@ -55,73 +55,12 @@ const Profile = () => {
   }, []);
 
   // const [userUpload,setUserUpload]=useState(avater);
-  const registerUser = async ({ name, address, contactno, profilepic }) => {
-    // console.log("name, address, contactno, profilepic", name, address, contactno, profilepic);
-    console.log("registerUser function called");
-    try {
-      const formData = new FormData();
-      formData.append("userId", params.userId);
-      formData.append("name", name);
-      if (!profilepic || !profilepic[0]) {
-        formData.append("avatar", avatar); // Provide the default image
-      } else {
-        formData.append("avatar", profilepic[0]);
-      }
-      formData.append("address", address);
-      formData.append("contact", contactno);
-      formData.append(
-        "isOrganization",
-        selectedOption === "Organization" ? true : false
-      );
-
-      const response = await axios.post(
-        " http://localhost:9005/api/v1/users/complete-registration",
-        formData,
-        {
-          withCredentials: true, // Include credentials (cookies) in the request
-        }
-      );
-
-      console.log(response);
-      setError("");
-      console.log(response.data.data.isDonor);
-      if (response.data.data.isDonor) {
-        navigate("/donor");
-      } else {
-        navigate("/volunteer");
-      }
-    } catch (error) {
-      console.log("Error:", error);
-      // console.log("Error message:", error.response.data.message);
-      // setError(error.response.data.message);
-    }
-  };
-
-  const handleSelectChange = (event) => {
-    const newValue = event.target.value;
-    setSelectedOption(newValue);
-  };
-
-  const resetError = () => {
-    // Reset the error state
-    setError("");
-  };
-
-  const onSubmit = async (data) => {
-    console.log("At first step");
-    // Check if there's an error before calling registerUser
-    if (formState.isValid) {
-      //what does .isValid do??
-      resetError();
-      try {
-        await handleSubmit(registerUser)(data);
-      } catch (error) {
-        // Handle any errors here
-        console.error("Form submission error:", error);
-      }
-    }
-  };
-
+ useEffect(()=>{
+  console.log(userData.avatar);
+ },[userData.avatar])
+ useEffect(()=>{
+  console.log(userData.name);
+ },[userData.name])
   return (
     <div className="dark:bg-[#121212]">
       <Navbar />
@@ -132,65 +71,9 @@ const Profile = () => {
             action=""
             onSubmit={(e) => {
               e.preventDefault();
-              resetError();
               handleSubmit(onSubmit)(e);
             }}
           >
-            {/* <div className="mb-4">
-            <img
-              src={profilepic}
-              alt="profilepic"
-              id="profilepic"
-              className="w-40 h-40 mx-auto my-3 rounded-full relative shadow-2xl
-               top-[-10rem] self-center"
-            />
-            <label
-              htmlFor="image"
-              className="block align-middle select-none top-[-9rem] relative items-center mx-auto text-center transition-all p-2 disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full w-40 cursor-pointer"
-            >
-              Upload Image
-            </label>
-
-            <input
-              type="file"
-              accept="image/jpeg, image/jpg, image/png"
-              id="image"
-              className="hidden"
-              onChange={(e) => {
-                console.log(e.target.value);
-              }}
-              {...register("profilepic", {
-                validate: {
-                  validFileFormat: (value) => {
-                    // Custom validation logic for file format
-                    if (value && value.length > 0) {
-                      const allowedFormats = ["jpg", "jpeg", "png"];
-                      const fileExtension = value[0]?.name
-                        .split(".")
-                        .pop()
-                        .toLowerCase();
-                      return (
-                        allowedFormats.includes(fileExtension) ||
-                        "Invalid file format"
-                      );
-                    }
-                    return true; // No file provided, so no validation needed
-                  },
-                  maxFileSize: (value) => {
-                    // Custom validation logic for file size (in bytes)
-                    if (value && value.length > 0) {
-                      const maxSize = 1024 * 1024 * 5; // 5 MB
-                      return (
-                        value[0]?.size <= maxSize ||
-                        "File size exceeds the limit (5 MB)"
-                      );
-                    }
-                    return true; // No file provided, so no validation needed
-                  },
-                },
-              })}
-            />
-          </div> */}
             <div className="mb-4 relative">
               <img
                 src={userData?.avatar}
@@ -361,14 +244,14 @@ const Profile = () => {
                 >
                   {isEditing ? "Cancel" : "Edit"}
                 </button>
-                <button
+                {/* <button
                   type="submit"
                   value="Register"
                   readOnly={!isEditing}
                   className="align-middle select-none  font-bold  text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full  h-10 w-full mt-6 cursor-pointer dark:bg-[#452e82]"
                 >
                   Register
-                </button>
+                </button> */}
               </div>
             </div>
           </form>
