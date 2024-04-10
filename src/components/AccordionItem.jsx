@@ -26,7 +26,7 @@ function AccordionItem({
   //activate for recaptcha
   const handleRecaptchaChange = (value) => {
     setCapVal(value);
-    console.log("reCAPTCHA value:", value);
+    // console.log("reCAPTCHA value:", value);
   };
   const [isRecaptchaLoaded, setIsRecaptchaLoaded] = useState(false);
 
@@ -153,7 +153,7 @@ function AccordionItem({
   const addDistributorToOrder = async () => {
     try {
       const response = await axios.post(
-        "https://api.khana.me/api/v1/order/add-distributor-to-order",
+        " https://api.khana.me/api/v1/order/add-distributor-to-order",
         {
           _id: userDetails._id,
           _orderId: item._id, //yei nai ho sure??
@@ -166,7 +166,7 @@ function AccordionItem({
         }
       );
       console.log("Distributor added to order successfully", response);
-      console.log(response.data.data);
+      // console.log(response.data.data);
       // setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {

@@ -19,7 +19,7 @@ const [foodSaved, setFoodSaved] = useState(0);
   const getTopDonatorsDataFunc = async () => {
     try {
       const response = await axios.get(
-        `https://api.khana.me/api/v1/getData/get-top-donors`
+        ` https://api.khana.me/api/v1/getData/get-top-donors`
       );
       console.log(response);
       const users = response.data.data;
@@ -32,7 +32,7 @@ const [foodSaved, setFoodSaved] = useState(0);
   const getOrganizationDetails=async()=>{
     try {
       const response = await axios.get(
-        `https://api.khana.me/api/v1/getData/getOrganizationDetails`
+        ` https://api.khana.me/api/v1/getData/getOrganizationDetails`
       );
       console.log(response);
       const bhojan = response.data.data.bhojan;
@@ -54,6 +54,11 @@ const [foodSaved, setFoodSaved] = useState(0);
     getTopDonatorsDataFunc();
     getOrganizationDetails();
   }, []);
+
+  useEffect(()=>{
+    const cookie=document.cookie;
+    console.log("cookie",cookie);
+  },[])
 
   // const topContributorsData = [
   //   { companyName: "Top Contributor 1", location: "Location 1" },

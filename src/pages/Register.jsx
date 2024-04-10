@@ -20,7 +20,7 @@ const Register = () => {
   // const [userUpload,setUserUpload]=useState(avater);
   const registerUser = async ({ name, address, contactno, profilepic }) => {
     // console.log("name, address, contactno, profilepic", name, address, contactno, profilepic);
-    console.log("registerUser function called");
+    // console.log("registerUser function called");
     try {
       const formData = new FormData();
       formData.append("userId", params.userId);
@@ -51,7 +51,7 @@ const Register = () => {
       );
       console.log("form data:",formData);
       const response = await axios.post(
-        "https://api.khana.me/api/v1/users/complete-registration",
+        "   https://api.khana.me/api/v1/users/complete-registration",
         formData,
         {
           withCredentials: true, // Include credentials (cookies) in the request
@@ -60,7 +60,7 @@ const Register = () => {
 
       console.log(response);
       setError("");
-      console.log(response.data.data.isDonor);
+      // console.log(response.data.data.isDonor);
       dispatch(login(response.data.data));
       if (response.data.data.isDonor) {
         navigate("/donor");
@@ -87,9 +87,9 @@ const Register = () => {
 
   const [image, setImage] = useState(`${avatar}`);
   const onImageChange = (event) => {
-    console.log("On Image Change");
+    // console.log("On Image Change");
     if (event.target.files && event.target.files[0]) {
-      console.log("image is being changed");
+      // console.log("image is being changed");
       setImage(URL.createObjectURL(event.target.files[0]));
     }
   }
@@ -106,7 +106,7 @@ const Register = () => {
 
     if (imageFile) {
       const blob = new Blob([imageFile[0]], { type: imageFile[0]?.type });
-      console.log(blob);
+      // console.log(blob);
       reader.readAsDataURL(blob);
     }
 
@@ -114,7 +114,7 @@ const Register = () => {
     //  console.log(imageFile?.File?.name);
     setImage(base64);
   })
-  console.log(image);
+  // console.log(image);
 
   return (
     <div className="flex justify-center items-center h-screen  bg-[#73605B]">
@@ -149,6 +149,7 @@ const Register = () => {
               type="file"
               accept="image/jpeg, image/jpg, image/png"
               id="image"
+              className="hidden"
               // name="image"  
               // console.log(e.target.value);
               // setUserUpload(e.target.value)

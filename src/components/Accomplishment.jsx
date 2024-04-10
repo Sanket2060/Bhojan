@@ -18,7 +18,7 @@ const Accomplishment = ({
   const intersectionRef = useRef(null);
 
   useEffect(()=>{
-    console.log("TotalFoodSAved from accomplishment is ",totalFoodSaved);
+    // console.log("TotalFoodSAved from accomplishment is ",totalFoodSaved);
   },[totalFoodSaved,ourCommunity,totalFoodSaved])
   useEffect(() => {
     const observer = new IntersectionObserver(

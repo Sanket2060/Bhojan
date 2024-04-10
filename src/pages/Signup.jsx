@@ -17,7 +17,7 @@ const Signup = () => {
       // api/users/register
       // send register data
       const response = await axios.post(
-        " https://api.khana.me/api/v1/users/register",
+        "https://api.khana.me/api/v1/users/register",
         {
           username,
           email,
@@ -125,7 +125,7 @@ const Signup = () => {
                 {...register("username", {
                   required: "Username is required",
                   pattern: {
-                    value: /^[a-zA-Z0-9]{1,8}$/,
+                    value: /^[a-zA-Z0-9]{1,12}$/,
                     message: "Username should be shorter"
                   }
                 })}
