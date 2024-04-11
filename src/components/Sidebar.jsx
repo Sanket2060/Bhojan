@@ -110,7 +110,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
               try {
                 navigate('/');
                 const response = await axios.post(
-                  "https://api.khana.me/api/v1/users/logout",
+                  " https://api.khana.me/api/v1/users/logout",
                   {},
                   {
                     withCredentials: true, // Include credentials (cookies) in the request
@@ -216,7 +216,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 try {
                   navigate('/');
                   const response = await axios.post(
-                    "https://api.khana.me/api/v1/users/logout",
+                    " https://api.khana.me/api/v1/users/logout",
                     {},
                     {
                       withCredentials: true, // Include credentials (cookies) in the request

@@ -11,7 +11,7 @@ import B from "../assets/devImages/suraj.jpg";
 import C from "../assets/devImages/manish.jpg";
 import D from "../assets/devImages/sulav.jpg";
 import E from "../assets/devImages/mitesh.jpg";
-import F from "../assets/devImages/Manoj.png";
+import F from "../assets/devImages/manoj.png";
 
 function AboutUsme(props) {
   //first developer

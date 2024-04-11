@@ -51,7 +51,7 @@ const Register = () => {
       );
       console.log("form data:",formData);
       const response = await axios.post(
-        "   https://api.khana.me/api/v1/users/complete-registration",
+        "    https://api.khana.me/api/v1/users/complete-registration",
         formData,
         {
           withCredentials: true, // Include credentials (cookies) in the request

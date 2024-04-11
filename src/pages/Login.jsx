@@ -16,7 +16,7 @@ const Login = () => {
     console.log("Email and password:", email, password);
     try {
       const response = await axios.post(
-        " https://api.khana.me/api/v1/users/login",
+        "  https://api.khana.me/api/v1/users/login",
         {
           email,
           password,
