@@ -88,26 +88,26 @@ const Donor = () => {
       icon: AiOutlineHeart,
       margin: true,
     },
-    {
-      name: "Logout",
-      link: "/",
-      icon: FiLogOut,
-      margin: true,
-      onClick: async () => {
-        try {
-          const response = await axios.post(
-            " https://api.khana.me/api/v1/users/logout",
-            {
-              withCredentials: true, // Include credentials (cookies) in the request
-            }
-          );
-          console.log(response);
-          // Perform any additional actions after logout
-        } catch (error) {
-          console.log("Error:", error);
-        }
-      },
-    },
+    // {
+    //   name: "Logout",
+    //   link: "/",
+    //   icon: FiLogOut,
+    //   margin: true,
+    //   onClick: async () => {
+    //     try {
+    //       const response = await axios.post(
+    //         " https://api.khana.me/api/v1/users/logout",
+    //         {
+    //           withCredentials: true, // Include credentials (cookies) in the request
+    //         }
+    //       );
+    //       console.log(response);
+    //       // Perform any additional actions after logout
+    //     } catch (error) {
+    //       console.log("Error:", error);
+    //     }
+    //   },
+    // },
   ];
 
   const [submittedItems, setSubmittedItems] = useState([]);

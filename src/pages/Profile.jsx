@@ -76,7 +76,7 @@ const Profile = () => {
           >
             <div className="mb-4 relative">
               <img
-                src={userData?.avatar}
+                src={userData?.avatar || avatar}
                 alt="profilepic"
                 id="profilepic"
                 className="w-40 h-40 mx-auto border-4 border-yellow-200 my-3 rounded-full relative shadow-2xl top-[-7rem] md:top-[-10rem] self-center"

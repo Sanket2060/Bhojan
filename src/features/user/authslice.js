@@ -17,6 +17,7 @@
           state.userDetails=action.payload;
         },
         logout: (state) => {
+          console.log("Trying to empty redux store");
           state.isAuthenticated = false;
           state.userDetails=null
         },
