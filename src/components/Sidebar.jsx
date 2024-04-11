@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { useSelector,useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { IoMdSunny, IoMdMoon } from "react-icons/io";
+import { logout } from "../features/user/authslice";
 
 export const Sidebar = ({ menus, handleToggle, isOpen }) => {
   const [isMobile, setIsMobile] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
-
+  const navigate = useNavigate();
+  const dispatch=useDispatch();
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
@@ -83,10 +86,9 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
               <div
                 // to={menu?.link}
                 key={i}
-                className={` ${
-                  menu?.margin &&
+                className={` ${menu?.margin &&
                   "pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4"
-                } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:text-gray-200 dark:hover:bg-stone-600`}
+                  } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:text-gray-200 dark:hover:bg-stone-600`}
                 onClick={() => {
                   // e.preventDefault();
                   console.log("Clicked");
@@ -102,6 +104,35 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
               </div>
             ))}
           </div>
+          <h2
+            className={`whitespace-pre px-1 cursor-pointer ${!open && "translate-x-28"}`}
+            onClick={async () => {
+              try {
+                navigate('/');
+                const response = await axios.post(
+                  "https://api.khana.me/api/v1/users/logout",
+                  {},
+                  {
+                    withCredentials: true, // Include credentials (cookies) in the request
+                  }
+                )
+                // .then(response=>{
+                  console.log(response);
+                // })
+                // .then(
+                  dispatch(logout());
+                // )
+                // Perform any additional actions after logout
+              }
+              
+              catch (error) {
+                console.log("Error at logging user out:", error);
+              }
+              
+            }}
+          >
+            Logout
+          </h2>
         </div>
       )}
       {!isMobile && (
@@ -159,16 +190,16 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                   className={` ${menu?.margin &&
                     "pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4"
                     } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600`}
-                      // onClick={(e)=>
-                        
-                        // {
-                          // if (menu.name='Logout')
-                          // {
-                          //   window.reload()
-                          //   e.stopPropagation();
-                          //   console.log("logout called");
-                          // }
-                      // }}
+                // onClick={(e)=>
+
+                // {
+                // if (menu.name='Logout')
+                // {
+                //   window.reload()
+                //   e.stopPropagation();
+                //   console.log("logout called");
+                // }
+                // }}
                 >
                   <div>{React.createElement(menu.icon, { size: "20" })}</div>
                   <h2
@@ -179,6 +210,34 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 </Link>
               ))}
             </div>
+            <h2
+              className={`whitespace-pre px-1 cursor-pointer ${!open && "translate-x-28"}`}
+              onClick={async () => {
+                try {
+                  navigate('/');
+                  const response = await axios.post(
+                    "https://api.khana.me/api/v1/users/logout",
+                    {},
+                    {
+                      withCredentials: true, // Include credentials (cookies) in the request
+                    }
+                  )
+                  // .then(response=>{
+                    console.log(response);
+                  // })
+                  // .then(
+                    dispatch(logout());
+                  // )
+                  // Perform any additional actions after logout
+                }
+                
+                catch (error) {
+                  console.log("Error at logging user out:", error);
+                }
+              }}
+            >
+              Logout
+            </h2>
           </div>
         </div>
       )}

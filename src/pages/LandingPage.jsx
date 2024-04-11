@@ -55,10 +55,14 @@ const [foodSaved, setFoodSaved] = useState(0);
     getOrganizationDetails();
   }, []);
 
-  useEffect(()=>{
-    const cookie=document.cookie;
-    console.log("cookie",cookie);
-  },[])
+//   useEffect(() => {
+//     const cookies = document.cookie.split(';').map(cookie => {
+//         const [name, value] = cookie.split('=');
+//         return { name: name.trim(), value: value.trim() };
+//     });
+//     console.log("cookies", cookies);
+// }, []);
+
 
   // const topContributorsData = [
   //   { companyName: "Top Contributor 1", location: "Location 1" },
