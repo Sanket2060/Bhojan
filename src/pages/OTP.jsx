@@ -10,7 +10,7 @@ const OTP = () => {
   console.log("userId from OTP:", params.userId);
   const [userOTP, setUserOTP] = useState();
   // const verifyOTP = async () => {
-  //   const response = await axios.post('  http://localhost:9005/api/v1/users/verify-otp', {
+  //   const response = await axios.post('  https://api.khana.me/api/v1/users/verify-otp', {
   //     userId: params.userId,
   //     userOTP
 
@@ -21,7 +21,7 @@ const OTP = () => {
   const verifyOTP = async () => {
     try {
       const response = await axios.post(
-        "  http://localhost:9005/api/v1/users/verify-otp",
+        "  https://api.khana.me/api/v1/users/verify-otp",
         {
           userId: params.userId,
           userOTP: userOTP,
