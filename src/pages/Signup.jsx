@@ -17,7 +17,7 @@ const Signup = () => {
       // api/users/register
       // send register data
       const response = await axios.post(
-        "https://api.khana.me/api/v1/users/register",
+        " http://localhost:9005/api/v1/users/register",
         {
           username,
           email,

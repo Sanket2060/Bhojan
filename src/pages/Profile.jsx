@@ -29,7 +29,7 @@ const Profile = () => {
       try {
         if (userDetails) {
           const response = await axios.post(
-            ` https://api.khana.me/api/v1/getData/getdetailsfromname`,
+            `  http://localhost:9005/api/v1/getData/getdetailsfromname`,
             {
               name: userDetails?.name,
             }
