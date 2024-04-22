@@ -13,6 +13,7 @@ const Register = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loader,setLoader]=useState();
   const [error, setError] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [userProvidedImage, setUserProvidedImage] = useState();
@@ -22,6 +23,7 @@ const Register = () => {
     // console.log("name, address, contactno, profilepic", name, address, contactno, profilepic);
     // console.log("registerUser function called");
     try {
+      setLoader(true);
       const formData = new FormData();
       formData.append("userId", params.userId);
       formData.append("name", name);
@@ -68,6 +70,7 @@ const Register = () => {
         navigate("/volunteer");
       }
     } catch (error) {
+      setLoader(false);
       console.log("Error:", error);
       // console.log("Error message:", error.response.data.message);
       // setError(error.response.data.message);
@@ -291,9 +294,16 @@ const Register = () => {
           </div>
         </form>
 
-        <div className="Error mt-8  p-2 rounded-md  text-sm font-light text-red-600">
+        {/* <div className="Error mt-8  p-2 rounded-md  text-sm font-light text-red-600">
           {error}
-        </div>
+        </div> */}
+         {
+          loader?
+          <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
+            <div class="loader "></div>  
+          </div>
+          :<div></div>
+          }
       </div>
       <div className="overflow-hidden relative h-screen w-full ">
         <div className="h-[80vw] overflow-clip absolute right-[-30vw] bottom-[-50vw] bg-yellow-100 rounded-full w-[80vw]"></div>

@@ -10,9 +10,11 @@ const Signup = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [selectedTab, setSelectedTab] = useState("Donator");
+  const [loader,setLoader]=useState();
   const [userId, setUserId] = useState(Number);
   const authenticate = async ({ username, email, password }) => {
     try {
+      setLoader(true);
       console.log(email, password);
       // api/users/register
       // send register data
@@ -36,6 +38,7 @@ const Signup = () => {
     } catch (error) {
       // handle error
       console.log(error.message);
+      setLoader(false);
       // Set error state to display the error message
       // setError(error.message);
     }
@@ -222,9 +225,19 @@ const Signup = () => {
               </Link>
             </div>
           </form>
+          {
+          loader?
+          <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
+            {/* {error} */}
+            <div class="loader "></div>  
+            {/* make the loader at center */}
+          </div>
+          :<div></div>
+          }
           {/* <div className="Error mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600">
             {error}
           </div> */}
+          
         </div>
         <div className="overflow-hidden relative h-screen w-full ">
           <div className="h-[80vw] overflow-clip absolute right-[-30vw] bottom-[-50vw] bg-yellow-100 rounded-full w-[80vw]"></div>
