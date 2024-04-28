@@ -5,6 +5,7 @@ import axios from "axios";
 const OTP = () => {
   const params = useParams(); // Extract userId from the URL
   const navigate = useNavigate();
+  const [loader,setLoader]=useState();
   const [error, setError] = useState("");
   // Use the userId parameter here, e.g., for fetching user-specific OTP data
   console.log("userId from OTP:", params.userId);
@@ -20,6 +21,7 @@ const OTP = () => {
 
   const verifyOTP = async () => {
     try {
+      setLoader(true);
       const response = await axios.post(
         "  https://api.khana.me/api/v1/users/verify-otp",
         {
@@ -33,6 +35,7 @@ const OTP = () => {
         `/register/${response.data.data.username}/${response.data.data.email}/${params.userId}`
       );
     } catch (error) {
+      setLoader(false);
       console.log("Error:", error.response.data.message);
       setError(error.response.data.message);
     }
@@ -86,6 +89,14 @@ const OTP = () => {
         <div className="Error mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600">
           {error}
         </div>
+        {
+          loader?
+          <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
+            <div class="loader "></div>  
+            {/* make the loader at center */}
+          </div>
+          :<div></div>
+          }
       </div>
 
       <div className="overflow-hidden relative h-screen w-full ">

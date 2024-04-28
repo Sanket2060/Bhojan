@@ -10,7 +10,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [loader,setLoader]=useState();
   const loginUser = async ({ email, password }) => {
     console.log("At login");
     console.log("Email and password:", email, password);
@@ -38,28 +38,33 @@ const Login = () => {
       }
       // navigate(`/register/${response.data.data.username}/${response.data.data.email}/${params.userId}`);
     } catch (error) {
+      setLoader(false);
       console.log(error);
       console.log("Error:", error.response.data.message);
       setError(error.response.data.message);
     }
   };
 
-  const resetError = () => {
-    // Reset the error state
-    setError("");
-  };
+  // const resetError = () => {
+  //   // Reset the error state
+  //   setError("");
+  // };
 
   const onSubmit = async (data) => {
+    setError("");
+    setLoader(true);
     console.log("At first step");
     // Check if there's an error before calling registerUser
     // if (formState.isValid) {   //what does .isValid do->checks if all validations are true or not provided to react form hooks(validate:)
     console.log("The form was valid");
-    resetError();
+    // resetError();
     try {
       handleSubmit(loginUser)(data); //??
     } catch (error) {
       // Handle any errors here
       console.error("Form submission error:", error);
+      setLoader(false);
+      setError("Please try again");
       // }
     }
   };
@@ -79,7 +84,7 @@ const Login = () => {
             action=""
             onSubmit={(e) => {
               e.preventDefault(); // Prevent default form submission
-              resetError();
+              // resetError();
               handleSubmit(onSubmit)(e);
             }}
           >
@@ -158,10 +163,18 @@ const Login = () => {
               </button>
             </Link>
           </div>
-
-          <div className="Error mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600">
+          <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
             {error}
           </div>
+        {
+          loader?
+          <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
+            {error}
+            <div class="loader "></div>  
+            {/* make the loader at center */}
+          </div>
+          :<div></div>
+          }
         </div>
       </div>
 
