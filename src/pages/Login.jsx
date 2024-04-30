@@ -10,7 +10,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loader,setLoader]=useState();
+  const [loader, setLoader] = useState();
   const loginUser = async ({ email, password }) => {
     console.log("At login");
     console.log("Email and password:", email, password);
@@ -166,15 +166,16 @@ const Login = () => {
           <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
             {error}
           </div>
-        {
-          loader?
-          <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
-            {error}
-            <div class="loader "></div>  
-            {/* make the loader at center */}
-          </div>
-          :<div></div>
-          }
+          {loader ? (
+            <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
+              {error}
+              <div className=" fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+                <div class="loader "></div>
+              </div>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
 

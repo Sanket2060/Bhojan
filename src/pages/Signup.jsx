@@ -4,13 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const Signup = () => {
-  const { register, handleSubmit,formState } = useForm();
-  const {errors}=formState;
+  const { register, handleSubmit, formState } = useForm();
+  const { errors } = formState;
   // const [error, setError] = useState("");
   const navigate = useNavigate();
   const params = useParams();
   const [selectedTab, setSelectedTab] = useState("Donator");
-  const [loader,setLoader]=useState();
+  const [loader, setLoader] = useState();
   const [userId, setUserId] = useState(Number);
   const authenticate = async ({ username, email, password }) => {
     try {
@@ -43,7 +43,6 @@ const Signup = () => {
       // setError(error.message);
     }
   };
-
 
   // useEffect(() => {
   //   setError("");
@@ -129,8 +128,8 @@ const Signup = () => {
                   required: "Username is required",
                   pattern: {
                     value: /^[a-zA-Z0-9]{1,12}$/,
-                    message: "Username should be shorter"
-                  }
+                    message: "Username should be shorter",
+                  },
                 })}
               />
               <p>{errors.username?.message}</p>
@@ -151,10 +150,9 @@ const Signup = () => {
                   required: "Email is required",
                   pattern: {
                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Email must be valid"
-                  }
+                    message: "Email must be valid",
+                  },
                 })}
-
               />
               <p>{errors.email?.message}</p>
             </div>
@@ -173,8 +171,9 @@ const Signup = () => {
                   required: "Password is required",
                   pattern: {
                     value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,
-                    message: "Password must contain at least 8 characters, including letters and numbers."
-                  }
+                    message:
+                      "Password must contain at least 8 characters, including letters and numbers.",
+                  },
                 })}
               />
               <p>{errors.password?.message}</p>
@@ -225,19 +224,19 @@ const Signup = () => {
               </Link>
             </div>
           </form>
-          {
-          loader?
-          <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
-            {/* {error} */}
-            <div class="loader "></div>  
-            {/* make the loader at center */}
-          </div>
-          :<div></div>
-          }
+          {loader ? (
+            <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
+              {/* {error} */}
+              <div className=" fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+                <div class="loader "></div>
+              </div>
+            </div>
+          ) : (
+            <div></div>
+          )}
           {/* <div className="Error mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600">
             {error}
           </div> */}
-          
         </div>
         <div className="overflow-hidden relative h-screen w-full ">
           <div className="h-[80vw] overflow-clip absolute right-[-30vw] bottom-[-50vw] bg-yellow-100 rounded-full w-[80vw]"></div>
