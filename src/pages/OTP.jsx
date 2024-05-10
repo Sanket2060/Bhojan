@@ -5,7 +5,7 @@ import axios from "axios";
 const OTP = () => {
   const params = useParams(); // Extract userId from the URL
   const navigate = useNavigate();
-  const [loader,setLoader]=useState();
+  const [loader, setLoader] = useState();
   const [error, setError] = useState("");
   // Use the userId parameter here, e.g., for fetching user-specific OTP data
   console.log("userId from OTP:", params.userId);
@@ -89,14 +89,15 @@ const OTP = () => {
         <div className="Error mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600">
           {error}
         </div>
-        {
-          loader?
+        {loader ? (
           <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
-            <div class="loader "></div>  
-            {/* make the loader at center */}
+            <div className=" fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+              <div class="loader "></div>
+            </div>
           </div>
-          :<div></div>
-          }
+        ) : (
+          <div></div>
+        )}
       </div>
 
       <div className="overflow-hidden relative h-screen w-full ">
