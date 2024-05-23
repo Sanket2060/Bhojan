@@ -29,7 +29,7 @@ const Profile = () => {
       try {
         if (userDetails) {
           const response = await axios.post(
-            `  http://localhost:9005/api/v1/getData/getdetailsfromname`,
+            `   https://api.khana.me/api/v1/getData/getdetailsfromname`,
             {
               name: userDetails?.name,
             }
@@ -55,12 +55,12 @@ const Profile = () => {
   }, []);
 
   // const [userUpload,setUserUpload]=useState(avater);
- useEffect(()=>{
-  console.log(userData.avatar);
- },[userData.avatar])
- useEffect(()=>{
-  console.log(userData.name);
- },[userData.name])
+  useEffect(() => {
+    console.log(userData.avatar);
+  }, [userData.avatar]);
+  useEffect(() => {
+    console.log(userData.name);
+  }, [userData.name]);
   return (
     <div className="dark:bg-[#121212]">
       <Navbar />

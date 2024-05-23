@@ -153,7 +153,7 @@ function AccordionItem({
   const addDistributorToOrder = async () => {
     try {
       const response = await axios.post(
-        "  http://localhost:9005/api/v1/order/add-distributor-to-order",
+        "   https://api.khana.me/api/v1/order/add-distributor-to-order",
         {
           _id: userDetails._id,
           _orderId: item._id, //yei nai ho sure??
@@ -187,8 +187,11 @@ function AccordionItem({
       } ${containerStyle.shadow} ${""}`}
     >
       {/* {expanded && ( */}
-      <div className={`p-4 dark:bg-[#1F1A24] dark:text-gray-50 ${countdown1 === 0 ? 'bg-red-100' : ''}`}>
-
+      <div
+        className={`p-4 dark:bg-[#1F1A24] dark:text-gray-50 ${
+          countdown1 === 0 ? "bg-red-100" : ""
+        }`}
+      >
         {/* Content of the accordion item */}
         <div className="bg-white dark:bg-[#1F1A24] p-4 rounded-md shadow-md relative">
           <p className="text-lg text-center pb-2 border-b font-semibold text-gray-800 dark:text-gray-200">

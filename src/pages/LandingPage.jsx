@@ -11,15 +11,15 @@ import axios from "axios";
 const LandingPage = () => {
   const [topContributorsData, setTopContributorsData] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
-  const [organizationDetails,setOrganizationDetails]=useState([]);
+  const [organizationDetails, setOrganizationDetails] = useState([]);
   const [numberOfPeopleFeed, setNumberOfPeopleFeed] = useState(0);
-const [community, setCommunity] = useState(0);
-const [foodSaved, setFoodSaved] = useState(0);
+  const [community, setCommunity] = useState(0);
+  const [foodSaved, setFoodSaved] = useState(0);
 
   const getTopDonatorsDataFunc = async () => {
     try {
       const response = await axios.get(
-        `  http://localhost:9005/api/v1/getData/get-top-donors`
+        `   https://api.khana.me/api/v1/getData/get-top-donors`
       );
       console.log(response);
       const users = response.data.data;
@@ -29,14 +29,14 @@ const [foodSaved, setFoodSaved] = useState(0);
       console.error("Error fetching user data:", error);
     }
   };
-  const getOrganizationDetails=async()=>{
+  const getOrganizationDetails = async () => {
     try {
       const response = await axios.get(
-        `  http://localhost:9005/api/v1/getData/getOrganizationDetails`
+        `   https://api.khana.me/api/v1/getData/getOrganizationDetails`
       );
       console.log(response);
       const bhojan = response.data.data.bhojan;
-      console.log("org details",bhojan);
+      console.log("org details", bhojan);
       setOrganizationDetails(bhojan);
       setNumberOfPeopleFeed(bhojan.numberOfPeopleFeed);
       setCommunity(bhojan.community);
@@ -44,25 +44,24 @@ const [foodSaved, setFoodSaved] = useState(0);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
-  }
+  };
 
-  useEffect(()=>{
-      console.log("Organization details: ",organizationDetails);
-      // console.log("community is ",organizationDetails.community);
-  },[organizationDetails])
+  useEffect(() => {
+    console.log("Organization details: ", organizationDetails);
+    // console.log("community is ",organizationDetails.community);
+  }, [organizationDetails]);
   useEffect(() => {
     getTopDonatorsDataFunc();
     getOrganizationDetails();
   }, []);
 
-//   useEffect(() => {
-//     const cookies = document.cookie.split(';').map(cookie => {
-//         const [name, value] = cookie.split('=');
-//         return { name: name.trim(), value: value.trim() };
-//     });
-//     console.log("cookies", cookies);
-// }, []);
-
+  //   useEffect(() => {
+  //     const cookies = document.cookie.split(';').map(cookie => {
+  //         const [name, value] = cookie.split('=');
+  //         return { name: name.trim(), value: value.trim() };
+  //     });
+  //     console.log("cookies", cookies);
+  // }, []);
 
   // const topContributorsData = [
   //   { companyName: "Top Contributor 1", location: "Location 1" },
@@ -143,17 +142,18 @@ const [foodSaved, setFoodSaved] = useState(0);
       </div>
       <LandingpageLeaderboard topContributors={topContributorsData} />
       <div className="p-20 bg-gray-100 dark:bg-[#1F1A24]"></div>
-      {
-        (foodSaved && community && numberOfPeopleFeed)?
+      {foodSaved && community && numberOfPeopleFeed ? (
         <Accomplishment
-        totalFoodSaved={Number(foodSaved)}
-        ourCommunity={Number(community)}
-        totalPeopleServed={Number(numberOfPeopleFeed)}
-        totalFoodSavedText="Total Food Saved"
-        ourCommunityText="Our Community"
-        totalPeopleServedText="Total People Served"
-        />:<div></div>
-      }
+          totalFoodSaved={Number(foodSaved)}
+          ourCommunity={Number(community)}
+          totalPeopleServed={Number(numberOfPeopleFeed)}
+          totalFoodSavedText="Total Food Saved"
+          ourCommunityText="Our Community"
+          totalPeopleServedText="Total People Served"
+        />
+      ) : (
+        <div></div>
+      )}
       <div className="flex flex-col bg-gray-100  pb-10 dark:bg-[#1F1A24] ">
         <div className="wrapper  pb-10 mt-28 lg:mt-32 mb-8 md:font-extrabold font-bold lg:text-7xl md:text-6xl text-5xl flex flex-col items-start">
           <div className="text-[#261750] self-center dark:text-[#7c58de]">
