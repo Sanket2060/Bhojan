@@ -3,20 +3,21 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../features/user/authslice";
-
+import { login } from "../features/user/authSlice";
+import LoginButton from "../components/auth0login";
+import LogoutButton from "../components/auth0logout";
 const Login = () => {
   const { register, handleSubmit, formState } = useForm();
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loader,setLoader]=useState();
+  const [loader, setLoader] = useState();
   const loginUser = async ({ email, password }) => {
     console.log("At login");
     console.log("Email and password:", email, password);
     try {
       const response = await axios.post(
-        "  https://api.khana.me/api/v1/users/login",
+        "  http://localhost:9005/api/v1/users/login",
         {
           email,
           password,
@@ -148,11 +149,12 @@ const Login = () => {
             <h2 className="text-center text-lg font-semibold  mt-1">OR</h2>
           </div>
           <div>
-            <a href="">
-              <button className="align-middle font-bold font-sans mt-1 p-2 text-center h-10 w-full bg-blue-700 text-white rounded-full focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none text-xs">
-                Continue with Google
-              </button>
-            </a>
+            {/* <a href=""> */}
+            {/* <button className="align-middle font-bold font-sans mt-1 p-2 text-center h-10 w-full bg-blue-700 text-white rounded-full focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none text-xs"> */}
+            <LoginButton />
+            {/* Continue with Google */}
+            {/* </button> */}
+            {/* </a> */}
           </div>
           <div className="mt-3 sm:flex justify-center  text-center ">
             <h2 className="  text-sm mt-1">Don't have an Account!</h2>
@@ -166,15 +168,15 @@ const Login = () => {
           <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
             {error}
           </div>
-        {
-          loader?
-          <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
-            {error}
-            <div class="loader "></div>  
-            {/* make the loader at center */}
-          </div>
-          :<div></div>
-          }
+          {loader ? (
+            <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
+              {error}
+              <div class="loader absolute bottom-8 left-[45%]"></div>
+              {/* make the loader at center */}
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
 

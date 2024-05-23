@@ -11,7 +11,7 @@ const OTP = () => {
   console.log("userId from OTP:", params.userId);
   const [userOTP, setUserOTP] = useState();
   // const verifyOTP = async () => {
-  //   const response = await axios.post('  https://api.khana.me/api/v1/users/verify-otp', {
+  //   const response = await axios.post('  http://localhost:9005/api/v1/users/verify-otp', {
   //     userId: params.userId,
   //     userOTP
 
@@ -23,7 +23,7 @@ const OTP = () => {
     try {
       setLoader(true);
       const response = await axios.post(
-        "  https://api.khana.me/api/v1/users/verify-otp",
+        "  http://localhost:9005/api/v1/users/verify-otp",
         {
           userId: params.userId,
           userOTP: userOTP,
@@ -92,7 +92,7 @@ const OTP = () => {
         {
           loader?
           <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
-            <div class="loader "></div>  
+            <div class="loader absolute bottom-4 "></div>  
             {/* make the loader at center */}
           </div>
           :<div></div>

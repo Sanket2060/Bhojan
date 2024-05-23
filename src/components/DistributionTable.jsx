@@ -124,7 +124,7 @@ const DistributionTable = ({
     if (onCompleteProp && completedItemIndex !== null) {
         try {
           const response =await  axios.post(
-            `  https://api.khana.me/api/v1/order/completed-order-for-donor`,
+            `  http://localhost:9005/api/v1/order/completed-order-for-donor`,
             {
               _orderId:completingItemOrderId,
             },

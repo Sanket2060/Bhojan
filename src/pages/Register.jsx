@@ -6,14 +6,14 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { login } from "../features/user/authslice";
+import { login } from "../features/user/authSlice";
 const Register = () => {
   const { register, handleSubmit, formState, watch } = useForm();
   const { errors } = formState;
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loader,setLoader]=useState();
+  const [loader, setLoader] = useState();
   const [error, setError] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [userProvidedImage, setUserProvidedImage] = useState();
@@ -51,9 +51,9 @@ const Register = () => {
         "isOrganization",
         selectedOption === "Organization" ? true : false
       );
-      console.log("form data:",formData);
+      console.log("form data:", formData);
       const response = await axios.post(
-        "    https://api.khana.me/api/v1/users/complete-registration",
+        "    http://localhost:9005/api/v1/users/complete-registration",
         formData,
         {
           withCredentials: true, // Include credentials (cookies) in the request
@@ -87,7 +87,6 @@ const Register = () => {
     setError("");
   };
 
-
   const [image, setImage] = useState(`${avatar}`);
   const onImageChange = (event) => {
     // console.log("On Image Change");
@@ -95,17 +94,17 @@ const Register = () => {
       // console.log("image is being changed");
       setImage(URL.createObjectURL(event.target.files[0]));
     }
-  }
+  };
   useEffect(() => {
     console.log(watch("profilepic"));
-    const imageFile = (watch("profilepic"));
+    const imageFile = watch("profilepic");
     setImage(imageFile[0]?.name);
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64string = reader.result;
       setBase64(base64string);
       console.log(base64);
-    }
+    };
 
     if (imageFile) {
       const blob = new Blob([imageFile[0]], { type: imageFile[0]?.type });
@@ -116,7 +115,7 @@ const Register = () => {
     console.log(imageFile[0]);
     //  console.log(imageFile?.File?.name);
     setImage(base64);
-  })
+  });
   // console.log(image);
 
   return (
@@ -129,10 +128,7 @@ const Register = () => {
           Register to Khana
         </h1>
         <hr className="border w-full h-1 bg-black my-4" />
-        <form
-          action=""
-          onSubmit={handleSubmit(registerUser)}
-        >
+        <form action="" onSubmit={handleSubmit(registerUser)}>
           <div>
             <img
               //  src={userUpload}
@@ -153,14 +149,11 @@ const Register = () => {
               accept="image/jpeg, image/jpg, image/png"
               id="image"
               className="hidden"
-              // name="image"  
+              // name="image"
               // console.log(e.target.value);
               // setUserUpload(e.target.value)
-              {...register("profilepic", {
-              })}
+              {...register("profilepic", {})}
             />
-
-
           </div>
           <div>
             <label for="username" className="font-normal text-sm ml-2">
@@ -208,13 +201,12 @@ const Register = () => {
                 required: "Name is required",
                 pattern: {
                   value: /^[A-Z][a-zA-Z ]*$/,
-                  message: "Name should start with a capital letter and shouldn't contain any special characters"
-                }
+                  message:
+                    "Name should start with a capital letter and shouldn't contain any special characters",
+                },
               })}
-
             />
             <p>{errors.name?.message}</p>
-
           </div>
 
           <div>
@@ -231,13 +223,12 @@ const Register = () => {
                 required: "Address is required",
                 pattern: {
                   value: /^[a-zA-Z0-9 ,.-]*$/,
-                  message: "Address should only contain letters, numbers, spaces, and these characters: ,.-"
-                }
+                  message:
+                    "Address should only contain letters, numbers, spaces, and these characters: ,.-",
+                },
               })}
-
             />
             <p>{errors.address?.message}</p>
-
           </div>
 
           <div>
@@ -263,13 +254,12 @@ const Register = () => {
                 required: "Contact number is required",
                 pattern: {
                   value: /^9\d{9}$/,
-                  message: "Please enter a valid phone number starting with 9 and having 10 digits in total"
-                }
+                  message:
+                    "Please enter a valid phone number starting with 9 and having 10 digits in total",
+                },
               })}
-
             />
             <p>{errors.contactno?.message}</p>
-
           </div>
           <div>
             <select
@@ -297,13 +287,13 @@ const Register = () => {
         {/* <div className="Error mt-8  p-2 rounded-md  text-sm font-light text-red-600">
           {error}
         </div> */}
-         {
-          loader?
+        {loader ? (
           <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
-            <div class="loader "></div>  
+            <div class="loader "></div>
           </div>
-          :<div></div>
-          }
+        ) : (
+          <div></div>
+        )}
       </div>
       <div className="overflow-hidden relative h-screen w-full ">
         <div className="h-[80vw] overflow-clip absolute right-[-30vw] bottom-[-50vw] bg-yellow-100 rounded-full w-[80vw]"></div>

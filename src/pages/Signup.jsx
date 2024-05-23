@@ -19,7 +19,7 @@ const Signup = () => {
       // api/users/register
       // send register data
       const response = await axios.post(
-        " https://api.khana.me/api/v1/users/register",
+        " http://localhost:9005/api/v1/users/register",
         {
           username,
           email,
@@ -229,7 +229,7 @@ const Signup = () => {
           loader?
           <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
             {/* {error} */}
-            <div class="loader "></div>  
+            <div class="loader absolute left-44 "></div>  
             {/* make the loader at center */}
           </div>
           :<div></div>
