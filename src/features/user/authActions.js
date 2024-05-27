@@ -3,17 +3,17 @@ import { login, logout } from "./authSlice.js";
 export const fetchUserData = (navigate) => {
   return async (dispatch, useSelector) => {
     try {
-      console.log("Tried reloading the page");
+      //console.log("Tried reloading the page");
       const response = await axios.get(
-        " https://api.khana.me/api/v1/getData/getUserDetails",
+        "https://khana.me/api/v1/getData/getUserDetails",
         {
           withCredentials: true,
         }
       );
-      console.log(response.data.data);
+      // console.log(response.data.data);
       dispatch(login(response.data.data));
       const userDetails = await useSelector((state) => state.auth.userDetails);
-      console.log("isDonor", userDetails.auth.userDetails.isDonor);
+      //console.log("isDonor", userDetails.auth.userDetails.isDonor);
       userDetails.auth.userDetails.isDonor
         ? navigate("/donor")
         : navigate("/volunteer");

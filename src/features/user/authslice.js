@@ -12,12 +12,12 @@
         login: (state,action) => {
           // console.log(action.payload);
           // console.log(action.payload.userDetails);
-          console.log(action.payload);
+          //console.log(action.payload);
           state.isAuthenticated = true;
           state.userDetails=action.payload;
         },
         logout: (state) => {
-          console.log("Trying to empty redux store");
+          //console.log("Trying to empty redux store");
           state.isAuthenticated = false;
           state.userDetails=null
         },

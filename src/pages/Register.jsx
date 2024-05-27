@@ -13,7 +13,7 @@ const Register = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loader,setLoader]=useState();
+  const [loader, setLoader] = useState();
   const [error, setError] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [userProvidedImage, setUserProvidedImage] = useState();
@@ -28,7 +28,7 @@ const Register = () => {
       formData.append("userId", params.userId);
       formData.append("name", name);
       if (!profilepic || !profilepic[0]) {
-        console.log("No image provided by user");
+        //console.log("No image provided by user");
         // Fetch the image, convert to Blob, then to File
         const response = await fetch(avatar);
         const blob = await response.blob();
@@ -51,16 +51,16 @@ const Register = () => {
         "isOrganization",
         selectedOption === "Organization" ? true : false
       );
-      console.log("form data:", formData);
+      //console.log("form data:", formData);
       const response = await axios.post(
-        "     https://api.khana.me/api/v1/users/complete-registration",
+        "    https://khana.me/api/v1/users/complete-registration",
         formData,
         {
           withCredentials: true, // Include credentials (cookies) in the request
         }
       );
 
-      console.log(response);
+      //console.log(response);
       setError("");
       // console.log(response.data.data.isDonor);
       dispatch(login(response.data.data));
@@ -71,7 +71,7 @@ const Register = () => {
       }
     } catch (error) {
       setLoader(false);
-      console.log("Error:", error);
+      //console.log("Error:", error);
       // console.log("Error message:", error.response.data.message);
       // setError(error.response.data.message);
     }
@@ -96,14 +96,14 @@ const Register = () => {
     }
   };
   useEffect(() => {
-    console.log(watch("profilepic"));
+    //console.log(watch("profilepic"));
     const imageFile = watch("profilepic");
     setImage(imageFile[0]?.name);
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64string = reader.result;
       setBase64(base64string);
-      console.log(base64);
+      //console.log(base64);
     };
 
     if (imageFile) {
@@ -112,7 +112,7 @@ const Register = () => {
       reader.readAsDataURL(blob);
     }
 
-    console.log(imageFile[0]);
+    //console.log(imageFile[0]);
     //  console.log(imageFile?.File?.name);
     setImage(base64);
   });

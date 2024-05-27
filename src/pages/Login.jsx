@@ -11,13 +11,13 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loader,setLoader]=useState();
+  const [loader, setLoader] = useState();
   const loginUser = async ({ email, password }) => {
-    console.log("At login");
-    console.log("Email and password:", email, password);
+    //console.log("At login");
+    //console.log("Email and password:", email, password);
     try {
       const response = await axios.post(
-        "   https://api.khana.me/api/v1/users/login",
+        "  https://khana.me/api/v1/users/login",
         {
           email,
           password,
@@ -26,8 +26,8 @@ const Login = () => {
           withCredentials: true, // Include credentials (cookies) in the request
         }
       );
-      console.log(response);
-      console.log("Response.data.data.isDonor", response.data.data.isDonor);
+      //console.log(response);
+      //console.log("Response.data.data.isDonor", response.data.data.isDonor);
       dispatch(login(response.data.data));
       if (response) {
         //also store user's data at redux toolkit
@@ -40,8 +40,8 @@ const Login = () => {
       // navigate(`/register/${response.data.data.username}/${response.data.data.email}/${params.userId}`);
     } catch (error) {
       setLoader(false);
-      console.log(error);
-      console.log("Error:", error.response.data.message);
+      //console.log(error);
+      //console.log("Error:", error.response.data.message);
       setError(error.response.data.message);
     }
   };
@@ -54,10 +54,10 @@ const Login = () => {
   const onSubmit = async (data) => {
     setError("");
     setLoader(true);
-    console.log("At first step");
+    //console.log("At first step");
     // Check if there's an error before calling registerUser
     // if (formState.isValid) {   //what does .isValid do->checks if all validations are true or not provided to react form hooks(validate:)
-    console.log("The form was valid");
+    //console.log("The form was valid");
     // resetError();
     try {
       handleSubmit(loginUser)(data); //??

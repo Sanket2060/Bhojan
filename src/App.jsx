@@ -18,7 +18,7 @@ import NewProfile from "./pages/newprofile";
 import ProtectedRoute from "./pages/Protected";
 import HelpUs from "./pages/HelpUs";
 import { useNavigate } from "react-router-dom";
-import { useDispatch,useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "./features/user/authSlice.js";
 import { fetchUserData } from "./features/user/authActions.js";
 const App = () => {

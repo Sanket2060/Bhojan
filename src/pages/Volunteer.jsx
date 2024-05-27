@@ -136,19 +136,19 @@ const Volunteer = () => {
   const currentActiveListings = async () => {
     try {
       const response = await axios.get(
-        "   https://api.khana.me/api/v1/getData/active-listings",
+        "  https://khana.me/api/v1/getData/active-listings",
         {},
         {}
       );
-      console.log("Current active listings for user are:", response.data.data);
+      //console.log("Current active listings for user are:", response.data.data);
       setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {
-      console.log("Error at listing active orders at donor", error);
+      //console.log("Error at listing active orders at donor", error);
     }
   };
   const retainAllData = () => {
-    console.log("Retain all data called");
+    //console.log("Retain all data called");
     currentActiveListings();
     getUsersPendingDistributions();
   };
@@ -158,7 +158,7 @@ const Volunteer = () => {
   const getUsersPendingDistributions = async () => {
     try {
       const response = await axios.post(
-        "   https://api.khana.me/api/v1/order/pending-listings-for-distributor",
+        "  https://khana.me/api/v1/order/pending-listings-for-distributor",
         {
           _id: userDetails._id,
         },
@@ -170,12 +170,12 @@ const Volunteer = () => {
         }
       );
       // console.log(response.data.data.runningOrders);
-      console.log("From users pending distribution at volunteer:", response);
+      //console.log("From users pending distribution at volunteer:", response);
       setPendingItems(response.data.data.runningOrders);
       // setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {
-      console.log("Error at listing active orders at donor", error);
+      //console.log("Error at listing active orders at donor", error);
     }
   };
 
@@ -190,7 +190,7 @@ const Volunteer = () => {
   const cancelOrderForDistributor = async (_id) => {
     try {
       const response = await axios.post(
-        `   https://api.khana.me/api/v1/order/cancel-order-for-distributor`,
+        `  https://khana.me/api/v1/order/cancel-order-for-distributor`,
         {
           _orderId: _id,
         },
@@ -198,7 +198,7 @@ const Volunteer = () => {
           withCredentials: true, // Include credentials (cookies) in the request
         }
       );
-      console.log("Successfully cancelled order:", response);
+      //console.log("Successfully cancelled order:", response);
       // setTopContributorsData(response.data.data.topTenDonators);
     } catch (error) {
       console.error("Error cancelling order for donor:", error);

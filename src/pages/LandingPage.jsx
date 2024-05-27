@@ -19,11 +19,11 @@ const LandingPage = () => {
   const getTopDonatorsDataFunc = async () => {
     try {
       const response = await axios.get(
-        `   https://api.khana.me/api/v1/getData/get-top-donors`
+        `  https://khana.me/api/v1/getData/get-top-donors`
       );
-      console.log(response);
+      //console.log(response);
       const users = response.data.data;
-      console.log(users);
+      //console.log(users);
       setTopContributorsData(response.data.data.topTenDonators);
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -32,11 +32,11 @@ const LandingPage = () => {
   const getOrganizationDetails = async () => {
     try {
       const response = await axios.get(
-        `   https://api.khana.me/api/v1/getData/getOrganizationDetails`
+        `  https://khana.me/api/v1/getData/getOrganizationDetails`
       );
-      console.log(response);
+      //console.log(response);
       const bhojan = response.data.data.bhojan;
-      console.log("org details", bhojan);
+      //console.log("org details", bhojan);
       setOrganizationDetails(bhojan);
       setNumberOfPeopleFeed(bhojan.numberOfPeopleFeed);
       setCommunity(bhojan.community);
@@ -47,7 +47,7 @@ const LandingPage = () => {
   };
 
   useEffect(() => {
-    console.log("Organization details: ", organizationDetails);
+    //console.log("Organization details: ", organizationDetails);
     // console.log("community is ",organizationDetails.community);
   }, [organizationDetails]);
   useEffect(() => {

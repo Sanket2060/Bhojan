@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 const Signup = () => {
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
-  const { register, handleSubmit, formState } = useForm();
-  const { errors } = formState;
   // const [error, setError] = useState("");
   const navigate = useNavigate();
   const params = useParams();
@@ -17,11 +15,11 @@ const Signup = () => {
   const authenticate = async ({ username, email, password }) => {
     try {
       setLoader(true);
-      console.log(email, password);
+      //console.log(email, password);
       // api/users/register
       // send register data
       const response = await axios.post(
-        "  https://api.khana.me/api/v1/users/register",
+        " https://khana.me/api/v1/users/register",
         {
           username,
           email,
@@ -31,15 +29,15 @@ const Signup = () => {
       );
 
       // handle success
-      console.log(response.data);
+      //console.log(response.data);
       setUserId(response.data.data.userId);
-      console.log(response.data.data.userId);
+      //console.log(response.data.data.userId);
 
       // Navigate to OTP page with the userId
       navigate(`/otp/${response.data.data.userId}`);
     } catch (error) {
       // handle error
-      console.log(error.message);
+      //console.log(error.message);
       setLoader(false);
       // Set error state to display the error message
       // setError(error.message);
@@ -130,8 +128,8 @@ const Signup = () => {
                   required: "Username is required",
                   pattern: {
                     value: /^[a-zA-Z0-9]{1,12}$/,
-                    message: "Username should be shorter"
-                  }
+                    message: "Username should be shorter",
+                  },
                 })}
               />
               <p>{errors.username?.message}</p>
@@ -152,10 +150,9 @@ const Signup = () => {
                   required: "Email is required",
                   pattern: {
                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Email must be valid"
-                  }
+                    message: "Email must be valid",
+                  },
                 })}
-
               />
               <p>{errors.email?.message}</p>
             </div>
@@ -174,8 +171,9 @@ const Signup = () => {
                   required: "Password is required",
                   pattern: {
                     value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,
-                    message: "Password must contain at least 8 characters, including letters and numbers."
-                  }
+                    message:
+                      "Password must contain at least 8 characters, including letters and numbers.",
+                  },
                 })}
               />
               <p>{errors.password?.message}</p>

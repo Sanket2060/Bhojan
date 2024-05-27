@@ -113,8 +113,8 @@ const DistributionTable = ({
   };
 
   const handleCompleteClick = async (index, orderId) => {
-    console.log("HandleCompleteClick");
-    console.log("orderId", orderId);
+    //console.log("HandleCompleteClick");
+    //console.log("orderId", orderId);
     setCompletedItemIndex(index);
     setCompleteConfirmationOpen(true); //confirmation box kholna ko lagi
     // await completeOrder(orderId);   //yesma matra ho id chaini
@@ -124,7 +124,7 @@ const DistributionTable = ({
     if (onCompleteProp && completedItemIndex !== null) {
       try {
         const response = await axios.post(
-          `   https://api.khana.me/api/v1/order/completed-order-for-donor`,
+          `  https://khana.me/api/v1/order/completed-order-for-donor`,
           {
             _orderId: completingItemOrderId,
           },
@@ -132,15 +132,15 @@ const DistributionTable = ({
             withCredentials: true, // Include credentials (cookies) in the request
           }
         );
-        console.log(response);
+        //console.log(response);
       } catch (error) {
-        console.log("Can't complete order for donor", error);
+        //console.log("Can't complete order for donor", error);
       }
       try {
         await getCompletedOrders();
         await currentActiveListings();
       } catch (error) {
-        console.log("Data fetched yet can't bring changes to ui", error);
+        //console.log("Data fetched yet can't bring changes to ui", error);
       }
       onCompleteProp(pendingItems[completedItemIndex]); //yo narakhe yo vanda pailako item lai complete gariraxa
       toast.success("Distribution Completed");
@@ -161,8 +161,8 @@ const DistributionTable = ({
   };
 
   useEffect(() => {
-    console.log("Completing item order id changed");
-    console.log("value after changing order id", completingItemOrderId);
+    //console.log("Completing item order id changed");
+    //console.log("value after changing order id", completingItemOrderId);
   }, [completingItemOrderId]);
 
   return (

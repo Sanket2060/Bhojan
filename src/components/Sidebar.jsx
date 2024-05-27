@@ -93,7 +93,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:text-gray-200 dark:hover:bg-stone-600`}
                 onClick={() => {
                   // e.preventDefault();
-                  console.log("Clicked");
+                  //console.log("Clicked");
                   if (menu.onClick) {
                     menu.onClick();
                   }
@@ -114,21 +114,21 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
               try {
                 navigate("/");
                 const response = await axios.post(
-                  "  https://api.khana.me/api/v1/users/logout",
+                  " https://khana.me/api/v1/users/logout",
                   {},
                   {
                     withCredentials: true, // Include credentials (cookies) in the request
                   }
                 );
                 // .then(response=>{
-                console.log(response);
+                //console.log(response);
                 // })
                 // .then(
                 dispatch(logout());
                 // )
                 // Perform any additional actions after logout
               } catch (error) {
-                console.log("Error at logging user out:", error);
+                //console.log("Error at logging user out:", error);
               }
             }}
           >
@@ -223,21 +223,21 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 try {
                   navigate("/");
                   const response = await axios.post(
-                    "  https://api.khana.me/api/v1/users/logout",
+                    " https://khana.me/api/v1/users/logout",
                     {},
                     {
                       withCredentials: true, // Include credentials (cookies) in the request
                     }
                   );
                   // .then(response=>{
-                  console.log(response);
+                  //console.log(response);
                   // })
                   // .then(
                   dispatch(logout());
                   // )
                   // Perform any additional actions after logout
                 } catch (error) {
-                  console.log("Error at logging user out:", error);
+                  //console.log("Error at logging user out:", error);
                 }
               }}
             >

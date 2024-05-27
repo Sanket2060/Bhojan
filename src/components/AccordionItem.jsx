@@ -153,7 +153,7 @@ function AccordionItem({
   const addDistributorToOrder = async () => {
     try {
       const response = await axios.post(
-        "   https://api.khana.me/api/v1/order/add-distributor-to-order",
+        "  https://khana.me/api/v1/order/add-distributor-to-order",
         {
           _id: userDetails._id,
           _orderId: item._id, //yei nai ho sure??
@@ -165,12 +165,12 @@ function AccordionItem({
           withCredentials: true, // Send cookies with the request
         }
       );
-      console.log("Distributor added to order successfully", response);
+      //console.log("Distributor added to order successfully", response);
       // console.log(response.data.data);
       // setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {
-      console.log("Error at listing active orders at donor", error);
+      //console.log("Error at listing active orders at donor", error);
     }
   };
 

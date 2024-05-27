@@ -29,7 +29,7 @@ const Profile = () => {
       try {
         if (userDetails) {
           const response = await axios.post(
-            `   https://api.khana.me/api/v1/getData/getdetailsfromname`,
+            `  https://khana.me/api/v1/getData/getdetailsfromname`,
             {
               name: userDetails?.name,
             }
@@ -37,7 +37,7 @@ const Profile = () => {
 
           const user = response.data.data;
           // console.log("userdata avatar:",user.user.avatar);
-          console.log(user);
+          //console.log(user);
           setUserData({
             name: user.user.name,
             username: user.user.username,
@@ -56,10 +56,10 @@ const Profile = () => {
 
   // const [userUpload,setUserUpload]=useState(avater);
   useEffect(() => {
-    console.log(userData.avatar);
+    //console.log(userData.avatar);
   }, [userData.avatar]);
   useEffect(() => {
-    console.log(userData.name);
+    //console.log(userData.name);
   }, [userData.name]);
   return (
     <div className="dark:bg-[#121212]">
@@ -94,7 +94,7 @@ const Profile = () => {
                 id="image"
                 className="hidden"
                 onChange={(e) => {
-                  console.log(e.target.value);
+                  //console.log(e.target.value);
                 }}
                 {...register("profilepic", {
                   validate: {
