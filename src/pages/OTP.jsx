@@ -91,8 +91,9 @@ const OTP = () => {
         </div>
         {loader ? (
           <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
-            <div class="loader absolute bottom-4 "></div>
-            {/* make the loader at center */}
+            <div className=" fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+              <div class="loader "></div>
+            </div>
           </div>
         ) : (
           <div></div>
