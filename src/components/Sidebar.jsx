@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IoMdSunny, IoMdMoon } from "react-icons/io";
 import { logout } from "../features/user/authslice";
+import NotificationManager from "./NotificationManager";
 
 export const Sidebar = ({ menus, handleToggle, isOpen }) => {
   const [isMobile, setIsMobile] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
   const navigate = useNavigate();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
@@ -66,8 +67,9 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
             />
           </div>
           <div
-            className={`mt-4 flex flex-col gap-4 justify-end right-0 dark:text-gray-200 ${!open && "hidden"
-              }`}
+            className={`mt-4 flex flex-col gap-4 justify-end right-0 dark:text-gray-200 ${
+              !open && "hidden"
+            }`}
           >
             <div
               className="pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4 group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600 cursor-pointer"
@@ -86,9 +88,10 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
               <div
                 // to={menu?.link}
                 key={i}
-                className={` ${menu?.margin &&
+                className={` ${
+                  menu?.margin &&
                   "pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4"
-                  } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:text-gray-200 dark:hover:bg-stone-600`}
+                } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:text-gray-200 dark:hover:bg-stone-600`}
                 onClick={() => {
                   // e.preventDefault();
                   console.log("Clicked");
@@ -104,31 +107,31 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
               </div>
             ))}
           </div>
+          <NotificationManager />
           <h2
-            className={`whitespace-pre px-1 cursor-pointer ${!open && "translate-x-28"}`}
+            className={`whitespace-pre px-1 cursor-pointer ${
+              !open && "translate-x-28"
+            }`}
             onClick={async () => {
               try {
-                navigate('/');
+                navigate("/");
                 const response = await axios.post(
                   " https://api.khana.me/api/v1/users/logout",
                   {},
                   {
                     withCredentials: true, // Include credentials (cookies) in the request
                   }
-                )
+                );
                 // .then(response=>{
-                  console.log(response);
+                console.log(response);
                 // })
                 // .then(
-                  dispatch(logout());
+                dispatch(logout());
                 // )
                 // Perform any additional actions after logout
-              }
-              
-              catch (error) {
+              } catch (error) {
                 console.log("Error at logging user out:", error);
               }
-              
             }}
           >
             Logout
@@ -146,15 +149,17 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
       )}
       {!isMobile && (
         <div
-          className={`min-h-screen ${isOpen ? "w-72 bg-[#ddd4d4]" : " hidden"
-            } duration-500 px-4 flex flex-col font-semibold p-1 overflow-y-auto fixed dark:bg-stone-800 `}
+          className={`min-h-screen ${
+            isOpen ? "w-72 bg-[#ddd4d4]" : " hidden"
+          } duration-500 px-4 flex flex-col font-semibold p-1 overflow-y-auto fixed dark:bg-stone-800 `}
         >
           <div className="  py-3 flex justify-between items-center">
             <Link
               to="/"
-              className={`font-bold text-xl cursor-pointer dark:text-gray-200 ${!open && "hidden"
-                }`}
-            // onClick={handleToggle}
+              className={`font-bold text-xl cursor-pointer dark:text-gray-200 ${
+                !open && "hidden"
+              }`}
+              // onClick={handleToggle}
             >
               Khana
             </Link>
@@ -166,8 +171,9 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
           </div>
 
           <div
-            className={`mt-4 flex flex-col gap-4 dark:text-gray-200 relative ${!open && "hidden"
-              }`}
+            className={`mt-4 flex flex-col gap-4 dark:text-gray-200 relative ${
+              !open && "hidden"
+            }`}
           >
             <div className="mt-4 flex flex-col gap-4 justify-end right-0">
               <div
@@ -187,19 +193,20 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 <Link
                   to={menu?.link}
                   key={i}
-                  className={` ${menu?.margin &&
+                  className={` ${
+                    menu?.margin &&
                     "pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4"
-                    } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600`}
-                // onClick={(e)=>
+                  } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600`}
+                  // onClick={(e)=>
 
-                // {
-                // if (menu.name='Logout')
-                // {
-                //   window.reload()
-                //   e.stopPropagation();
-                //   console.log("logout called");
-                // }
-                // }}
+                  // {
+                  // if (menu.name='Logout')
+                  // {
+                  //   window.reload()
+                  //   e.stopPropagation();
+                  //   console.log("logout called");
+                  // }
+                  // }}
                 >
                   <div>{React.createElement(menu.icon, { size: "20" })}</div>
                   <h2
@@ -209,29 +216,30 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                   </h2>
                 </Link>
               ))}
+              <NotificationManager />
             </div>
             <h2
-              className={`whitespace-pre px-1 cursor-pointer ${!open && "translate-x-28"}`}
+              className={`whitespace-pre px-1 cursor-pointer ${
+                !open && "translate-x-28"
+              }`}
               onClick={async () => {
                 try {
-                  navigate('/');
+                  navigate("/");
                   const response = await axios.post(
                     " https://api.khana.me/api/v1/users/logout",
                     {},
                     {
                       withCredentials: true, // Include credentials (cookies) in the request
                     }
-                  )
+                  );
                   // .then(response=>{
-                    console.log(response);
+                  console.log(response);
                   // })
                   // .then(
-                    dispatch(logout());
+                  dispatch(logout());
                   // )
                   // Perform any additional actions after logout
-                }
-                
-                catch (error) {
+                } catch (error) {
                   console.log("Error at logging user out:", error);
                 }
               }}
