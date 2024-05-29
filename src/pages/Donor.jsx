@@ -34,7 +34,7 @@ const Donor = () => {
   //   console.log("Logout is clicked");
   //   // if (userDetails._id){
   //     try {
-  //       const response=axios.post('  https://api.khana.me/api/v1/users/logout',{
+  //       const response=axios.post('  https://khana.me/api/v1/users/logout',{
   //         withCredentials: true, // Include credentials (cookies) in the request
   //       });
   //       console.log(response);
@@ -52,7 +52,7 @@ const Donor = () => {
     try {
       if (userDetails._id) {
         const response = await axios.post(
-          "  https://api.khana.me/api/v1/getData/getAllCompletedOrdersForDonor",
+          "  https://khana.me/api/v1/getData/getAllCompletedOrdersForDonor",
           {
             _id: userDetails._id,
           }
@@ -60,16 +60,16 @@ const Donor = () => {
         // console.log("Fetched All Completed Orders For Donor successfully",response);
         // console.log(response.data.data.completedOrders);
         setCompletedListings(response.data.data.completedOrders);
-        console.log("Fetched all completed orders for donor");
+        //console.log("Fetched all completed orders for donor");
       } else {
-        console.log("No user is logged in to give his/her data");
+        //console.log("No user is logged in to give his/her data");
       }
     } catch (error) {
-      console.log("Error at getAllCompletedOrdersForDonor ", error);
+      //console.log("Error at getAllCompletedOrdersForDonor ", error);
     }
   };
   useEffect(() => {
-    console.log("Completed orders are:", completedListings);
+    //console.log("Completed orders are:", completedListings);
   }, [completedListings]);
   //sidebar
   const SidebarMenu = [
@@ -96,7 +96,7 @@ const Donor = () => {
     //   onClick: async () => {
     //     try {
     //       const response = await axios.post(
-    //         "  https://api.khana.me/api/v1/users/logout",
+    //         "  https://khana.me/api/v1/users/logout",
     //         {
     //           withCredentials: true, // Include credentials (cookies) in the request
     //         }
@@ -137,7 +137,7 @@ const Donor = () => {
     try {
       if (formData) {
         const response = await axios.post(
-          "https://api.khana.me/api/v1/order/create-order",
+          "https://khana.me/api/v1/order/create-order",
           {
             _id: userDetails._id,
             foodItems: formData.foodItem,
@@ -152,20 +152,20 @@ const Donor = () => {
             withCredentials: true, // Send cookies with the request
           }
         );
-        console.log("Order Added succesfully");
+        //console.log("Order Added succesfully");
         setRecentOrderDetails(response);
       } else {
-        console.log("No data recieved for forms");
+        //console.log("No data recieved for forms");
       }
     } catch (error) {
-      console.log("Error at adding order", error);
+      //console.log("Error at adding order", error);
     }
   };
 
   const currentActiveListings = async () => {
     try {
       const response = await axios.post(
-        "  https://api.khana.me/api/v1/order/active-listings-for-donor",
+        "  https://khana.me/api/v1/order/active-listings-for-donor",
         {
           _id: userDetails._id,
         },
@@ -176,11 +176,11 @@ const Donor = () => {
           withCredentials: true, // Send cookies with the request
         }
       );
-      console.log(response.data.data);
+      //console.log(response.data.data);
       setActiveListings(response.data.data);
       // setActiveListings(response.data);
     } catch (error) {
-      console.log("Error at listing active orders", error);
+      //console.log("Error at listing active orders", error);
     }
   };
 
@@ -189,7 +189,7 @@ const Donor = () => {
   }, [recentOrderDetails]);
 
   const handleCancelDistribution = (index) => {
-    console.log("Cancel button clicked for index", index);
+    //console.log("Cancel button clicked for index", index);
     // Remove the item from pending distribution
     setActiveListings((prevItems) => prevItems.filter((_, i) => i !== index));
   };
@@ -238,7 +238,7 @@ const Donor = () => {
   const cancelOrderForDonor = async (_id) => {
     try {
       const response = await axios.post(
-        `  https://api.khana.me/api/v1/order/cancel-order-for-donor`,
+        `  https://khana.me/api/v1/order/cancel-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -246,7 +246,7 @@ const Donor = () => {
           withCredentials: true, // Include credentials (cookies) in the request
         }
       );
-      console.log("Successfully cancelled order:", response);
+      //console.log("Successfully cancelled order:", response);
       // setTopContributorsData(response.data.data.topTenDonators);
     } catch (error) {
       console.error("Error cancelling order for donor:", error);
@@ -256,7 +256,7 @@ const Donor = () => {
   const completeOrderForDonor = async (_id) => {
     try {
       const response = await axios.post(
-        `  https://api.khana.me/api/v1/order/completed-order-for-donor`,
+        `  https://khana.me/api/v1/order/completed-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -264,9 +264,9 @@ const Donor = () => {
           withCredentials: true, // Include credentials (cookies) in the request
         }
       );
-      console.log("Successfully completed order:", response);
+      //console.log("Successfully completed order:", response);
       increaseOrderPoints(_id);
-      currentActiveListings();//??? Yo duita lai call garera update garam vanera gareko
+      currentActiveListings(); //??? Yo duita lai call garera update garam vanera gareko
       getAllCompletedOrdersForDonor(); //??
       // setTopContributorsData(response.data.data.topTenDonators);
     } catch (error) {
@@ -274,10 +274,10 @@ const Donor = () => {
     }
   };
 
-  const increaseOrderPoints=async(_id)=>{
+  const increaseOrderPoints = async (_id) => {
     try {
       const response = await axios.post(
-        `  https://api.khana.me/api/v1/order/increaseOrderPoints`,
+        `  https://khana.me/api/v1/order/increaseOrderPoints`,
         {
           _orderId: _id,
         },
@@ -285,12 +285,11 @@ const Donor = () => {
           withCredentials: true, // Include credentials (cookies) in the request
         }
       );
-      console.log("Increased order points:", response);
+      //console.log("Increased order points:", response);
     } catch (error) {
       console.error("Error increasing  order points  for donor:", error);
-
     }
-  }
+  };
 
   return (
     <div className="flex dark:bg-[#121212]">
