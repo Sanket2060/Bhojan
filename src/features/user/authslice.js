@@ -10,7 +10,7 @@
       },
       reducers: {
         login: (state,action) => {
-          // console.log(action.payload);
+          console.log(action.payload);
           // console.log(action.payload.userDetails);
           //console.log(action.payload);
           state.isAuthenticated = true;
