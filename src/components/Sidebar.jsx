@@ -69,6 +69,9 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
             className={`mt-4 flex flex-col gap-4 justify-end right-0 dark:text-gray-200 ${
               !open && "hidden"
             }`}
+            className={`mt-4 flex flex-col gap-4 justify-end right-0 dark:text-gray-200 ${
+              !open && "hidden"
+            }`}
           >
             <div
               className="pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4 group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600 cursor-pointer"
@@ -89,7 +92,10 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 key={i}
                 className={` ${
                   menu?.margin &&
+                className={` ${
+                  menu?.margin &&
                   "pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4"
+                } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:text-gray-200 dark:hover:bg-stone-600`}
                 } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:text-gray-200 dark:hover:bg-stone-600`}
                 onClick={() => {
                   // e.preventDefault();
@@ -106,12 +112,17 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
               </div>
             ))}
           </div>
+          <NotificationManager />
           <h2
+            className={`whitespace-pre px-1 cursor-pointer ${
+              !open && "translate-x-28"
+            }`}
             className={`whitespace-pre px-1 cursor-pointer ${
               !open && "translate-x-28"
             }`}
             onClick={async () => {
               try {
+                navigate("/");
                 navigate("/");
                 const response = await axios.post(
                   " https://khana.me/api/v1/users/logout",
@@ -120,15 +131,17 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                     withCredentials: true, // Include credentials (cookies) in the request
                   }
                 );
+                );
                 // .then(response=>{
-                //console.log(response);
+                console.log(response);
                 // })
                 // .then(
+                dispatch(logout());
                 dispatch(logout());
                 // )
                 // Perform any additional actions after logout
               } catch (error) {
-                //console.log("Error at logging user out:", error);
+                console.log("Error at logging user out:", error);
               }
             }}
           >
@@ -150,10 +163,17 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
           className={`min-h-screen ${
             isOpen ? "w-72 bg-[#ddd4d4]" : " hidden"
           } duration-500 px-4 flex flex-col font-semibold p-1 overflow-y-auto fixed dark:bg-stone-800 `}
+          className={`min-h-screen ${
+            isOpen ? "w-72 bg-[#ddd4d4]" : " hidden"
+          } duration-500 px-4 flex flex-col font-semibold p-1 overflow-y-auto fixed dark:bg-stone-800 `}
         >
           <div className="  py-3 flex justify-between items-center">
             <Link
               to="/"
+              className={`font-bold text-xl cursor-pointer dark:text-gray-200 ${
+                !open && "hidden"
+              }`}
+              // onClick={handleToggle}
               className={`font-bold text-xl cursor-pointer dark:text-gray-200 ${
                 !open && "hidden"
               }`}
@@ -169,6 +189,9 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
           </div>
 
           <div
+            className={`mt-4 flex flex-col gap-4 dark:text-gray-200 relative ${
+              !open && "hidden"
+            }`}
             className={`mt-4 flex flex-col gap-4 dark:text-gray-200 relative ${
               !open && "hidden"
             }`}
@@ -193,10 +216,22 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                   key={i}
                   className={` ${
                     menu?.margin &&
+                  className={` ${
+                    menu?.margin &&
                     "pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4"
                   } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600`}
                   // onClick={(e)=>
+                  } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600`}
+                  // onClick={(e)=>
 
+                  // {
+                  // if (menu.name='Logout')
+                  // {
+                  //   window.reload()
+                  //   e.stopPropagation();
+                  //   console.log("logout called");
+                  // }
+                  // }}
                   // {
                   // if (menu.name='Logout')
                   // {
@@ -214,13 +249,18 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                   </h2>
                 </Link>
               ))}
+              <NotificationManager />
             </div>
             <h2
               className={`whitespace-pre px-1 cursor-pointer ${
                 !open && "translate-x-28"
               }`}
+              className={`whitespace-pre px-1 cursor-pointer ${
+                !open && "translate-x-28"
+              }`}
               onClick={async () => {
                 try {
+                  navigate("/");
                   navigate("/");
                   const response = await axios.post(
                     " https://khana.me/api/v1/users/logout",
@@ -229,15 +269,17 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                       withCredentials: true, // Include credentials (cookies) in the request
                     }
                   );
+                  );
                   // .then(response=>{
-                  //console.log(response);
+                  console.log(response);
                   // })
                   // .then(
+                  dispatch(logout());
                   dispatch(logout());
                   // )
                   // Perform any additional actions after logout
                 } catch (error) {
-                  //console.log("Error at logging user out:", error);
+                  console.log("Error at logging user out:", error);
                 }
               }}
             >
