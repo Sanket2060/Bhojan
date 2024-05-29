@@ -16,6 +16,7 @@ const Profile = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
+  const [rank, setRank] = useState("-");
   const [userData, setUserData] = useState({
     name: "",
     username: "",
@@ -29,7 +30,7 @@ const Profile = () => {
       try {
         if (userDetails) {
           const response = await axios.post(
-            `  https://khana.me/api/v1/getData/getdetailsfromname`,
+            `  http://localhost:9005/api/v1/getData/getdetailsfromname`,
             {
               name: userDetails?.name,
             }
@@ -54,10 +55,67 @@ const Profile = () => {
     fetchData();
   }, []);
 
+  if (userDetails?.isDonor) {
+    useEffect(() => {
+      const getUsersRank = async () => {
+        try {
+          if (userDetails) {
+            const response = await axios.get(
+              `  http://localhost:9005/api/v1/getData/getDonorsRank`,
+              {
+                username: userDetails?.username,
+              }
+            );
+            console.log(response);
+            const rank = response.data.data;
+            console.log("rank:", rank);
+
+            if (rank > 10) {
+              setRank("-");
+            } else {
+              setRank(rank);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching user's rank:", error);
+        }
+      };
+
+      getUsersRank();
+    }, []);
+  } else {
+    useEffect(() => {
+      const getUsersRank = async () => {
+        try {
+          if (userDetails) {
+            const response = await axios.get(
+              `  http://localhost:9005/api/v1/getData/getDistributorsRank`,
+              {
+                username: userDetails?.username,
+              }
+            );
+
+            const rank = response.data.data;
+            console.log("rank:", rank);
+            console.log(rank);
+            if (rank > 10) {
+              setRank("-");
+            } else {
+              setRank(rank);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching user's rank:", error);
+        }
+      };
+
+      getUsersRank();
+    }, []);
+  }
   // const [userUpload,setUserUpload]=useState(avater);
-  useEffect(() => {
-    //console.log(userData.avatar);
-  }, [userData.avatar]);
+  // useEffect(() => {
+  //   console.log(userData);
+  // }, [userData]);
   useEffect(() => {
     //console.log(userData.name);
   }, [userData.name]);
@@ -76,7 +134,7 @@ const Profile = () => {
           >
             <div className="mb-4 relative">
               <img
-                src={userData?.avatar || avatar}
+                src={userDetails?.avatar}
                 alt="profilepic"
                 id="profilepic"
                 className="w-40 h-40 mx-auto border-4 border-yellow-200 my-3 rounded-full relative shadow-2xl top-[-7rem] md:top-[-10rem] self-center"
@@ -115,9 +173,9 @@ const Profile = () => {
             <div className="relative top-[-8rem]">
               <ProfileAccomplishment
                 totalFoodSaved={500}
-                ourCommunity={200}
-                totalPeopleServed={800}
-                totalFoodSavedText="Food Saved"
+                ourCommunity={1000}
+                totalPeopleServed={userDetails?.numberOfPeopleFeed}
+                totalPoints="Total Points"
                 ourCommunityText="Rank"
                 totalPeopleServedText="People Served"
               />
