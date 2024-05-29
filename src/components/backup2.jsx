@@ -30,7 +30,6 @@
 //   const [isBlurred, setIsBlurred] = useState(true);
 //   const [showModal, setShowModal] = useState(false);
 
-
 //   useEffect(() => {
 //     // Simulate loading delay
 //     setTimeout(() => {
@@ -74,8 +73,8 @@
 //     addDistributorToOrder();
 //     // getUsersPendingDistributions();
 //     retainAllData();
-//     setIsBlurred(false); 
-//     setShowModal(true); 
+//     setIsBlurred(false);
+//     setShowModal(true);
 //     return;
 //     // }
 //   };
@@ -97,11 +96,10 @@
 //     setShowModal(false);
 //   };
 
-
 //   const addDistributorToOrder = async () => {
 //     try {
 //       const response = await axios.post(
-//         "  https://api.khana.me/api/v1/order/add-distributor-to-order",
+//         "  https://khana.me/api/v1/order/add-distributor-to-order",
 //         {
 //           _id: userDetails._id,
 //           _orderId: item._id, //yei nai ho sure??

@@ -15,7 +15,7 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
   };
   const handleRecaptchaChange = (value) => {
     setCapVal(value);
-    console.log("reCAPTCHA value:", value);
+    //console.log("reCAPTCHA value:", value);
   };
   const [isRecaptchaLoaded, setIsRecaptchaLoaded] = useState(false);
   const [capVal, setCapVal] = useState(null);
@@ -87,7 +87,7 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
     // }
 
     // console.log("Time Difference in Minutes:", timeDifference);
-    console.log(formData);
+    //console.log(formData);
     // e.preventDefault();
     onFormSubmit(formData);
     setFormData({
@@ -249,9 +249,9 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
               </div>
 
               <div className="flex justify-center items-center mb-4">
-                {localStorage.theme === "dark"
-                  ? console.log("darktheme")
-                  : console.log("lighttheme")}
+                {/* {localStorage.theme === "dark"
+                  ? //console.log("darktheme")
+                  : //console.log("lighttheme")} */}
                 {isRecaptchaLoaded ? (
                   <ReCAPTCHA
                     sitekey="6LeVh08pAAAAAGFv8aKqbVg0H5X5FpZi5XhZPHUo"

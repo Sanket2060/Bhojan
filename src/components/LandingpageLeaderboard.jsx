@@ -4,7 +4,7 @@ const LandingpageLeaderboard = ({ topContributors }) => {
   const [imageHeight, setImageHeight] = useState(null);
 
   useEffect(() => {
-    console.log("Image height:", imageHeight);
+    //console.log("Image height:", imageHeight);
   }, [imageHeight]);
 
   const handleImageLoad = (event) => {
