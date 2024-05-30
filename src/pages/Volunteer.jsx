@@ -1,15 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Sidebar } from "../components/Sidebar.jsx";
 import Accomplishment from "../components/Accomplishment.jsx";
-// import Accordion from "../components/Accordion.jsx";
 import AccordionItem from "../components/AccordionItem";
 import Footer from "../components/Footer";
 import axios from "axios";
-// import PendingDistributions from "../components/PendingDistributions";
 import WelcomeBack from "../components/WelcomeBack.jsx";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import ProfileAccomplishment from "../components/ProfileAccomplishment.jsx";
 
 //icons
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { MdOutlineDashboard } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import { TbReportAnalytics } from "react-icons/tb";
@@ -38,6 +37,33 @@ const Volunteer = () => {
       ref.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const [rank, setRank] = useState("-");
+  useEffect(() => {
+    const getUsersRank = async () => {
+      try {
+        if (userDetails) {
+          const endpoint = userDetails.isDonor
+            ? "http://localhost:9005/api/v1/getData/getDonorsRank"
+            : "http://localhost:9005/api/v1/getData/getDistributorsRank";
+          console.log("userDetails.username", userDetails?.username);
+          const response = await axios.post(endpoint, {
+            username: userDetails?.username,
+          });
+          console.log("response", response);
+          const rankValue = response.data.data.rank;
+          if (rankValue > 10) {
+            setRank("-");
+          } else {
+            setRank(rankValue);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user's rank:", error);
+      }
+    };
+
+    getUsersRank();
+  }, [userDetails]);
   const SidebarMenu = [
     { name: "Homepage", link: "/", icon: MdOutlineDashboard },
     { name: "User", link: "/profile", icon: AiOutlineUser },
@@ -339,13 +365,14 @@ const Volunteer = () => {
             </div>
           </div>
           <div id="accomplishment" className="justify-center pt-10 w-full">
-            <Accomplishment
+            <ProfileAccomplishment
               totalFoodSaved={500}
-              ourCommunity={1}
-              totalPeopleServed={800}
-              totalFoodSavedText="Total Food Saved"
-              ourCommunityText="Ranking"
-              totalPeopleServedText="Total People Served"
+              ourCommunity={1000}
+              totalPeopleServed={userDetails?.numberOfPeopleFeed}
+              totalPoints="Total Points"
+              rankText="Rank"
+              rank={rank}
+              totalPeopleServedText="People Served"
             />
           </div>
           <div>
