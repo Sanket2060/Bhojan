@@ -21,14 +21,14 @@ const Donor = () => {
   const [isDistribute, setIsDistribute] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
   const [completedListings, setCompletedListings] = useState([]);
-  const [rank,setRank]=useState('-');
+  const [rank, setRank] = useState("-");
   useEffect(() => {
     const getUsersRank = async () => {
       try {
         if (userDetails) {
           const endpoint = userDetails.isDonor
-            ? "http://localhost:9005/api/v1/getData/getDonorsRank"
-            : "http://localhost:9005/api/v1/getData/getDistributorsRank";
+            ? " https://khana.me/api/v1/getData/getDonorsRank"
+            : " https://khana.me/api/v1/getData/getDistributorsRank";
           console.log("userDetails.username", userDetails?.username);
           const response = await axios.post(endpoint, {
             username: userDetails?.username,
@@ -56,7 +56,7 @@ const Donor = () => {
     try {
       if (userDetails._id) {
         const response = await axios.post(
-          "  http://localhost:9005/api/v1/getData/getAllCompletedOrdersForDonor",
+          "   https://khana.me/api/v1/getData/getAllCompletedOrdersForDonor",
           {
             _id: userDetails._id,
           }
@@ -121,7 +121,7 @@ const Donor = () => {
     try {
       if (formData) {
         const response = await axios.post(
-          "http://localhost:9005/api/v1/order/create-order",
+          " https://khana.me/api/v1/order/create-order",
           {
             _id: userDetails._id,
             foodItems: formData.foodItem,
@@ -149,7 +149,7 @@ const Donor = () => {
   const currentActiveListings = async () => {
     try {
       const response = await axios.post(
-        "  http://localhost:9005/api/v1/order/active-listings-for-donor",
+        "   https://khana.me/api/v1/order/active-listings-for-donor",
         {
           _id: userDetails._id,
         },
@@ -222,7 +222,7 @@ const Donor = () => {
   const cancelOrderForDonor = async (_id) => {
     try {
       const response = await axios.post(
-        `  http://localhost:9005/api/v1/order/cancel-order-for-donor`,
+        `   https://khana.me/api/v1/order/cancel-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -240,7 +240,7 @@ const Donor = () => {
   const completeOrderForDonor = async (_id) => {
     try {
       const response = await axios.post(
-        `  http://localhost:9005/api/v1/order/completed-order-for-donor`,
+        `   https://khana.me/api/v1/order/completed-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -261,7 +261,7 @@ const Donor = () => {
   const increaseOrderPoints = async (_id) => {
     try {
       const response = await axios.post(
-        `  http://localhost:9005/api/v1/order/increaseOrderPoints`,
+        `   https://khana.me/api/v1/order/increaseOrderPoints`,
         {
           _orderId: _id,
         },
@@ -362,15 +362,15 @@ const Donor = () => {
           </div>
           <hr className="w-full h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
           <div id="Accomplishment">
-          <ProfileAccomplishment
-                totalFoodSaved={500}
-                ourCommunity={1000}
-                totalPeopleServed={userDetails?.numberOfPeopleFeed}
-                totalPoints="Total Points"
-                rankText="Rank"
-                rank={rank}
-                totalPeopleServedText="People Served"
-              />
+            <ProfileAccomplishment
+              totalFoodSaved={500}
+              ourCommunity={1000}
+              totalPeopleServed={userDetails?.numberOfPeopleFeed}
+              totalPoints="Total Points"
+              rankText="Rank"
+              rank={rank}
+              totalPeopleServedText="People Served"
+            />
           </div>
         </div>
       </div>

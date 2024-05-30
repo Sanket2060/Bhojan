@@ -23,15 +23,13 @@ const Profile = () => {
       try {
         if (userDetails) {
           const endpoint = userDetails.isDonor
-            ? "http://localhost:9005/api/v1/getData/getDonorsRank"
-            : "http://localhost:9005/api/v1/getData/getDistributorsRank";
-          console.log("userDetails.username",userDetails?.username);
-          const response = await axios.post(endpoint,
-            {               
+            ? " https://khana.me/api/v1/getData/getDonorsRank"
+            : " https://khana.me/api/v1/getData/getDistributorsRank";
+          console.log("userDetails.username", userDetails?.username);
+          const response = await axios.post(endpoint, {
             username: userDetails?.username,
-            }
-          );
-          console.log("response",response);
+          });
+          console.log("response", response);
           const rankValue = response.data.data.rank;
           if (rankValue > 10) {
             setRank("-");
@@ -47,9 +45,9 @@ const Profile = () => {
     getUsersRank();
   }, [userDetails]);
 
-  useEffect(()=>{
-    console.log("rank",rank);
-  },[rank])
+  useEffect(() => {
+    console.log("rank", rank);
+  }, [rank]);
 
   return (
     <div className="dark:bg-[#121212]">
