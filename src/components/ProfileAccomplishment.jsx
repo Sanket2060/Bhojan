@@ -7,9 +7,10 @@ const ProfileAccomplishment = ({
   totalFoodSaved: initialTotalFoodSaved,
   ourCommunity: initialOurCommunity,
   totalPeopleServed: initialTotalPeopleServed,
-  totalFoodSavedText,
-  ourCommunityText,
+  totalPoints,
+  rankText,
   totalPeopleServedText,
+  rank
 }) => {
   const [totalFoodSaved, setTotalFoodSaved] = useState(0);
   const [ourCommunity, setOurCommunity] = useState(0);
@@ -72,13 +73,13 @@ const ProfileAccomplishment = ({
         <div className="flex flex-row justify-center gap-4">
           <div className="flex flex-col m-auto text-sm">
             <div className="flex flex-col m-auto">
-              <p className="text-lg font-bold">{totalPeopleServed}</p>
-              <p>{totalPeopleServedText}</p>
+              <p className="text-lg font-bold">{totalPeopleServed*5}</p>
+              <p>{totalPoints}</p>
             </div>
           </div>
           <div className="flex flex-col m-auto">
-            <p className="text-lg font-bold">{ourCommunity}</p>
-            <p>{ourCommunityText}</p>
+            <p className="text-lg font-bold">{rank}</p>
+            <p>{rankText}</p>
           </div>
           <div className="flex flex-col m-auto">
             <p className="text-lg font-bold">{totalPeopleServed}</p>

@@ -5,7 +5,7 @@ export const fetchUserData = (navigate) => {
     try {
       //console.log("Tried reloading the page");
       const response = await axios.get(
-        "https://khana.me/api/v1/getData/getUserDetails",
+        " https://khana.me/api/v1/getData/getUserDetails",
         {
           withCredentials: true,
         }

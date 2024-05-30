@@ -7,7 +7,7 @@ import DonorForm from "../components/DonorForm.jsx";
 // import PendingDistributions from "../components/PendingDistributions";
 import HowToDonate from "../components/HowToDonate";
 import DistributionTable from "../components/DistributionTable";
-
+import ProfileAccomplishment from "../components/ProfileAccomplishment.jsx";
 //icons
 import { MdOutlineDashboard } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
@@ -17,33 +17,37 @@ import { FiFolder } from "react-icons/fi";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-// import { useNavigate } from "react-router-dom";
-// const navigate = useNavigate();
-
-// const handleLogout = () => {
-//   // logout logic
-
-//   navigate("/login");
-// };
-
 const Donor = () => {
   const [isDistribute, setIsDistribute] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
   const [completedListings, setCompletedListings] = useState([]);
-  // const logoutUser=()=>{
-  //   console.log("Logout is clicked");
-  //   // if (userDetails._id){
-  //     try {
-  //       const response=axios.post('  https://khana.me/api/v1/users/logout',{
-  //         withCredentials: true, // Include credentials (cookies) in the request
-  //       });
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.log("Error:",error);
-  //     }
-  //   // }
-  // }
-  //fetch all pending distributions and completed distributions
+  const [rank, setRank] = useState("-");
+  useEffect(() => {
+    const getUsersRank = async () => {
+      try {
+        if (userDetails) {
+          const endpoint = userDetails.isDonor
+            ? " https://khana.me/api/v1/getData/getDonorsRank"
+            : " https://khana.me/api/v1/getData/getDistributorsRank";
+          console.log("userDetails.username", userDetails?.username);
+          const response = await axios.post(endpoint, {
+            username: userDetails?.username,
+          });
+          console.log("response", response);
+          const rankValue = response.data.data.rank;
+          if (rankValue > 10) {
+            setRank("-");
+          } else {
+            setRank(rankValue);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user's rank:", error);
+      }
+    };
+
+    getUsersRank();
+  }, [userDetails]);
   useEffect(() => {
     currentActiveListings();
     getAllCompletedOrdersForDonor();
@@ -52,7 +56,7 @@ const Donor = () => {
     try {
       if (userDetails._id) {
         const response = await axios.post(
-          "  https://khana.me/api/v1/getData/getAllCompletedOrdersForDonor",
+          "   https://khana.me/api/v1/getData/getAllCompletedOrdersForDonor",
           {
             _id: userDetails._id,
           }
@@ -88,26 +92,6 @@ const Donor = () => {
       icon: AiOutlineHeart,
       margin: true,
     },
-    // {
-    //   name: "Logout",
-    //   link: "/",
-    //   icon: FiLogOut,
-    //   margin: true,
-    //   onClick: async () => {
-    //     try {
-    //       const response = await axios.post(
-    //         "  https://khana.me/api/v1/users/logout",
-    //         {
-    //           withCredentials: true, // Include credentials (cookies) in the request
-    //         }
-    //       );
-    //       console.log(response);
-    //       // Perform any additional actions after logout
-    //     } catch (error) {
-    //       console.log("Error:", error);
-    //     }
-    //   },
-    // },
   ];
 
   const [submittedItems, setSubmittedItems] = useState([]);
@@ -137,7 +121,7 @@ const Donor = () => {
     try {
       if (formData) {
         const response = await axios.post(
-          "https://khana.me/api/v1/order/create-order",
+          " https://khana.me/api/v1/order/create-order",
           {
             _id: userDetails._id,
             foodItems: formData.foodItem,
@@ -165,7 +149,7 @@ const Donor = () => {
   const currentActiveListings = async () => {
     try {
       const response = await axios.post(
-        "  https://khana.me/api/v1/order/active-listings-for-donor",
+        "   https://khana.me/api/v1/order/active-listings-for-donor",
         {
           _id: userDetails._id,
         },
@@ -238,7 +222,7 @@ const Donor = () => {
   const cancelOrderForDonor = async (_id) => {
     try {
       const response = await axios.post(
-        `  https://khana.me/api/v1/order/cancel-order-for-donor`,
+        `   https://khana.me/api/v1/order/cancel-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -256,7 +240,7 @@ const Donor = () => {
   const completeOrderForDonor = async (_id) => {
     try {
       const response = await axios.post(
-        `  https://khana.me/api/v1/order/completed-order-for-donor`,
+        `   https://khana.me/api/v1/order/completed-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -277,7 +261,7 @@ const Donor = () => {
   const increaseOrderPoints = async (_id) => {
     try {
       const response = await axios.post(
-        `  https://khana.me/api/v1/order/increaseOrderPoints`,
+        `   https://khana.me/api/v1/order/increaseOrderPoints`,
         {
           _orderId: _id,
         },
@@ -378,13 +362,14 @@ const Donor = () => {
           </div>
           <hr className="w-full h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
           <div id="Accomplishment">
-            <Accomplishment
+            <ProfileAccomplishment
               totalFoodSaved={500}
-              ourCommunity={1}
-              totalPeopleServed={800}
-              totalFoodSavedText="Total Food Saved"
-              ourCommunityText="Ranking"
-              totalPeopleServedText="Total People Served"
+              ourCommunity={1000}
+              totalPeopleServed={userDetails?.numberOfPeopleFeed}
+              totalPoints="Total Points"
+              rankText="Rank"
+              rank={rank}
+              totalPeopleServedText="People Served"
             />
           </div>
         </div>

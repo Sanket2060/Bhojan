@@ -10,3 +10,7 @@ shadcn ui
 Problems:
 -cookie ma problem xa->Cookie null xa
 -Frontend validation navai backend(api) call vayo
+
+
+To be learnt:
+-solving vulnerabilities on installing npm packages
