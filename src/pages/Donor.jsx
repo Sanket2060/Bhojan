@@ -27,8 +27,8 @@ const Donor = () => {
       try {
         if (userDetails) {
           const endpoint = userDetails.isDonor
-            ? " https://khana.me/api/v1/getData/getDonorsRank"
-            : " https://khana.me/api/v1/getData/getDistributorsRank";
+            ? "  https://khana.me/api/v1/getData/getDonorsRank"
+            : "  https://khana.me/api/v1/getData/getDistributorsRank";
           console.log("userDetails.username", userDetails?.username);
           const response = await axios.post(endpoint, {
             username: userDetails?.username,
@@ -56,7 +56,7 @@ const Donor = () => {
     try {
       if (userDetails._id) {
         const response = await axios.post(
-          "   https://khana.me/api/v1/getData/getAllCompletedOrdersForDonor",
+          "    https://khana.me/api/v1/getData/getAllCompletedOrdersForDonor",
           {
             _id: userDetails._id,
           }
@@ -121,7 +121,7 @@ const Donor = () => {
     try {
       if (formData) {
         const response = await axios.post(
-          " https://khana.me/api/v1/order/create-order",
+          "  https://khana.me/api/v1/order/create-order",
           {
             _id: userDetails._id,
             foodItems: formData.foodItem,
@@ -149,7 +149,7 @@ const Donor = () => {
   const currentActiveListings = async () => {
     try {
       const response = await axios.post(
-        "   https://khana.me/api/v1/order/active-listings-for-donor",
+        " https://khana.me/api/v1/order/active-listings-for-donor",
         {
           _id: userDetails._id,
         },
@@ -164,7 +164,7 @@ const Donor = () => {
       setActiveListings(response.data.data);
       // setActiveListings(response.data);
     } catch (error) {
-      //console.log("Error at listing active orders", error);
+      console.log("Error at listing active orders", error);
     }
   };
 
@@ -222,7 +222,7 @@ const Donor = () => {
   const cancelOrderForDonor = async (_id) => {
     try {
       const response = await axios.post(
-        `   https://khana.me/api/v1/order/cancel-order-for-donor`,
+        `    https://khana.me/api/v1/order/cancel-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -239,8 +239,9 @@ const Donor = () => {
 
   const completeOrderForDonor = async (_id) => {
     try {
+      console.log("complete order for donor reached");
       const response = await axios.post(
-        `   https://khana.me/api/v1/order/completed-order-for-donor`,
+        `    https://khana.me/api/v1/order/completed-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -254,14 +255,15 @@ const Donor = () => {
       getAllCompletedOrdersForDonor(); //??
       // setTopContributorsData(response.data.data.topTenDonators);
     } catch (error) {
-      console.error("Error completing order for donor:", error);
+      console.log("Error completing order for donor:", error);
     }
   };
 
   const increaseOrderPoints = async (_id) => {
     try {
+      console.log("reached increase order points");
       const response = await axios.post(
-        `   https://khana.me/api/v1/order/increaseOrderPoints`,
+        ` https://khana.me/api/v1/order/increaseOrderPoints`,
         {
           _orderId: _id,
         },
@@ -269,7 +271,7 @@ const Donor = () => {
           withCredentials: true, // Include credentials (cookies) in the request
         }
       );
-      //console.log("Increased order points:", response);
+      console.log("Increased order points:", response);
     } catch (error) {
       console.error("Error increasing  order points  for donor:", error);
     }
@@ -340,6 +342,7 @@ const Donor = () => {
               completeOrder={completeOrderForDonor}
               getCompletedOrders={getAllCompletedOrdersForDonor}
               currentActiveListings={currentActiveListings}
+              increaseOrderPoints={increaseOrderPoints}
             />
 
             {/* <button
