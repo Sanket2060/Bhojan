@@ -18,6 +18,7 @@ const DistributionTable = ({
   allCompletedOrdersForDonor,
   getCompletedOrders,
   currentActiveListings,
+  increaseOrderPoints,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
@@ -123,6 +124,7 @@ const DistributionTable = ({
   const onConfirmComplete = async () => {
     if (onCompleteProp && completedItemIndex !== null) {
       try {
+        console.log("reached complete order for donor");
         const response = await axios.post(
           `   https://khana.me/api/v1/order/completed-order-for-donor`,
           {
@@ -132,15 +134,16 @@ const DistributionTable = ({
             withCredentials: true, // Include credentials (cookies) in the request
           }
         );
+        await increaseOrderPoints(completingItemOrderId);
         //console.log(response);
       } catch (error) {
-        //console.log("Can't complete order for donor", error);
+        console.log("Can't complete order for donor", error);
       }
       try {
         await getCompletedOrders();
         await currentActiveListings();
       } catch (error) {
-        //console.log("Data fetched yet can't bring changes to ui", error);
+        console.log("Data fetched yet can't bring changes to ui", error);
       }
       onCompleteProp(pendingItems[completedItemIndex]); //yo narakhe yo vanda pailako item lai complete gariraxa
       toast.success("Distribution Completed");
