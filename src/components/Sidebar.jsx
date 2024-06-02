@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IoMdSunny, IoMdMoon } from "react-icons/io";
-import { logout } from "../features/user/authSlice";
+import { logout } from "../features/user/authslice";
 
 export const Sidebar = ({ menus, handleToggle, isOpen }) => {
   const [isMobile, setIsMobile] = useState(false);
