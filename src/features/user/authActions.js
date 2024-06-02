@@ -1,5 +1,5 @@
 import axios from "axios";
-import { login, logout } from "./authSlice.js";
+import { login, logout } from "./authslice.js";
 export const fetchUserData = (navigate) => {
   return async (dispatch, useSelector) => {
     try {
