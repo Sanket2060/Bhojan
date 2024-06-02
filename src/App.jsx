@@ -20,7 +20,7 @@ import HelpUs from "./pages/HelpUs";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { logout } from "/src/features/user/authSlice.js";
+import { logout } from "./features/user/authslice.js";
 import { fetchUserData } from "./features/user/authActions.js";
 const App = () => {
   const navigate = useNavigate();
