@@ -80,12 +80,6 @@ const Volunteer = () => {
       icon: AiOutlineHeart,
       margin: true,
     },
-    {
-      name: "Logout",
-      link: "/",
-      icon: FiLogOut,
-      margin: true,
-    },
   ];
 
   // const userName = "John";
