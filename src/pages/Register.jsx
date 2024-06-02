@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { login } from "../features/user/authSlice";
+import { login } from "../features/user/authslice";
 const Register = () => {
   const { register, handleSubmit, formState, watch } = useForm();
   const { errors } = formState;
