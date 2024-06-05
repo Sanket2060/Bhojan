@@ -126,7 +126,7 @@ const DistributionTable = ({
       try {
         console.log("reached complete order for donor");
         const response = await axios.post(
-          `    https://khana.me/api/v1/order/completed-order-for-donor`,
+          `   https://khana.me/api/v1/order/completed-order-for-donor`,
           {
             _orderId: completingItemOrderId,
           },
@@ -135,9 +135,13 @@ const DistributionTable = ({
           }
         );
         await increaseOrderPoints(completingItemOrderId);
+        toast.success("Order completed successfully");
         //console.log(response);
       } catch (error) {
         console.log("Can't complete order for donor", error);
+        toast.error(
+          "Can't complete order for donor,No Distributor assigned yet"
+        );
       }
       try {
         await getCompletedOrders();
@@ -146,7 +150,7 @@ const DistributionTable = ({
         console.log("Data fetched yet can't bring changes to ui", error);
       }
       onCompleteProp(pendingItems[completedItemIndex]); //yo narakhe yo vanda pailako item lai complete gariraxa
-      toast.success("Distribution Completed");
+      // toast.success("Distribution Completed");
     }
     setCompleteConfirmationOpen(false);
   };

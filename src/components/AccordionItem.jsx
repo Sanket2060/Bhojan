@@ -153,7 +153,7 @@ function AccordionItem({
   const addDistributorToOrder = async () => {
     try {
       const response = await axios.post(
-        "    https://khana.me/api/v1/order/add-distributor-to-order",
+        "   https://khana.me/api/v1/order/add-distributor-to-order",
         {
           _id: userDetails._id,
           _orderId: item._id, //yei nai ho sure??

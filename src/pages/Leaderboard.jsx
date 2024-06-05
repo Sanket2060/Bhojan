@@ -22,15 +22,18 @@ const Leaderboard = () => {
       const donorDataResponse = await axios.get(
         "https://khana.me/api/v1/getData/get-top-donors"
       );
-      setDonorData(donorDataResponse.data.data.topTenDonators);
+      console.log("donorDataResponse", donorDataResponse);
+      setDonorData(donorDataResponse?.data?.data?.topTenDonators);
 
       const distributorDataResponse = await axios.get(
-        "    https://khana.me/api/v1/getData/get-top-distributors"
+        "   https://khana.me/api/v1/getData/get-top-distributors"
       );
-      //console.log("Distributor data response", distributorDataResponse);
-      setDistributorData(distributorDataResponse.data.data.topTenDistributors);
+      console.log("Distributor data response", distributorDataResponse);
+      setDistributorData(
+        distributorDataResponse?.data?.data?.topTenDistributors
+      );
     } catch (error) {
-      //console.log(error);
+      console.log(error);
     }
   };
 
