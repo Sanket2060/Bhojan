@@ -222,7 +222,30 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 </Link>
               ))}
             </div>
-            <div className="pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4 group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600 cursor-pointer">
+            <div className="pt-5 mt-2 border-t border-[#bca4a4] md:border-spacing-4 group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-white rounded-md dark:hover:text-white dark:hover:bg-stone-600 cursor-pointer"
+            onClick={async () => {
+              try {
+                navigate("/");
+                const response = await axios.post(
+                  "   http://localhost:9005/api/v1/users/logout",
+
+                  {},
+                  {
+                    withCredentials: true, // Include credentials (cookies) in the request
+                  }
+                );
+                // .then(response=>{
+                //console.log(response);
+                // })
+                // .then(
+                dispatch(logout());
+                // )
+                // Perform any additional actions after logout
+              } catch (error) {
+                //console.log("Error at logging user out:", error);
+              }
+            }}
+            >
               <div>
                 <FiLogOut size={18} />
               </div>
@@ -230,28 +253,6 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 className={`whitespace-pre px-1 cursor-pointer ${
                   !open && "translate-x-28"
                 }`}
-                onClick={async () => {
-                  try {
-                    navigate("/");
-                    const response = await axios.post(
-                      "   http://localhost:9005/api/v1/users/logout",
-
-                      {},
-                      {
-                        withCredentials: true, // Include credentials (cookies) in the request
-                      }
-                    );
-                    // .then(response=>{
-                    //console.log(response);
-                    // })
-                    // .then(
-                    dispatch(logout());
-                    // )
-                    // Perform any additional actions after logout
-                  } catch (error) {
-                    //console.log("Error at logging user out:", error);
-                  }
-                }}
               >
                 Logout
               </h2>
