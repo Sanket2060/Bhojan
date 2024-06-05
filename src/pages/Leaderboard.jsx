@@ -20,13 +20,13 @@ const Leaderboard = () => {
   const getLeaderboardData = async () => {
     try {
       const donorDataResponse = await axios.get(
-        "https://khana.me/api/v1/getData/get-top-donors"
+        "http://localhost:9005/api/v1/getData/get-top-donors"
       );
       console.log("donorDataResponse", donorDataResponse);
       setDonorData(donorDataResponse?.data?.data?.topTenDonators);
 
       const distributorDataResponse = await axios.get(
-        "   https://khana.me/api/v1/getData/get-top-distributors"
+        "   http://localhost:9005/api/v1/getData/get-top-distributors"
       );
       console.log("Distributor data response", distributorDataResponse);
       setDistributorData(

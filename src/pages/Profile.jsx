@@ -23,8 +23,8 @@ const Profile = () => {
       try {
         if (userDetails) {
           const endpoint = userDetails.isDonor
-            ? " https://khana.me/api/v1/getData/getDonorsRank"
-            : " https://khana.me/api/v1/getData/getDistributorsRank";
+            ? " http://localhost:9005/api/v1/getData/getDonorsRank"
+            : " http://localhost:9005/api/v1/getData/getDistributorsRank";
           console.log("userDetails.username", userDetails?.username);
           const response = await axios.post(endpoint, {
             username: userDetails?.username,

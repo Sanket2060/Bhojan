@@ -43,8 +43,8 @@ const Volunteer = () => {
       try {
         if (userDetails) {
           const endpoint = userDetails.isDonor
-            ? " https://khana.me/api/v1/getData/getDonorsRank"
-            : " https://khana.me/api/v1/getData/getDistributorsRank";
+            ? " http://localhost:9005/api/v1/getData/getDonorsRank"
+            : " http://localhost:9005/api/v1/getData/getDistributorsRank";
           console.log("userDetails.username", userDetails?.username);
           const response = await axios.post(endpoint, {
             username: userDetails?.username,
@@ -78,12 +78,6 @@ const Volunteer = () => {
       name: "Difference you made",
       link: "#accomplishment",
       icon: AiOutlineHeart,
-      margin: true,
-    },
-    {
-      name: "Logout",
-      link: "/",
-      icon: FiLogOut,
       margin: true,
     },
   ];
@@ -162,7 +156,7 @@ const Volunteer = () => {
   const currentActiveListings = async () => {
     try {
       const response = await axios.get(
-        "   https://khana.me/api/v1/getData/active-listings",
+        "   http://localhost:9005/api/v1/getData/active-listings",
         {},
         {}
       );
@@ -184,7 +178,7 @@ const Volunteer = () => {
   const getUsersPendingDistributions = async () => {
     try {
       const response = await axios.post(
-        "   https://khana.me/api/v1/order/pending-listings-for-distributor",
+        "   http://localhost:9005/api/v1/order/pending-listings-for-distributor",
         {
           _id: userDetails._id,
         },
@@ -216,7 +210,7 @@ const Volunteer = () => {
   const cancelOrderForDistributor = async (_id) => {
     try {
       const response = await axios.post(
-        `   https://khana.me/api/v1/order/cancel-order-for-distributor`,
+        `   http://localhost:9005/api/v1/order/cancel-order-for-distributor`,
         {
           _orderId: _id,
         },
