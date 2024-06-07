@@ -45,7 +45,7 @@ function AccordionItem({
       countdownInterval = setInterval(() => {
         setCountdown((prevCountdown) => prevCountdown - 1);
       }, 1000);
-      toast.success("Reserved for 5 min");
+      // toast.success("Reserved for 5 min");
     }
 
     return () => {
@@ -77,7 +77,7 @@ function AccordionItem({
 
     // getUsersPendingDistributions();
     retainAllData();
-    toast.success("Alerted Donor - Pending Distribution");
+    // toast.success("Alerted Donor - Pending Distribution");
     return;
   };
 

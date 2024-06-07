@@ -85,13 +85,6 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
     // console.log("Time Difference in Minutes:", timeDifference);
     //console.log(formData);
     // e.preventDefault();
-    onFormSubmit(formData);
-    setFormData({
-      title: "",
-      foodItem: "",
-      quantity: "",
-      expirationTime: "",
-    });
     if (!formData.title.trim()) {
       toast.error("Title is required");
       return;
@@ -110,13 +103,13 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
       toast.error("Quantity must be a positive number");
       return;
     }
-    if (formData.quantity == 69 || formData.expirationTime == 69) {
-      toast.error("69 halera funny vaidaina");
-      return;
-    } else if (formData.quantity == 420 || formData.expirationTime == 420) {
-      toast.error("420 halera funny vaidaina");
-      return;
-    }
+    // if (formData.quantity == 69 || formData.expirationTime == 69) {
+    //   toast.error("69 halera funny vaidaina");
+    //   return;
+    // } else if (formData.quantity == 420 || formData.expirationTime == 420) {
+    //   toast.error("420 halera funny vaidaina");
+    //   return;
+    // }
 
     if (!formData.expirationTime) {
       toast.error("Expiration time is required");
@@ -126,6 +119,13 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
       toast.error("reCAPTCHA validation failed");
       return;
     }
+    onFormSubmit(formData);
+    setFormData({
+      title: "",
+      foodItem: "",
+      quantity: "",
+      expirationTime: "",
+    });
 
     try {
       setLoading(true);
@@ -232,7 +232,7 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
                   {...register("expirationTime", {
                     required: "Expiration time is required",
                   })}
-                  value={formData.closingTime}
+                  value={formData.expirationTime}
                   className="mt-1 p-2 w-full border rounded-md dark:bg-gray-700 dark:border-[#181c1c] dark:text-gray-100 focus:outline-none focus:ring focus:border-blue-300"
                   required
                   onChange={handleInputChange}
