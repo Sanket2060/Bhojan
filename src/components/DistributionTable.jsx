@@ -126,7 +126,7 @@ const DistributionTable = ({
       try {
         console.log("reached complete order for donor");
         const response = await axios.post(
-          `    https://khana.me/api/v1/order/completed-order-for-donor`,
+          `    https://bhojanbd-1.onrender.com/api/v1/order/completed-order-for-donor`,
           {
             _orderId: completingItemOrderId,
           },

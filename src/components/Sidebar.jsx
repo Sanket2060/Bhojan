@@ -119,7 +119,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 try {
                   navigate("/");
                   const response = await axios.post(
-                    "   https://khana.me/api/v1/users/logout",
+                    "   https://bhojanbd-1.onrender.com/api/v1/users/logout",
 
                     {},
                     {
@@ -234,7 +234,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                   try {
                     navigate("/");
                     const response = await axios.post(
-                      "   https://khana.me/api/v1/users/logout",
+                      "   https://bhojanbd-1.onrender.com/api/v1/users/logout",
 
                       {},
                       {
