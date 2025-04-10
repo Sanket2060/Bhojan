@@ -19,7 +19,7 @@ const LandingPage = () => {
   const getTopDonatorsDataFunc = async () => {
     try {
       const response = await axios.get(
-        `    https://khana.me/api/v1/getData/get-top-donors`
+        `    https://bhojanbd-1.onrender.com/api/v1/getData/get-top-donors`
       );
       //console.log(response);
       const users = response.data.data;
@@ -32,7 +32,7 @@ const LandingPage = () => {
   const getOrganizationDetails = async () => {
     try {
       const response = await axios.get(
-        `    https://khana.me/api/v1/getData/getOrganizationDetails`
+        `    https://bhojanbd-1.onrender.com/api/v1/getData/getOrganizationDetails`
       );
       console.log(response);
       const bhojan = response.data.data.bhojan;
