@@ -83,7 +83,7 @@ const UserProfileForm = () => {
   return (
     <>
       {isEditing && (
-        <div className="flex justify-center items-center md:h-[74vh] md:w-[80%] m-auto relative shadow-2xl overflow-hidden ">
+        <div className="flex justify-center items-center md:h-[74vh] md:w-[80%] m-auto relative shadow-2xl overflow-hidden dark:bg-[#282828]">
           <form
             className="max-w-96 "
             action=""
@@ -95,7 +95,10 @@ const UserProfileForm = () => {
           >
             <div className="relative p-4 md:p-0 grid gap-y-2">
               <div>
-                <label for="name" className="font-normal text-sm ml-2">
+                <label
+                  for="name"
+                  className="font-normal text-sm ml-2 dark:text-white"
+                >
                   Name:
                 </label>
 
@@ -121,7 +124,10 @@ const UserProfileForm = () => {
               </div>
 
               <div>
-                <label htmlFor="username" className="font-normal text-sm ml-2">
+                <label
+                  htmlFor="username"
+                  className="font-normal text-sm ml-2 dark:text-white"
+                >
                   Username:
                 </label>
                 <input
@@ -133,7 +139,10 @@ const UserProfileForm = () => {
               </div>
 
               <div>
-                <label for="email" className="font-normal text-sm ml-2">
+                <label
+                  for="email"
+                  className="font-normal text-sm ml-2 dark:text-white"
+                >
                   Email:
                 </label>
 
@@ -148,7 +157,10 @@ const UserProfileForm = () => {
               </div>
 
               <div>
-                <label for="address" className="font-normal text-sm ml-2">
+                <label
+                  for="address"
+                  className="font-normal text-sm ml-2 dark:text-white"
+                >
                   Address:
                 </label>
                 <input
@@ -170,7 +182,10 @@ const UserProfileForm = () => {
               </div>
 
               <div>
-                <label for="contno" className="font-normal text-sm ml-2">
+                <label
+                  for="contno"
+                  className="font-normal text-sm ml-2 dark:text-white"
+                >
                   {" "}
                   Contact Number:
                 </label>
