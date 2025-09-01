@@ -1,15 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Sidebar } from "../components/Sidebar.jsx";
 import Accomplishment from "../components/Accomplishment.jsx";
-// import Accordion from "../components/Accordion.jsx";
 import AccordionItem from "../components/AccordionItem";
 import Footer from "../components/Footer";
 import axios from "axios";
-// import PendingDistributions from "../components/PendingDistributions";
 import WelcomeBack from "../components/WelcomeBack.jsx";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import ProfileAccomplishment from "../components/ProfileAccomplishment.jsx";
 
 //icons
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { MdOutlineDashboard } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import { TbReportAnalytics } from "react-icons/tb";
@@ -38,6 +37,33 @@ const Volunteer = () => {
       ref.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const [rank, setRank] = useState("-");
+  useEffect(() => {
+    const getUsersRank = async () => {
+      try {
+        if (userDetails) {
+          const endpoint = userDetails.isDonor
+            ? "  https://bhojanbd-1.onrender.com/api/v1/getData/getDonorsRank"
+            : "  https://bhojanbd-1.onrender.com/api/v1/getData/getDistributorsRank";
+          console.log("userDetails.username", userDetails?.username);
+          const response = await axios.post(endpoint, {
+            username: userDetails?.username,
+          });
+          console.log("response", response);
+          const rankValue = response.data.data.rank;
+          if (rankValue > 10) {
+            setRank("-");
+          } else {
+            setRank(rankValue);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user's rank:", error);
+      }
+    };
+
+    getUsersRank();
+  }, [userDetails]);
   const SidebarMenu = [
     { name: "Homepage", link: "/", icon: MdOutlineDashboard },
     { name: "User", link: "/profile", icon: AiOutlineUser },
@@ -52,12 +78,6 @@ const Volunteer = () => {
       name: "Difference you made",
       link: "#accomplishment",
       icon: AiOutlineHeart,
-      margin: true,
-    },
-    {
-      name: "Logout",
-      link: "/",
-      icon: FiLogOut,
       margin: true,
     },
   ];
@@ -136,19 +156,19 @@ const Volunteer = () => {
   const currentActiveListings = async () => {
     try {
       const response = await axios.get(
-        "https://api.khana.me/api/v1/getData/active-listings",
+        "    https://bhojanbd-1.onrender.com/api/v1/getData/active-listings",
         {},
         {}
       );
-      console.log("Current active listings for user are:", response.data.data);
+      //console.log("Current active listings for user are:", response.data.data);
       setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {
-      console.log("Error at listing active orders at donor", error);
+      //console.log("Error at listing active orders at donor", error);
     }
   };
   const retainAllData = () => {
-    console.log("Retain all data called");
+    //console.log("Retain all data called");
     currentActiveListings();
     getUsersPendingDistributions();
   };
@@ -158,7 +178,7 @@ const Volunteer = () => {
   const getUsersPendingDistributions = async () => {
     try {
       const response = await axios.post(
-        "https://api.khana.me/api/v1/order/pending-listings-for-distributor",
+        "    https://bhojanbd-1.onrender.com/api/v1/order/pending-listings-for-distributor",
         {
           _id: userDetails._id,
         },
@@ -170,12 +190,12 @@ const Volunteer = () => {
         }
       );
       // console.log(response.data.data.runningOrders);
-      console.log("From users pending distribution at volunteer:",response);
+      //console.log("From users pending distribution at volunteer:", response);
       setPendingItems(response.data.data.runningOrders);
       // setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {
-      console.log("Error at listing active orders at donor", error);
+      //console.log("Error at listing active orders at donor", error);
     }
   };
 
@@ -190,7 +210,7 @@ const Volunteer = () => {
   const cancelOrderForDistributor = async (_id) => {
     try {
       const response = await axios.post(
-        `https://api.khana.me/api/v1/order/cancel-order-for-distributor`,
+        `    https://bhojanbd-1.onrender.com/api/v1/order/cancel-order-for-distributor`,
         {
           _orderId: _id,
         },
@@ -198,7 +218,7 @@ const Volunteer = () => {
           withCredentials: true, // Include credentials (cookies) in the request
         }
       );
-      console.log("Successfully cancelled order:", response);
+      //console.log("Successfully cancelled order:", response);
       // setTopContributorsData(response.data.data.topTenDonators);
     } catch (error) {
       console.error("Error cancelling order for donor:", error);
@@ -226,7 +246,7 @@ const Volunteer = () => {
         style={{ marginLeft: isMobile ? "0px" : open ? "0%" : "2.8%" }}
       >
         <div className="md:col-span-1 justify-center pt-2 overflow-hidden">
-        <div className="flex flex-col bg-blue-100 rounded-md p-6 shadow-sm dark:bg-[#1F1A24]">
+          <div className="flex flex-col bg-blue-100 rounded-md p-6 shadow-sm dark:bg-[#1F1A24]">
             <WelcomeBack userName={userDetails.username} />
           </div>
 
@@ -245,7 +265,6 @@ const Volunteer = () => {
           )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="col-span-1 ">
-              
               <div className="container px-6">
                 <h1 className="text-3xl font-bold mb-4 text-[#261750] dark:text-[#7c58de] self-center text-center ">
                   Active Listings
@@ -340,13 +359,14 @@ const Volunteer = () => {
             </div>
           </div>
           <div id="accomplishment" className="justify-center pt-10 w-full">
-            <Accomplishment
+            <ProfileAccomplishment
               totalFoodSaved={500}
-              ourCommunity={1}
-              totalPeopleServed={800}
-              totalFoodSavedText="Total Food Saved"
-              ourCommunityText="Ranking"
-              totalPeopleServedText="Total People Served"
+              ourCommunity={1000}
+              totalPeopleServed={userDetails?.numberOfPeopleFeed}
+              totalPoints="Total Points"
+              rankText="Rank"
+              rank={rank}
+              totalPeopleServedText="People Served"
             />
           </div>
           <div>

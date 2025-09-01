@@ -1,5 +1,6 @@
 # Logs
 logs
+.env
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -11,6 +12,10 @@ node_modules
 dist
 dist-ssr
 *.local
+Project-Final-Report-slides.pptx
+project-Final-Report.pptx
+Project-Reportold.docx
+
 
 # Editor directories and files
 .vscode/*

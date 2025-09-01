@@ -15,7 +15,7 @@ const UserProfileForm = () => {
   // const [userUpload,setUserUpload]=useState(avater);
   const registerUser = async ({ name, address, contactno, profilepic }) => {
     // console.log("name, address, contactno, profilepic", name, address, contactno, profilepic);
-    console.log("registerUser function called");
+    //console.log("registerUser function called");
     try {
       const formData = new FormData();
       formData.append("userId", params.userId);
@@ -33,23 +33,23 @@ const UserProfileForm = () => {
       );
 
       const response = await axios.post(
-        "https://api.khana.me/api/v1/users/complete-registration",
+        "    https://bhojanbd-1.onrender.com/api/v1/users/complete-registration",
         formData,
         {
           withCredentials: true, // Include credentials (cookies) in the request
         }
       );
 
-      console.log(response);
+      //console.log(response);
       setError("");
-      console.log(response.data.data.isDonor);
+      //console.log(response.data.data.isDonor);
       if (response.data.data.isDonor) {
         navigate("/donor");
       } else {
         navigate("/volunteer");
       }
     } catch (error) {
-      console.log("Error:", error);
+      //console.log("Error:", error);
       // console.log("Error message:", error.response.data.message);
       // setError(error.response.data.message);
     }
@@ -66,7 +66,7 @@ const UserProfileForm = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log("At first step");
+    //console.log("At first step");
     // Check if there's an error before calling registerUser
     if (formState.isValid) {
       //what does .isValid do??

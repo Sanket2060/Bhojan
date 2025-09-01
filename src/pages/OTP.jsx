@@ -5,12 +5,13 @@ import axios from "axios";
 const OTP = () => {
   const params = useParams(); // Extract userId from the URL
   const navigate = useNavigate();
+  const [loader, setLoader] = useState();
   const [error, setError] = useState("");
   // Use the userId parameter here, e.g., for fetching user-specific OTP data
   console.log("userId from OTP:", params.userId);
   const [userOTP, setUserOTP] = useState();
   // const verifyOTP = async () => {
-  //   const response = await axios.post('https://api.khana.me/api/v1/users/verify-otp', {
+  //   const response = await axios.post('    https://bhojanbd-1.onrender.com/api/v1/users/verify-otp', {
   //     userId: params.userId,
   //     userOTP
 
@@ -20,20 +21,22 @@ const OTP = () => {
 
   const verifyOTP = async () => {
     try {
+      setLoader(true);
       const response = await axios.post(
-        "https://api.khana.me/api/v1/users/verify-otp",
+        "    https://bhojanbd-1.onrender.com/api/v1/users/verify-otp",
         {
           userId: params.userId,
           userOTP: userOTP,
           // .trim()
         }
       );
-      console.log(response);
+      //console.log(response);
       navigate(
         `/register/${response.data.data.username}/${response.data.data.email}/${params.userId}`
       );
     } catch (error) {
-      console.log("Error:", error.response.data.message);
+      setLoader(false);
+      //console.log("Error:", error.response.data.message);
       setError(error.response.data.message);
     }
   };
@@ -86,6 +89,15 @@ const OTP = () => {
         <div className="Error mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600">
           {error}
         </div>
+        {loader ? (
+          <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
+            <div className=" fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+              <div class="loader "></div>
+            </div>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
 
       <div className="overflow-hidden relative h-screen w-full ">

@@ -5,7 +5,6 @@ import { toast, ToastContainer } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
 import DistributionTable from "./DistributionTable";
 
-
 const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
   const [showForm, setShowForm] = useState(true);
   const { register, handleSubmit, formState } = useForm();
@@ -15,7 +14,7 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
   };
   const handleRecaptchaChange = (value) => {
     setCapVal(value);
-    console.log("reCAPTCHA value:", value);
+    //console.log("reCAPTCHA value:", value);
   };
   const [isRecaptchaLoaded, setIsRecaptchaLoaded] = useState(false);
   const [capVal, setCapVal] = useState(null);
@@ -44,9 +43,6 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
   };
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-
-
- 
 
   // Handle form submission
   const handleSubmits = async () => {
@@ -87,7 +83,7 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
     // }
 
     // console.log("Time Difference in Minutes:", timeDifference);
-    console.log(formData);
+    //console.log(formData);
     // e.preventDefault();
     onFormSubmit(formData);
     setFormData({
@@ -133,7 +129,7 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
 
     try {
       setLoading(true);
-  
+
       // Simulate API call with a delay
       await new Promise((resolve) => setTimeout(resolve, 2000));
       setIsDistribute(true);
@@ -146,10 +142,8 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
     }
     toast.success("Listing Posted");
     // Additional logic if needed after form submission
-
   };
 
- 
   const createOrder = () => {};
 
   return (
@@ -249,14 +243,14 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
               </div>
 
               <div className="flex justify-center items-center mb-4">
-                {localStorage.theme === "dark"
-                  ? console.log("darktheme")
-                  : console.log("lighttheme")}
+                {/* {localStorage.theme === "dark"
+                  ? //console.log("darktheme")
+                  : //console.log("lighttheme")} */}
                 {isRecaptchaLoaded ? (
                   <ReCAPTCHA
                     sitekey="6LeVh08pAAAAAGFv8aKqbVg0H5X5FpZi5XhZPHUo"
                     onChange={handleRecaptchaChange}
-                    theme={localStorage.theme === "dark" ? "dark" : "light"}
+                    theme={localStorage.theme === "dark" ? "light" : "dark"}
                   />
                 ) : (
                   <div className="recaptcha-loading">
@@ -279,33 +273,29 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
                     e.preventDefault();
                     handleSubmits();
                     if (capVal) {
-                      
                     } else {
                       console.error("reCAPTCHA validation failed");
                     }
-                    
                   }}
                 >
                   {loading ? (
-            // Simple CSS-based loading spinner
-            <div
-              style={{
-                border: "4px solid rgba(0, 0, 0, 0.1)",
-                borderTop: "4px solid #3498db",
-                borderRadius: "50%",
-                width: "20px",
-                height: "20px",
-                animation: "spin 1s linear infinite",
-              }}
-            ></div>
-          ) : success ? (
-            "✔ Listing Posted!"
-          ) : (
-            "Post Listing"
-            
-          )}
+                    // Simple CSS-based loading spinner
+                    <div
+                      style={{
+                        border: "4px solid rgba(0, 0, 0, 0.1)",
+                        borderTop: "4px solid #3498db",
+                        borderRadius: "50%",
+                        width: "20px",
+                        height: "20px",
+                        animation: "spin 1s linear infinite",
+                      }}
+                    ></div>
+                  ) : success ? (
+                    "✔ Listing Posted!"
+                  ) : (
+                    "Post Listing"
+                  )}
                 </button>
-                
               </div>
             </form>
           </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import profilepic from "../assets/devImages/default.jpg";
+import avatar from "../assets/profilepic.jpg";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -16,110 +16,38 @@ const Profile = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
-  const [userData, setUserData] = useState({
-    name: "",
-    username: "",
-    email: "",
-    address: "",
-    number: "",
-  });
+  const [rank, setRank] = useState("-");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getUsersRank = async () => {
       try {
         if (userDetails) {
-          const response = await axios.post(
-            `https://api.khana.me/api/v1/getData/getdetailsfromname`,
-            {
-              name: userDetails?.name,
-            }
-          );
-
-          const user = response.data.data;
-          console.log(user);
-          setUserData({
-            name: user.name,
-            username: user.username,
-            email: user.email,
-            address: user.address,
-            number: user.contact,
+          const endpoint = userDetails.isDonor
+            ? "  https://bhojanbd-1.onrender.com/api/v1/getData/getDonorsRank"
+            : "  https://bhojanbd-1.onrender.com/api/v1/getData/getDistributorsRank";
+          console.log("userDetails.username", userDetails?.username);
+          const response = await axios.post(endpoint, {
+            username: userDetails?.username,
           });
+          console.log("response", response);
+          const rankValue = response.data.data.rank;
+          if (rankValue > 10) {
+            setRank("-");
+          } else {
+            setRank(rankValue);
+          }
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user's rank:", error);
       }
     };
 
-    fetchData();
-  }, []);
+    getUsersRank();
+  }, [userDetails]);
 
-  // const [userUpload,setUserUpload]=useState(avater);
-  const registerUser = async ({ name, address, contactno, profilepic }) => {
-    // console.log("name, address, contactno, profilepic", name, address, contactno, profilepic);
-    console.log("registerUser function called");
-    try {
-      const formData = new FormData();
-      formData.append("userId", params.userId);
-      formData.append("name", name);
-      if (!profilepic || !profilepic[0]) {
-        formData.append("avatar", avatar); // Provide the default image
-      } else {
-        formData.append("avatar", profilepic[0]);
-      }
-      formData.append("address", address);
-      formData.append("contact", contactno);
-      formData.append(
-        "isOrganization",
-        selectedOption === "Organization" ? true : false
-      );
-
-      const response = await axios.post(
-        "https://api.khana.me/api/v1/users/complete-registration",
-        formData,
-        {
-          withCredentials: true, // Include credentials (cookies) in the request
-        }
-      );
-
-      console.log(response);
-      setError("");
-      console.log(response.data.data.isDonor);
-      if (response.data.data.isDonor) {
-        navigate("/donor");
-      } else {
-        navigate("/volunteer");
-      }
-    } catch (error) {
-      console.log("Error:", error);
-      // console.log("Error message:", error.response.data.message);
-      // setError(error.response.data.message);
-    }
-  };
-
-  const handleSelectChange = (event) => {
-    const newValue = event.target.value;
-    setSelectedOption(newValue);
-  };
-
-  const resetError = () => {
-    // Reset the error state
-    setError("");
-  };
-
-  const onSubmit = async (data) => {
-    console.log("At first step");
-    // Check if there's an error before calling registerUser
-    if (formState.isValid) {
-      //what does .isValid do??
-      resetError();
-      try {
-        await handleSubmit(registerUser)(data);
-      } catch (error) {
-        // Handle any errors here
-        console.error("Form submission error:", error);
-      }
-    }
-  };
+  useEffect(() => {
+    console.log("rank", rank);
+  }, [rank]);
 
   return (
     <div className="dark:bg-[#121212]">
@@ -131,68 +59,12 @@ const Profile = () => {
             action=""
             onSubmit={(e) => {
               e.preventDefault();
-              resetError();
               handleSubmit(onSubmit)(e);
             }}
           >
-            {/* <div className="mb-4">
-            <img
-              src={profilepic}
-              alt="profilepic"
-              id="profilepic"
-              className="w-40 h-40 mx-auto my-3 rounded-full relative shadow-2xl
-               top-[-10rem] self-center"
-            />
-            <label
-              htmlFor="image"
-              className="block align-middle select-none top-[-9rem] relative items-center mx-auto text-center transition-all p-2 disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full w-40 cursor-pointer"
-            >
-              Upload Image
-            </label>
-
-            <input
-              type="file"
-              accept="image/jpeg, image/jpg, image/png"
-              id="image"
-              className="hidden"
-              onChange={(e) => {
-                console.log(e.target.value);
-              }}
-              {...register("profilepic", {
-                validate: {
-                  validFileFormat: (value) => {
-                    // Custom validation logic for file format
-                    if (value && value.length > 0) {
-                      const allowedFormats = ["jpg", "jpeg", "png"];
-                      const fileExtension = value[0]?.name
-                        .split(".")
-                        .pop()
-                        .toLowerCase();
-                      return (
-                        allowedFormats.includes(fileExtension) ||
-                        "Invalid file format"
-                      );
-                    }
-                    return true; // No file provided, so no validation needed
-                  },
-                  maxFileSize: (value) => {
-                    // Custom validation logic for file size (in bytes)
-                    if (value && value.length > 0) {
-                      const maxSize = 1024 * 1024 * 5; // 5 MB
-                      return (
-                        value[0]?.size <= maxSize ||
-                        "File size exceeds the limit (5 MB)"
-                      );
-                    }
-                    return true; // No file provided, so no validation needed
-                  },
-                },
-              })}
-            />
-          </div> */}
             <div className="mb-4 relative">
               <img
-                src={profilepic}
+                src={userDetails?.avatar}
                 alt="profilepic"
                 id="profilepic"
                 className="w-40 h-40 mx-auto border-4 border-yellow-200 my-3 rounded-full relative shadow-2xl top-[-7rem] md:top-[-10rem] self-center"
@@ -210,7 +82,7 @@ const Profile = () => {
                 id="image"
                 className="hidden"
                 onChange={(e) => {
-                  console.log(e.target.value);
+                  //console.log(e.target.value);
                 }}
                 {...register("profilepic", {
                   validate: {
@@ -222,19 +94,20 @@ const Profile = () => {
 
             <div className="relative top-[-10rem] md:top-[-12rem] flex flex-col p-2">
               <h1 className="text-3xl font-bold p-2 self-center dark:text-gray-200">
-                {params.name}Suraj Adhikari
+                {userDetails?.name}
               </h1>
               <h2 className="text-xl self-center dark:text-gray-400">
-                @username{params.username}
+                @{userDetails?.username}
               </h2>
             </div>
             <div className="relative top-[-8rem]">
               <ProfileAccomplishment
                 totalFoodSaved={500}
-                ourCommunity={200}
-                totalPeopleServed={800}
-                totalFoodSavedText="Food Saved"
-                ourCommunityText="Rank"
+                ourCommunity={1000}
+                totalPeopleServed={userDetails?.numberOfPeopleFeed}
+                totalPoints="Total Points"
+                rankText="Rank"
+                rank={rank}
                 totalPeopleServedText="People Served"
               />
             </div>
@@ -252,7 +125,7 @@ const Profile = () => {
                   className="border-2 w-full h-10 px-2 pl-2  border-[#01cc65]  mb-1 rounded-xl  p-2 text-sm focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="name "
                   name="name"
-                  value={params.name}
+                  value={userDetails?.name}
                   readOnly={!isEditing}
                   required
                   {...register("name", {
@@ -277,7 +150,7 @@ const Profile = () => {
                 </label>
                 <input
                   type="text"
-                  value={params.username}
+                  value={userDetails.username}
                   readOnly={!isEditing}
                   className="border-2 w-full h-10 px-2 pl-2 border-[#01cc65] mb-1 rounded-xl p-2 text-sm focus:outline-none focus:ring-0 focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                 />
@@ -293,7 +166,7 @@ const Profile = () => {
 
                 <input
                   type=""
-                  value={params.email}
+                  value={userDetails.email}
                   readOnly={!isEditing}
                   className="border-2 w-full h-10 px-2 pl-2  border-[#01cc65]  mb-1 rounded-xl  p-2 text-sm focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="username"
@@ -312,7 +185,7 @@ const Profile = () => {
                   type="text"
                   className="border-2 w-full h-10 px-2 pl-2  border-[#01cc65] mb-1 rounded-xl p-2 text-sm focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="address"
-                  value={params.address}
+                  value={userDetails.address}
                   readOnly={!isEditing}
                   required
                   {...register("address", {
@@ -338,7 +211,7 @@ const Profile = () => {
                   type="number"
                   className="border-2 w-full h-10 px-2 pl-2 border-[#01cc65] mb-1 rounded-xl focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 p-2 text-sm dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="contactno"
-                  value={params.number}
+                  value={userDetails.contact}
                   readOnly={!isEditing}
                   required
                   {...register("contactno", {
@@ -359,14 +232,6 @@ const Profile = () => {
                   className="align-middle select-none font-bold text-center transition-all text-sm bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full h-10 w-full mt-6 cursor-pointer dark:bg-[#452e82]"
                 >
                   {isEditing ? "Cancel" : "Edit"}
-                </button>
-                <button
-                  type="submit"
-                  value="Register"
-                  readOnly={!isEditing}
-                  className="align-middle select-none  font-bold  text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full  h-10 w-full mt-6 cursor-pointer dark:bg-[#452e82]"
-                >
-                  Register
                 </button>
               </div>
             </div>

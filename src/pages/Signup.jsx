@@ -4,19 +4,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const Signup = () => {
-  const { register, handleSubmit } = useForm();
-  const [error, setError] = useState("");
+  const { register, handleSubmit, formState } = useForm();
+  const { errors } = formState;
+  // const [error, setError] = useState("");
   const navigate = useNavigate();
   const params = useParams();
   const [selectedTab, setSelectedTab] = useState("Donator");
+  const [loader, setLoader] = useState();
   const [userId, setUserId] = useState(Number);
   const authenticate = async ({ username, email, password }) => {
     try {
-      console.log(email, password);
+      setLoader(true);
+      //console.log(email, password);
       // api/users/register
       // send register data
       const response = await axios.post(
-        "https://api.khana.me/api/v1/users/register",
+        "   https://bhojanbd-1.onrender.com/api/v1/users/register",
         {
           username,
           email,
@@ -26,27 +29,24 @@ const Signup = () => {
       );
 
       // handle success
-      console.log(response.data);
+      //console.log(response.data);
       setUserId(response.data.data.userId);
-      console.log(response.data.data.userId);
+      //console.log(response.data.data.userId);
 
       // Navigate to OTP page with the userId
       navigate(`/otp/${response.data.data.userId}`);
     } catch (error) {
       // handle error
-      console.log(error.message);
+      //console.log(error.message);
+      setLoader(false);
       // Set error state to display the error message
-      setError(error.message);
+      // setError(error.message);
     }
   };
 
-  useEffect(() => {
-    console.log("Error is:", error);
-  }, [error]);
-
-  useEffect(() => {
-    setError("");
-  }, []);
+  // useEffect(() => {
+  //   setError("");
+  // }, []);
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
@@ -125,14 +125,14 @@ const Signup = () => {
                 placeholder="Enter your Username"
                 required
                 {...register("username", {
-                  required: true,
-                  validate: {
-                    matchPattern: (value) =>
-                      /^[a-zA-Z0-9]{1,8}$/.test(value) ||
-                      setError("Username should be shorter"),
+                  required: "Username is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9]{1,12}$/,
+                    message: "Username should be shorter",
                   },
                 })}
               />
+              <p>{errors.username?.message}</p>
             </div>
 
             <div>
@@ -147,14 +147,14 @@ const Signup = () => {
                 placeholder="Enter your Email"
                 required
                 {...register("email", {
-                  required: true,
-                  validate: {
-                    matchPattern: (value) =>
-                      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ||
-                      setError("Enter a valid email address"),
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Email must be valid",
                   },
                 })}
               />
+              <p>{errors.email?.message}</p>
             </div>
 
             <div>
@@ -168,18 +168,15 @@ const Signup = () => {
                 placeholder="Enter your Password"
                 required
                 {...register("password", {
-                  required: true,
-                  validate: {
-                    matchPattern: (value) =>
-                      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/.test(
-                        value
-                      ) ||
-                      setError(
-                        "Password must contain at least 8 characters, including letters and numbers."
-                      ),
+                  required: "Password is required",
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,
+                    message:
+                      "Password must contain at least 8 characters, including letters and numbers.",
                   },
                 })}
               />
+              <p>{errors.password?.message}</p>
             </div>
 
             <div className="inline">
@@ -227,9 +224,19 @@ const Signup = () => {
               </Link>
             </div>
           </form>
-          <div className="Error mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600">
+          {loader ? (
+            <div className="mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600 flex">
+              {/* {error} */}
+              <div className=" fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+                <div class="loader "></div>
+              </div>
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {/* <div className="Error mt-10 -8 pb-10 p-2 rounded-md  text-sm font-light text-red-600">
             {error}
-          </div>
+          </div> */}
         </div>
         <div className="overflow-hidden relative h-screen w-full ">
           <div className="h-[80vw] overflow-clip absolute right-[-30vw] bottom-[-50vw] bg-yellow-100 rounded-full w-[80vw]"></div>

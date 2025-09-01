@@ -3,7 +3,7 @@ import PartnerSingleBox from "./PartnerSingleBox"; // Import your Partner compon
 
 const AutoScrollPartners = ({ topContributorsData }) => {
   useEffect(() => {
-    console.log("Top contributors data:", topContributorsData);
+    //console.log("Top contributors data:", topContributorsData);
   }, [topContributorsData]);
   return (
     <div className="wrapper md:w-screen relative overflow-hidden">
