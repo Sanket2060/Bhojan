@@ -7,8 +7,10 @@ import axios from "axios";
 import { IoMdSunny, IoMdMoon } from "react-icons/io";
 import { logout } from "../features/user/authslice";
 import { FiLogOut } from "react-icons/fi";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const Sidebar = ({ menus, handleToggle, isOpen }) => {
+  const { logout } = useAuth0();
   const [isMobile, setIsMobile] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
   const navigate = useNavigate();
@@ -117,20 +119,21 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
               }`}
               onClick={async () => {
                 try {
-                  navigate("/");
+                  console.log("logging out");
                   const response = await axios.post(
                     "   https://bhojanbd-1.onrender.com/api/v1/users/logout",
-
+                    
                     {},
                     {
                       withCredentials: true, // Include credentials (cookies) in the request
                     }
                   );
                   // .then(response=>{
-                  //console.log(response);
-                  // })
-                  // .then(
-                  dispatch(logout());
+                    //console.log(response);
+                    // })
+                    // .then(
+                     dispatch(logout());
+                      navigate("/");
                   // )
                   // Perform any additional actions after logout
                 } catch (error) {
@@ -232,7 +235,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 }`}
                 onClick={async () => {
                   try {
-                    navigate("/");
+                  console.log("logging out");
                     const response = await axios.post(
                       "   https://bhojanbd-1.onrender.com/api/v1/users/logout",
 
@@ -241,11 +244,18 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                         withCredentials: true, // Include credentials (cookies) in the request
                       }
                     );
+                    logout({
+                    logoutParams: {
+                     returnTo: window.location.origin, // where user should land after logout
+                     },
+                      });
                     // .then(response=>{
                     //console.log(response);
                     // })
                     // .then(
+                    navigate("/");
                     dispatch(logout());
+                    
                     // )
                     // Perform any additional actions after logout
                   } catch (error) {

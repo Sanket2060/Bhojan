@@ -8,6 +8,10 @@ import AutoScrollPartners from "../components/PartnerArea";
 import LandingpageLeaderboard from "../components/LandingpageLeaderboard";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../features/user/authslice.js";
 const LandingPage = () => {
   const [topContributorsData, setTopContributorsData] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
@@ -15,6 +19,46 @@ const LandingPage = () => {
   const [numberOfPeopleFeed, setNumberOfPeopleFeed] = useState(0);
   const [community, setCommunity] = useState(0);
   const [foodSaved, setFoodSaved] = useState(0);
+
+    const dispatch = useDispatch();
+    const { isAuthenticated, user, getIdTokenClaims } = useAuth0();
+    const navigate = useNavigate();
+  
+    useEffect(() => {
+      const handleLogin = async () => {
+        console.log("isAuthenticated:", isAuthenticated);
+        if (isAuthenticated) {
+          const tokenClaims = await getIdTokenClaims();
+          const idToken = tokenClaims.__raw;
+          console.log("ID Token:", idToken);
+  
+          // Send token to backend to create/find user & get app JWT
+          const res = await fetch("https://bhojanbd-1.onrender.com/api/v1/users/auth/google", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: idToken }),
+            credentials: "include", // Include cookies in the request 
+          });
+          const response = await res.json();
+          console.log("Response from backend:", response.data);
+          dispatch(login(response.data));
+        // if (response) {
+        //   //also store user's data at redux toolkit
+        //   if (response.data.data.isDonor) {
+        //     navigate("/donor");
+        //   } else {
+        //     navigate("/volunteer");
+        //   }
+        // }
+  
+  
+          // Redirect to dashboard automatically
+          // navigate("/dashboard");
+        }
+      };
+  
+      handleLogin();
+    }, [isAuthenticated, getIdTokenClaims, navigate]);
 
   const getTopDonatorsDataFunc = async () => {
     try {

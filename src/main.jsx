@@ -15,7 +15,7 @@ root.render(
       domain="dev-s1bcfe4tz1wwlu2h.us.auth0.com"
       clientId="uXaWVnDDUjdLU8ziq0Rn9eC0Np90rgD1"
       authorizationParams={{
-        redirect_uri: 'http://localhost:5173/aboutus'
+        redirect_uri: 'http://localhost:5173/'
       }}
     >
       <Provider store={store}>
