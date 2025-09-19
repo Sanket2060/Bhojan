@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import axios from "axios";
 import WelcomeBack from "../components/WelcomeBack.jsx";
 import ProfileAccomplishment from "../components/ProfileAccomplishment.jsx";
+import { useSelector } from "react-redux";
 
 //icons
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -16,12 +17,23 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiFolder } from "react-icons/fi";
 import { BiCloud } from "react-icons/bi";
 import HowToDistribute from "../components/HowToDistribute";
-import { useSelector } from "react-redux";
 import DistributionTable from "../components/DistributionTable.jsx";
 // import { useNavigate } from "react-router-dom";
 
 const Volunteer = () => {
   //   const navigate = useNavigate();
+  const realTimeActiveListing=useSelector((state)=> state.order.orders);
+  useEffect(() => {
+    console.log("active listing changed");
+    setAccordionItems([...realTimeActiveListing,accordionItems])
+    console.log("setAccordionItems new value after getting new order",accordionItems);
+    return () => {
+      
+    }
+  }, [realTimeActiveListing])
+
+
+  
   const distributeRef = useRef();
   const [distributeRefState, setDistributeRefState] = useState();
   // const handleLogout = () => {
@@ -43,8 +55,8 @@ const Volunteer = () => {
       try {
         if (userDetails) {
           const endpoint = userDetails.isDonor
-            ? "  https://bhojanbd-1.onrender.com/api/v1/getData/getDonorsRank"
-            : "  https://bhojanbd-1.onrender.com/api/v1/getData/getDistributorsRank";
+            ? "  http://localhost:9005/api/v1/getData/getDonorsRank"
+            : "  http://localhost:9005/api/v1/getData/getDistributorsRank";
           console.log("userDetails.username", userDetails?.username);
           const response = await axios.post(endpoint, {
             username: userDetails?.username,
@@ -125,14 +137,14 @@ const Volunteer = () => {
   const [pendingItems, setPendingItems] = useState([]);
   const [completedItems, setCompletedItems] = useState([]);
 
-  // const handleCompleteDistribution = (index) => {
-  //   const completedItem = pendingItems[index];
-  //   // Move the completed item to completed distributions
-  //   setCompletedItems((prevItems) => [...prevItems, completedItem]);
-  //   // Remove the item from pending distribution
-  //   setPendingItems((prevItems) => prevItems.filter((_, i) => i !== index));
-  //   setIsDistribute(false);
-  // };
+   useEffect(() => {
+    console.log("Active listings arrived from api",accordionItems);
+  
+    return () => {
+      
+    }
+  }, [accordionItems])
+
   const handleCancelDistribution = (index) => {
     // Remove the item from pending distribution
     setPendingItems((prevItems) => prevItems.filter((_, i) => i !== index));
@@ -156,11 +168,11 @@ const Volunteer = () => {
   const currentActiveListings = async () => {
     try {
       const response = await axios.get(
-        "    https://bhojanbd-1.onrender.com/api/v1/getData/active-listings",
+        "    http://localhost:9005/api/v1/getData/active-listings",
         {},
         {}
       );
-      //console.log("Current active listings for user are:", response.data.data);
+      console.log("Current active listings for user are:", response.data.data);
       setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {
@@ -178,7 +190,7 @@ const Volunteer = () => {
   const getUsersPendingDistributions = async () => {
     try {
       const response = await axios.post(
-        "    https://bhojanbd-1.onrender.com/api/v1/order/pending-listings-for-distributor",
+        "    http://localhost:9005/api/v1/order/pending-listings-for-distributor",
         {
           _id: userDetails._id,
         },
@@ -210,7 +222,7 @@ const Volunteer = () => {
   const cancelOrderForDistributor = async (_id) => {
     try {
       const response = await axios.post(
-        `    https://bhojanbd-1.onrender.com/api/v1/order/cancel-order-for-distributor`,
+        `    http://localhost:9005/api/v1/order/cancel-order-for-distributor`,
         {
           _orderId: _id,
         },

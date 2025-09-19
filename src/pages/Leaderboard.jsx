@@ -20,12 +20,12 @@ const Leaderboard = () => {
   const getLeaderboardData = async () => {
     try {
       const donorDataResponse = await axios.get(
-        "https://bhojanbd-1.onrender.com/api/v1/getData/get-top-donors"
+        "http://localhost:9005/api/v1/getData/get-top-donors"
       );
       setDonorData(donorDataResponse.data.data.topTenDonators);
 
       const distributorDataResponse = await axios.get(
-        "    https://bhojanbd-1.onrender.com/api/v1/getData/get-top-distributors"
+        "    http://localhost:9005/api/v1/getData/get-top-distributors"
       );
       //console.log("Distributor data response", distributorDataResponse);
       setDistributorData(distributorDataResponse.data.data.topTenDistributors);

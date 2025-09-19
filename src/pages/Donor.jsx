@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 //components
 import { Sidebar } from "../components/Sidebar.jsx";
 import Accomplishment from "../components/Accomplishment.jsx";
@@ -16,19 +16,21 @@ import { FiLogOut } from "react-icons/fi";
 import { FiFolder } from "react-icons/fi";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { SocketContext } from "../context/socketContext.js";
 
 const Donor = () => {
   const [isDistribute, setIsDistribute] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
   const [completedListings, setCompletedListings] = useState([]);
   const [rank, setRank] = useState("-");
+  const socket=useContext(SocketContext)
   useEffect(() => {
     const getUsersRank = async () => {
       try {
         if (userDetails) {
           const endpoint = userDetails.isDonor
-            ? "  https://bhojanbd-1.onrender.com/api/v1/getData/getDonorsRank"
-            : "  https://bhojanbd-1.onrender.com/api/v1/getData/getDistributorsRank";
+            ? "  http://localhost:9005/api/v1/getData/getDonorsRank"
+            : "  http://localhost:9005/api/v1/getData/getDistributorsRank";
           console.log("userDetails.username", userDetails?.username);
           const response = await axios.post(endpoint, {
             username: userDetails?.username,
@@ -56,7 +58,7 @@ const Donor = () => {
     try {
       if (userDetails._id) {
         const response = await axios.post(
-          "    https://bhojanbd-1.onrender.com/api/v1/getData/getAllCompletedOrdersForDonor",
+          "    http://localhost:9005/api/v1/getData/getAllCompletedOrdersForDonor",
           {
             _id: userDetails._id,
           }
@@ -121,7 +123,7 @@ const Donor = () => {
     try {
       if (formData) {
         const response = await axios.post(
-          "  https://bhojanbd-1.onrender.com/api/v1/order/create-order",
+          "  http://localhost:9005/api/v1/order/create-order",
           {
             _id: userDetails._id,
             foodItems: formData.foodItem,
@@ -138,6 +140,9 @@ const Donor = () => {
         );
         //console.log("Order Added succesfully");
         setRecentOrderDetails(response);
+        socket.emit("new_order",response,()=>{
+          console.log("Notified all the volunteers successfully");
+        })
       } else {
         //console.log("No data recieved for forms");
       }
@@ -149,7 +154,7 @@ const Donor = () => {
   const currentActiveListings = async () => {
     try {
       const response = await axios.post(
-        " https://bhojanbd-1.onrender.com/api/v1/order/active-listings-for-donor",
+        " http://localhost:9005/api/v1/order/active-listings-for-donor",
         {
           _id: userDetails._id,
         },
@@ -160,7 +165,7 @@ const Donor = () => {
           withCredentials: true, // Send cookies with the request
         }
       );
-      //console.log(response.data.data);
+      // console.log("Retrieved active listings",response.data.data);
       setActiveListings(response.data.data);
       // setActiveListings(response.data);
     } catch (error) {
@@ -222,7 +227,7 @@ const Donor = () => {
   const cancelOrderForDonor = async (_id) => {
     try {
       const response = await axios.post(
-        `    https://bhojanbd-1.onrender.com/api/v1/order/cancel-order-for-donor`,
+        `    http://localhost:9005/api/v1/order/cancel-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -241,7 +246,7 @@ const Donor = () => {
     try {
       console.log("complete order for donor reached");
       const response = await axios.post(
-        `    https://bhojanbd-1.onrender.com/api/v1/order/completed-order-for-donor`,
+        `    http://localhost:9005/api/v1/order/completed-order-for-donor`,
         {
           _orderId: _id,
         },
@@ -263,7 +268,7 @@ const Donor = () => {
     try {
       console.log("reached increase order points");
       const response = await axios.post(
-        ` https://bhojanbd-1.onrender.com/api/v1/order/increaseOrderPoints`,
+        ` http://localhost:9005/api/v1/order/increaseOrderPoints`,
         {
           _orderId: _id,
         },

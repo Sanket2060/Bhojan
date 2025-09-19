@@ -140,7 +140,6 @@ const DonorForm = ({ onFormSubmit, setIsDistribute }) => {
     } finally {
       setLoading(false);
     }
-    toast.success("Listing Posted");
     // Additional logic if needed after form submission
   };
 

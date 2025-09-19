@@ -121,7 +121,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                 try {
                   console.log("logging out");
                   const response = await axios.post(
-                    "   https://bhojanbd-1.onrender.com/api/v1/users/logout",
+                    "   http://localhost:9005/api/v1/users/logout",
                     
                     {},
                     {
@@ -237,7 +237,7 @@ export const Sidebar = ({ menus, handleToggle, isOpen }) => {
                   try {
                   console.log("logging out");
                     const response = await axios.post(
-                      "   https://bhojanbd-1.onrender.com/api/v1/users/logout",
+                      "   http://localhost:9005/api/v1/users/logout",
 
                       {},
                       {

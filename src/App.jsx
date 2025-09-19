@@ -19,12 +19,21 @@ import ProtectedRoute from "./pages/Protected";
 import HelpUs from "./pages/HelpUs";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useSocket } from "./hooks/useSocket.js";
+import { SocketContext } from "./context/socketContext.js";
 import { logout } from "./features/user/authslice.js";
 import { fetchUserData } from "./features/user/authActions.js";
+
+
+
 const App = () => {
+  
+  const userDetails = useSelector((state) => state.auth.userDetails);
+  const socket = useSocket(userDetails);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+
   useEffect(() => {
     const accessTokenm = document.cookie;
     console.log(accessTokenm);
@@ -44,6 +53,7 @@ const App = () => {
   }, [dispatch]); // Ensure dispatch is defined and accessible
   return (
     <div>
+       <SocketContext.Provider value={socket}>
       {/* ToastContainer for Toastify */}
       <ToastContainer />
 
@@ -99,6 +109,7 @@ const App = () => {
           element={<Register />}
         />
       </Routes>
+       </SocketContext.Provider>
     </div>
   );
 };

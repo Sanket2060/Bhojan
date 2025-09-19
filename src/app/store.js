@@ -1,9 +1,11 @@
 // store.js
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/user/authslice';
+import realTimeOrdersSlice from '../features/user/realtimeorderSlice';
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    order:realTimeOrdersSlice
   },
 });
 

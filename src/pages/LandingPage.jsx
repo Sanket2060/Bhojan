@@ -33,7 +33,7 @@ const LandingPage = () => {
           console.log("ID Token:", idToken);
   
           // Send token to backend to create/find user & get app JWT
-          const res = await fetch("https://bhojanbd-1.onrender.com/api/v1/users/auth/google", {
+          const res = await fetch("http://localhost:9005/api/v1/users/auth/google", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ token: idToken }),
@@ -63,7 +63,7 @@ const LandingPage = () => {
   const getTopDonatorsDataFunc = async () => {
     try {
       const response = await axios.get(
-        `    https://bhojanbd-1.onrender.com/api/v1/getData/get-top-donors`
+        `    http://localhost:9005/api/v1/getData/get-top-donors`
       );
       //console.log(response);
       const users = response.data.data;
@@ -76,7 +76,7 @@ const LandingPage = () => {
   const getOrganizationDetails = async () => {
     try {
       const response = await axios.get(
-        `    https://bhojanbd-1.onrender.com/api/v1/getData/getOrganizationDetails`
+        `    http://localhost:9005/api/v1/getData/getOrganizationDetails`
       );
       console.log(response);
       const bhojan = response.data.data.bhojan;
