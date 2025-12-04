@@ -20,17 +20,17 @@ const Leaderboard = () => {
   const getLeaderboardData = async () => {
     try {
       const donorDataResponse = await axios.get(
-        "  https://api.khana.me/api/v1/getData/get-top-donors"
+        "https://bhojanbd-1.onrender.com/api/v1/getData/get-top-donors"
       );
       setDonorData(donorDataResponse.data.data.topTenDonators);
 
       const distributorDataResponse = await axios.get(
-        "  https://api.khana.me/api/v1/getData/get-top-distributors"
+        "    https://bhojanbd-1.onrender.com/api/v1/getData/get-top-distributors"
       );
-      console.log("Distributor data response",distributorDataResponse);
+      //console.log("Distributor data response", distributorDataResponse);
       setDistributorData(distributorDataResponse.data.data.topTenDistributors);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 

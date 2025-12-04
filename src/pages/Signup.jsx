@@ -15,11 +15,11 @@ const Signup = () => {
   const authenticate = async ({ username, email, password }) => {
     try {
       setLoader(true);
-      console.log(email, password);
+      //console.log(email, password);
       // api/users/register
       // send register data
       const response = await axios.post(
-        " https://api.khana.me/api/v1/users/register",
+        "   https://bhojanbd-1.onrender.com/api/v1/users/register",
         {
           username,
           email,
@@ -29,15 +29,15 @@ const Signup = () => {
       );
 
       // handle success
-      console.log(response.data);
+      //console.log(response.data);
       setUserId(response.data.data.userId);
-      console.log(response.data.data.userId);
+      //console.log(response.data.data.userId);
 
       // Navigate to OTP page with the userId
       navigate(`/otp/${response.data.data.userId}`);
     } catch (error) {
       // handle error
-      console.log(error.message);
+      //console.log(error.message);
       setLoader(false);
       // Set error state to display the error message
       // setError(error.message);

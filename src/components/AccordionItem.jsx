@@ -153,7 +153,7 @@ function AccordionItem({
   const addDistributorToOrder = async () => {
     try {
       const response = await axios.post(
-        "  https://api.khana.me/api/v1/order/add-distributor-to-order",
+        "    https://bhojanbd-1.onrender.com/api/v1/order/add-distributor-to-order",
         {
           _id: userDetails._id,
           _orderId: item._id, //yei nai ho sure??
@@ -165,12 +165,12 @@ function AccordionItem({
           withCredentials: true, // Send cookies with the request
         }
       );
-      console.log("Distributor added to order successfully", response);
+      //console.log("Distributor added to order successfully", response);
       // console.log(response.data.data);
       // setAccordionItems(response.data.data.result);
       // setActiveListings(response.data);
     } catch (error) {
-      console.log("Error at listing active orders at donor", error);
+      //console.log("Error at listing active orders at donor", error);
     }
   };
 
@@ -187,8 +187,11 @@ function AccordionItem({
       } ${containerStyle.shadow} ${""}`}
     >
       {/* {expanded && ( */}
-      <div className={`p-4 dark:bg-[#1F1A24] dark:text-gray-50 ${countdown1 === 0 ? 'bg-red-100' : ''}`}>
-
+      <div
+        className={`p-4 dark:bg-[#1F1A24] dark:text-gray-50 ${
+          countdown1 === 0 ? "bg-red-100" : ""
+        }`}
+      >
         {/* Content of the accordion item */}
         <div className="bg-white dark:bg-[#1F1A24] p-4 rounded-md shadow-md relative">
           <p className="text-lg text-center pb-2 border-b font-semibold text-gray-800 dark:text-gray-200">

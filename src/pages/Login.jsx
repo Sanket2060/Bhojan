@@ -4,7 +4,8 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../features/user/authslice";
-
+import LoginButton from "../components/auth0login";
+import LogoutButton from "../components/auth0logout";
 const Login = () => {
   const { register, handleSubmit, formState } = useForm();
   const [error, setError] = useState("");
@@ -12,11 +13,11 @@ const Login = () => {
   const dispatch = useDispatch();
   const [loader, setLoader] = useState();
   const loginUser = async ({ email, password }) => {
-    console.log("At login");
-    console.log("Email and password:", email, password);
+    //console.log("At login");
+    //console.log("Email and password:", email, password);
     try {
       const response = await axios.post(
-        "  https://api.khana.me/api/v1/users/login",
+        "    https://bhojanbd-1.onrender.com/api/v1/users/login",
         {
           email,
           password,
@@ -25,8 +26,8 @@ const Login = () => {
           withCredentials: true, // Include credentials (cookies) in the request
         }
       );
-      console.log(response);
-      console.log("Response.data.data.isDonor", response.data.data.isDonor);
+      //console.log(response);
+      //console.log("Response.data.data.isDonor", response.data.data.isDonor);
       dispatch(login(response.data.data));
       if (response) {
         //also store user's data at redux toolkit
@@ -39,8 +40,8 @@ const Login = () => {
       // navigate(`/register/${response.data.data.username}/${response.data.data.email}/${params.userId}`);
     } catch (error) {
       setLoader(false);
-      console.log(error);
-      console.log("Error:", error.response.data.message);
+      //console.log(error);
+      //console.log("Error:", error.response.data.message);
       setError(error.response.data.message);
     }
   };
@@ -53,10 +54,10 @@ const Login = () => {
   const onSubmit = async (data) => {
     setError("");
     setLoader(true);
-    console.log("At first step");
+    //console.log("At first step");
     // Check if there's an error before calling registerUser
     // if (formState.isValid) {   //what does .isValid do->checks if all validations are true or not provided to react form hooks(validate:)
-    console.log("The form was valid");
+    //console.log("The form was valid");
     // resetError();
     try {
       handleSubmit(loginUser)(data); //??
@@ -148,11 +149,12 @@ const Login = () => {
             <h2 className="text-center text-lg font-semibold  mt-1">OR</h2>
           </div>
           <div>
-            <a href="">
-              <button className="align-middle font-bold font-sans mt-1 p-2 text-center h-10 w-full bg-blue-700 text-white rounded-full focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none text-xs">
-                Continue with Google
-              </button>
-            </a>
+            {/* <a href=""> */}
+            {/* <button className="align-middle font-bold font-sans mt-1 p-2 text-center h-10 w-full bg-blue-700 text-white rounded-full focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none text-xs"> */}
+            <LoginButton />
+            {/* Continue with Google */}
+            {/* </button> */}
+            {/* </a> */}
           </div>
           <div className="mt-3 sm:flex justify-center  text-center ">
             <h2 className="  text-sm mt-1">Don't have an Account!</h2>

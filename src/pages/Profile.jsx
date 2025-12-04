@@ -16,51 +16,39 @@ const Profile = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const userDetails = useSelector((state) => state.auth.userDetails);
-  const [userData, setUserData] = useState({
-    name: "",
-    username: "",
-    email: "",
-    address: "",
-    number: "",
-  });
+  const [rank, setRank] = useState("-");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getUsersRank = async () => {
       try {
         if (userDetails) {
-          const response = await axios.post(
-            `  https://api.khana.me/api/v1/getData/getdetailsfromname`,
-            {
-              name: userDetails?.name,
-            }
-          );
-
-          const user = response.data.data;
-          // console.log("userdata avatar:",user.user.avatar);
-          console.log(user);
-          setUserData({
-            name: user.user.name,
-            username: user.user.username,
-            email: user.user.email,
-            address: user.user.address,
-            number: user.user.contact,
+          const endpoint = userDetails.isDonor
+            ? "  https://bhojanbd-1.onrender.com/api/v1/getData/getDonorsRank"
+            : "  https://bhojanbd-1.onrender.com/api/v1/getData/getDistributorsRank";
+          console.log("userDetails.username", userDetails?.username);
+          const response = await axios.post(endpoint, {
+            username: userDetails?.username,
           });
+          console.log("response", response);
+          const rankValue = response.data.data.rank;
+          if (rankValue > 10) {
+            setRank("-");
+          } else {
+            setRank(rankValue);
+          }
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user's rank:", error);
       }
     };
 
-    fetchData();
-  }, []);
+    getUsersRank();
+  }, [userDetails]);
 
-  // const [userUpload,setUserUpload]=useState(avater);
- useEffect(()=>{
-  console.log(userData.avatar);
- },[userData.avatar])
- useEffect(()=>{
-  console.log(userData.name);
- },[userData.name])
+  useEffect(() => {
+    console.log("rank", rank);
+  }, [rank]);
+
   return (
     <div className="dark:bg-[#121212]">
       <Navbar />
@@ -76,7 +64,7 @@ const Profile = () => {
           >
             <div className="mb-4 relative">
               <img
-                src={userData?.avatar || avatar}
+                src={userDetails?.avatar}
                 alt="profilepic"
                 id="profilepic"
                 className="w-40 h-40 mx-auto border-4 border-yellow-200 my-3 rounded-full relative shadow-2xl top-[-7rem] md:top-[-10rem] self-center"
@@ -94,7 +82,7 @@ const Profile = () => {
                 id="image"
                 className="hidden"
                 onChange={(e) => {
-                  console.log(e.target.value);
+                  //console.log(e.target.value);
                 }}
                 {...register("profilepic", {
                   validate: {
@@ -106,19 +94,20 @@ const Profile = () => {
 
             <div className="relative top-[-10rem] md:top-[-12rem] flex flex-col p-2">
               <h1 className="text-3xl font-bold p-2 self-center dark:text-gray-200">
-                {userData?.name}
+                {userDetails?.name}
               </h1>
               <h2 className="text-xl self-center dark:text-gray-400">
-                @{userData?.username}
+                @{userDetails?.username}
               </h2>
             </div>
             <div className="relative top-[-8rem]">
               <ProfileAccomplishment
                 totalFoodSaved={500}
-                ourCommunity={200}
-                totalPeopleServed={800}
-                totalFoodSavedText="Food Saved"
-                ourCommunityText="Rank"
+                ourCommunity={1000}
+                totalPeopleServed={userDetails?.numberOfPeopleFeed}
+                totalPoints="Total Points"
+                rankText="Rank"
+                rank={rank}
                 totalPeopleServedText="People Served"
               />
             </div>
@@ -136,7 +125,7 @@ const Profile = () => {
                   className="border-2 w-full h-10 px-2 pl-2  border-[#01cc65]  mb-1 rounded-xl  p-2 text-sm focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="name "
                   name="name"
-                  value={userData?.name}
+                  value={userDetails?.name}
                   readOnly={!isEditing}
                   required
                   {...register("name", {
@@ -161,7 +150,7 @@ const Profile = () => {
                 </label>
                 <input
                   type="text"
-                  value={userData.username}
+                  value={userDetails.username}
                   readOnly={!isEditing}
                   className="border-2 w-full h-10 px-2 pl-2 border-[#01cc65] mb-1 rounded-xl p-2 text-sm focus:outline-none focus:ring-0 focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                 />
@@ -177,7 +166,7 @@ const Profile = () => {
 
                 <input
                   type=""
-                  value={userData.email}
+                  value={userDetails.email}
                   readOnly={!isEditing}
                   className="border-2 w-full h-10 px-2 pl-2  border-[#01cc65]  mb-1 rounded-xl  p-2 text-sm focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="username"
@@ -196,7 +185,7 @@ const Profile = () => {
                   type="text"
                   className="border-2 w-full h-10 px-2 pl-2  border-[#01cc65] mb-1 rounded-xl p-2 text-sm focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="address"
-                  value={userData.address}
+                  value={userDetails.address}
                   readOnly={!isEditing}
                   required
                   {...register("address", {
@@ -222,7 +211,7 @@ const Profile = () => {
                   type="number"
                   className="border-2 w-full h-10 px-2 pl-2 border-[#01cc65] mb-1 rounded-xl focus:outline-none focus:ring-0  focus:border-gray-300 focus:text-gray-900 focus:border-4 p-2 text-sm dark:bg-gray-800 dark:border-gray-800 dark:focus:border-gray-700 dark:text-gray-50"
                   id="contactno"
-                  value={userData.number}
+                  value={userDetails.contact}
                   readOnly={!isEditing}
                   required
                   {...register("contactno", {
@@ -244,14 +233,6 @@ const Profile = () => {
                 >
                   {isEditing ? "Cancel" : "Edit"}
                 </button>
-                {/* <button
-                  type="submit"
-                  value="Register"
-                  readOnly={!isEditing}
-                  className="align-middle select-none  font-bold  text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none rounded-full  h-10 w-full mt-6 cursor-pointer dark:bg-[#452e82]"
-                >
-                  Register
-                </button> */}
               </div>
             </div>
           </form>
