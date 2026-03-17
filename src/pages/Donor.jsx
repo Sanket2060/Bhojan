@@ -138,8 +138,8 @@ const Donor = () => {
             withCredentials: true, // Send cookies with the request
           }
         );
-        //console.log("Order Added succesfully");
-        setRecentOrderDetails(response);
+        console.log("Order Added succesfully",response);
+         setRecentOrderDetails(response);
         socket.emit("new_order",response,()=>{
           console.log("Notified all the volunteers successfully");
         })

@@ -25,7 +25,7 @@ const Volunteer = () => {
   const realTimeActiveListing=useSelector((state)=> state.order.orders);
   useEffect(() => {
     console.log("active listing changed");
-    setAccordionItems([...realTimeActiveListing,accordionItems])
+    setAccordionItems([...realTimeActiveListing,...accordionItems])
     console.log("setAccordionItems new value after getting new order",accordionItems);
     return () => {
       
